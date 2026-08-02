@@ -1,0 +1,56 @@
+\section{Complete Practical Coding}
+\label{sec:practical-18}
+
+Portable source keeps editable values centralised and records the files needed
+to reproduce the PDF.
+
+\begin{latexcode}{Complete practical file: portable reproducible note}
+\documentclass{article}
+\usepackage{booktabs}
+
+\newcommand{\projectname}{Measurement Demonstration}
+\newcommand{\datasetversion}{v1.0}
+\newcommand{\analysisdate}{2026-08-02}
+
+\title{\projectname}
+\author{Project Team}
+\date{\analysisdate}
+
+\begin{document}
+\maketitle
+
+\section{Reproducibility record}
+This report uses dataset \datasetversion. All paths in the source are
+relative to the project root.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Files required for a clean rebuild.}
+  \begin{tabular}{ll}
+    \toprule
+    File & Purpose \\
+    \midrule
+    \texttt{main.tex} & Root document \\
+    \texttt{data/measurements.csv} & Input data \\
+    \texttt{figures/result.pdf} & Generated figure \\
+    \texttt{references.bib} & Reference records \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Change record}
+Record what changed, why it changed, and who checked the new PDF.
+
+\end{document}
+\end{latexcode}
+
+\begin{terminalcode}{Practical build commands}
+latexmk -C main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+\end{terminalcode}
+
+\begin{codelab}
+Move the project to a clean folder, run the two commands, and record every
+missing input. Replace absolute paths instead of copying files outside the
+project silently.
+\end{codelab}

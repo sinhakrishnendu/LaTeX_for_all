@@ -1,0 +1,261 @@
+\chapter{Long Documents and Multi-File Projects}
+\label{chap:long-documents}
+\index{long document}\index{input command}\index{include command}\index{multi-file project}\index{index}
+
+A 200-page thesis should not be one scrolling source file. Splitting a project
+by stable scholarly units makes navigation, collaboration, and debugging
+easier, provided one main document still owns the class, packages, metadata,
+and build.
+
+\begin{learningoutcomes}
+  \item Split a long document with \cmd{input} and \cmd{include}.
+  \item Organise front matter, main matter, back matter, and appendices.
+  \item Generate lists of figures and tables.
+  \item Plan nomenclature, acronyms, a glossary, and an index.
+  \item Define shared semantic commands in one file.
+  \item Maintain references across files and preserve project portability.
+\end{learningoutcomes}
+
+\section{One main document}
+
+The root \file{main.tex} should make the project visible at a glance:
+
+\begin{latexcode}{A small multi-file book driver}
+\documentclass[11pt]{book}
+\input{preamble/packages}
+\input{preamble/commands}
+
+\begin{document}
+\frontmatter
+\input{frontmatter/abstract}
+\tableofcontents
+
+\mainmatter
+\include{chapters/introduction}
+\include{chapters/methods}
+
+\appendix
+\include{appendices/supplementary_methods}
+
+\backmatter
+\printbibliography
+\end{document}
+\end{latexcode}
+
+The included files contain content, not another \cmd{documentclass} or document
+environment. Relative paths are resolved from the main document during a normal
+build.
+
+\section{input and include}
+
+\cmd{input}\required{file} inserts a file at that exact point, much like
+copying its source into the main file. It is suitable for preamble components,
+small sections, tables, and front-matter pieces.
+
+\cmd{include}\required{file} is intended for large divisions such as chapters.
+It begins on a fresh page and writes a separate auxiliary file. The preamble
+command \cmd{includeonly} can compile selected included units while retaining
+stored numbering from earlier full builds:
+
+\begin{latexcode}{Draft only one included chapter}
+\includeonly{chapters/methods}
+\end{latexcode}
+
+Do not nest \cmd{include} inside another included file. Use \cmd{input} for
+smaller nested material.
+
+\begin{commonerror}
+\textbf{Symptom:} an included file compiles alone but fails from
+\file{main.tex}, or the reverse.
+
+\textbf{Cause:} the file assumes a different working directory or duplicates
+the preamble.
+
+\textbf{Repair:} treat \file{main.tex} as the official entry point. Keep
+project-relative paths consistent and move shared setup to the root preamble.
+\end{commonerror}
+
+\section{A durable folder structure}
+
+Group files by role rather than by draft date:
+
+\begin{terminalcode}{Example thesis tree}
+thesis/
+|-- main.tex
+|-- metadata.tex
+|-- preamble/
+|-- frontmatter/
+|-- chapters/
+|-- appendices/
+|-- figures/
+|-- data/
+|-- bibliography/
+|-- README.md
+`-- latexmkrc
+\end{terminalcode}
+
+Avoid names such as \file{final2-really-final.tex}. Version control or an
+archive records revisions more reliably. Use lowercase, descriptive names and
+one convention for separators.
+
+\section{Front, main, and back matter}
+
+The \code{book} class provides \cmd{frontmatter}, \cmd{mainmatter}, and
+\cmd{backmatter}. Front matter commonly uses Roman page numbers and unnumbered
+chapters; main matter starts Arabic numbering and numbered chapters; back
+matter holds references, glossary, and index.
+
+Not every institution uses the same order or numbering. Verify the current
+thesis manual and map its required components onto this structure. Do not
+invent a certificate or declaration text.
+
+\section{Appendices and supplementary material}
+
+\cmd{appendix} changes later chapter or section numbering. Appendix files can
+be included like chapters. Supplementary material may be part of the same PDF
+or a separate submission file; the venue decides. Give each supplement a
+stable filename, title, and connection to the main text.
+
+\section{Lists of figures and tables}
+
+\cmd{listoffigures} and \cmd{listoftables} collect captions through auxiliary
+files. They may need repeat compilation. Short captions can keep lists readable
+when a full caption is long:
+
+\begin{latexcode}{Short list entry and full caption}
+\caption[Simulated method comparison]{Relationship between Method A
+and Method B for all simulated paired values. The dashed line marks
+equality.}
+\end{latexcode}
+
+The optional argument becomes the list entry; the required argument remains the
+full figure caption. It must still identify the figure honestly.
+
+\section{Nomenclature, acronyms, and glossary}
+
+A \term{nomenclature} lists symbols; an acronym list expands shortened forms;
+a glossary defines specialised terms. Packages such as \pkg{glossaries} can
+generate and link these lists but require an additional indexing step. Begin
+with the information architecture:
+
+\begin{itemize}
+  \item define a term or acronym at first use in the prose;
+  \item store each definition once;
+  \item decide whether a separate list genuinely helps the reader;
+  \item document the required build command, often \pkg{latexmk} plus a
+        glossary tool configuration.
+\end{itemize}
+
+Do not add a glossary package merely to decorate three abbreviations.
+
+\section{An index}
+
+An index connects reader vocabulary to useful locations; it is not an
+alphabetical copy of every noun. With the standard \pkg{makeidx} workflow:
+
+\begin{latexcode}{Minimal index workflow}
+\usepackage{makeidx}
+\makeindex
+
+% In the body:
+compiler\index{compiler}
+
+% In the back matter:
+\printindex
+\end{latexcode}
+
+MakeIndex processes the generated \file{.idx} file before a later \LaTeX{} pass.
+Indexing is editorial work: choose synonyms, subentries, and primary pages from
+the reader's likely search terms.
+
+\section{Shared commands}
+
+If a phrase or notation must remain consistent, define a semantic command in a
+shared file:
+
+\begin{latexcode}{One editable notation definition}
+\newcommand{\MeanDifference}{\ensuremath{\bar d}}
+\end{latexcode}
+
+Then use \cmd{MeanDifference} throughout. Choose a descriptive name and avoid
+redefining core commands. A custom command is helpful when it captures meaning
+or repeated complexity; a command for a word used twice may only hide prose.
+
+\section{Cross-file references}
+
+Labels are project-wide. A chapter can refer to a figure in another file
+because the main build combines their auxiliary information. Every label must
+still be unique. When using \cmd{includeonly}, run a complete build before
+submission so removed or renamed labels cannot survive unnoticed in stale
+auxiliary files.
+
+\begin{scienceinpractice}
+A computational thesis may keep one chapter per study, a shared notation file,
+one bibliography database, generated figures, and a README that records the
+analysis and document builds. This organisation lets a reviewer trace a result
+without making chapter files independently pretend to be complete documents.
+\end{scienceinpractice}
+
+\section{Portability audit}
+
+A portable project uses relative paths, includes all permitted dependencies,
+and compiles in a clean location. Check for:
+
+\begin{itemize}
+  \item paths beginning with a user home directory or drive letter;
+  \item local fonts and unshared style files;
+  \item case differences hidden by one file system;
+  \item generated figures whose source or generation notes are absent;
+  \item a main file that is not clearly identified;
+  \item undocumented build tools or shell-escape requirements.
+\end{itemize}
+
+\begin{goodpractice}
+Copy or clone the project into a temporary clean folder and build from the
+README. A successful build in the author's long-lived directory may depend on
+forgotten auxiliary files or private packages.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Split the running article into \file{main.tex}, a preamble file, and separate
+section files. Keep title metadata and bibliography registration in the main
+driver. Use \cmd{input} for sections because a journal article should not force
+new pages between them. Compile from a clean build directory and update the
+README with the official entry point.
+\end{miniproject}
+
+\chaptersummary
+
+One main file owns the document. \cmd{input} inserts material exactly;
+\cmd{include} supports large page-starting units and selective drafting.
+Front, main, back, appendix, and supplementary structures should follow
+verified requirements. Lists, glossary tools, and indexes use generated files
+and repeat builds. Shared semantic commands reduce inconsistency. Relative
+paths, included dependencies, a README, and a clean test establish portability.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item The root main file is obvious and contains the only class declaration.
+  \item Files are split by stable scholarly role.
+  \item Front, main, back, and appendix order follows verified requirements.
+  \item Labels remain unique across all files.
+  \item Shared commands encode meaning, not arbitrary abbreviations.
+  \item A clean copy builds from relative paths and documented commands.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Choose \cmd{input} or \cmd{include} for a table, preamble file, and
+        thesis chapter.
+  \item Draw a folder tree for a five-chapter thesis.
+  \item Add lists of figures and tables and explain the repeat pass.
+  \item Create two appendix files without typing appendix letters.
+  \item Define one shared notation command with a descriptive name.
+  \item Find and replace an absolute image path with a portable relative path.
+  \item Explain why a clean build is stronger evidence than rebuilding in a
+        long-used folder.
+  \item Challenge: split a 500-line source file without changing its PDF
+        content or breaking its references.
+\end{chapterexercises}

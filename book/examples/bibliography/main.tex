@@ -1,0 +1,11 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{references.bib}
+\begin{document}
+\textcite{lamport1994} is a book; a classic article can be cited
+parenthetically \parencite{knuth1984}.
+\printbibliography
+\end{document}

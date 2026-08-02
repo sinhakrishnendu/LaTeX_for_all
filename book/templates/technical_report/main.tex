@@ -1,0 +1,69 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[british]{babel}
+\usepackage[a4paper,margin=27mm,headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{booktabs,tabularx}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\definecolor{reportblue}{HTML}{234A68}
+\addbibresource{references.bib}
+\graphicspath{{figures/}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small [PROJECT NAME]}
+\fancyhead[R]{\small [CLASSIFICATION]}
+\fancyfoot[C]{\thepage}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+\begin{titlepage}
+  \color{reportblue}
+  \noindent\rule{\textwidth}{2pt}
+  \vspace{18mm}
+  {\Huge\bfseries Technical Assessment of Simulated Measurement Agreement\par}
+  \vspace{8mm}
+  {\Large Decision report [REPORT ID]\par}
+  \vfill
+  \color{black}
+  \noindent\begin{tabularx}{\textwidth}{@{}lX@{}}
+    Prepared for: & [Client, programme, or decision owner] \\
+    Prepared by: & [Author, team, and organisation] \\
+    Issue date: & [YYYY-MM-DD] \\
+    Version: & [1.0] \\
+    Status: & [Draft / Final] \\
+    Classification: & [Public / Internal / Confidential -- verify] \\
+  \end{tabularx}
+  \vfill
+  \noindent\rule{\textwidth}{2pt}
+\end{titlepage}
+
+\pagenumbering{roman}
+\input{sections/document_control}
+\input{sections/executive_summary}
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+\pagenumbering{arabic}
+
+\input{sections/context}
+\input{sections/methods}
+\input{sections/findings}
+\input{sections/recommendations}
+\input{sections/limitations}
+
+\printbibliography[heading=bibintoc,title={References}]
+\appendix
+\input{sections/appendices}
+\end{document}

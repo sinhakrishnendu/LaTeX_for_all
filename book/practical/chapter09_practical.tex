@@ -1,0 +1,51 @@
+\section{Complete Practical Coding}
+\label{sec:practical-09}
+
+This complete example covers a compact numeric table and a wrapping text
+table. Both use captions, labels, and restrained horizontal rules.
+
+\begin{latexcode}{Complete practical file: publication-style tables}
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{siunitx}
+
+\begin{document}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of two demonstration groups.}
+  \label{tab:summary}
+  \begin{tabular}{lS[table-format=2.1]S[table-format=1.1]}
+    \toprule
+    Group & {Mean} & {SD} \\
+    \midrule
+    A & 12.4 & 1.8 \\
+    B & 16.7 & 2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Observations requiring wrapped text.}
+  \label{tab:notes}
+  \begin{tabularx}{\linewidth}{@{}lXr@{}}
+    \toprule
+    Code & Observation & Count \\
+    \midrule
+    A & Response remained stable during observation. & 12 \\
+    B & Response increased after treatment. & 15 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Tables~\ref{tab:summary} and~\ref{tab:notes} serve different jobs.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Add a third row, lengthen one observation, and change one numeric value to
+three digits. Adjust the declared \code{S} format instead of shrinking text.
+\end{codelab}

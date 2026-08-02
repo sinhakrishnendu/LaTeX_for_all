@@ -1,0 +1,29 @@
+\begin{tikzpicture}[
+  node distance=1.15cm,
+  every node/.style={font=\small},
+  filebox/.style={
+    draw=black,
+    line width=0.75pt,
+    fill=white,
+    minimum width=2.4cm,
+    minimum height=1.2cm,
+    align=center
+  },
+  processbox/.style={
+    draw=black,
+    line width=0.75pt,
+    fill=white,
+    minimum width=2.4cm,
+    minimum height=1.2cm,
+    align=center
+  },
+  flow/.style={-{Stealth[length=2.2mm]},line width=0.75pt,color=black}
+]
+  \node[filebox] (source) {Source\\\file{main.tex}};
+  \node[processbox,right=of source] (compiler) {\LaTeX{}\\compiler};
+  \node[filebox,right=of compiler] (pdf) {Output\\\file{main.pdf}};
+  \draw[flow] (source) -- node[above]{reads} (compiler);
+  \draw[flow] (compiler) -- node[above]{writes} (pdf);
+  \draw[flow] (pdf.south) .. controls +(0,-0.9) and +(0,-0.9) ..
+    node[midway,below=2pt]{inspect and revise} (source.south);
+\end{tikzpicture}

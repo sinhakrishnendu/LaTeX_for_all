@@ -1,0 +1,351 @@
+\chapter{Writing a Technical or Project Report}
+\label{chap:report}
+\index{technical report}\index{executive summary}\index{recommendation}\index{document control}
+
+A technical report helps a defined audience make, record, or review a decision.
+Its value lies not in a formal cover but in the traceable path from purpose and
+evidence to findings, limitations, recommendations, owners, and next actions.
+
+\begin{learningoutcomes}
+  \item Define audience, decision, scope, status, and handling requirements.
+  \item Build a cover, document-control record, executive summary, and body.
+  \item Separate observations, interpretations, recommendations, and decisions.
+  \item Present risk, uncertainty, actions, and evidence registers clearly.
+  \item Maintain version, approval, distribution, and archival information.
+  \item Compile and adapt the independent technical-report template.
+\end{learningoutcomes}
+
+\section{Begin with the decision}
+
+Ask who will read the report, what they must decide, when they must decide it,
+and which evidence is within scope. A report without a decision context often
+becomes a chronological diary of work.
+
+Write a one-sentence commissioning statement:
+
+\begin{quote}
+This report evaluates [evidence] so that [decision owner] can decide [specific
+decision] by [date], subject to [important boundary].
+\end{quote}
+
+That sentence controls relevance. Useful material outside the boundary can be
+recorded as future work rather than crowding the main argument.
+
+\begin{pausepredict}
+Two audiences need the same results: a technical reviewer must reproduce the
+analysis, while an executive must choose whether to fund a validation study.
+Which information belongs in the executive summary, the methods, and an
+appendix? Identify what both audiences still need in the main findings.
+\end{pausepredict}
+
+\section{Tour the report project}
+
+The complete independent project is in
+\file{templates/technical\_report/}. It uses separate files for document
+control, executive summary, context, methods, findings, recommendations,
+limitations, and appendices:
+
+\begin{terminalcode}{Build the technical report}
+cd templates/technical_report
+latexmk -pdf main.tex
+\end{terminalcode}
+
+All organisations, identifiers, results, and dates are placeholders or
+simulated. The README warns users to verify branding, confidentiality, and
+approval rules. A reusable template must keep those obligations visible.
+
+\section{The cover is controlled metadata}
+
+A report cover commonly identifies:
+
+\begin{itemize}
+  \item exact title and report or project identifier;
+  \item client, sponsor, or decision owner;
+  \item authoring organisation and responsible authors;
+  \item issue date, version, and status;
+  \item distribution or classification marking where applicable.
+\end{itemize}
+
+Treat ``Draft'', ``Approved'', ``Public'', and ``Confidential'' as controlled
+states, not visual decorations. The cover, headers, filename, document register,
+and repository record must agree. Do not apply a restriction merely because an
+old template contains one, and do not remove one without authority.
+
+\begin{commonerror}
+\textbf{Symptom:} a PDF named \file{final.pdf} has ``Draft'' in the footer and a
+different version in the document-control table.
+
+\textbf{Cause:} status metadata was typed in independent locations.
+
+\textbf{Repair:} define shared commands for report ID, version, date, and status;
+generate the release filename from a controlled convention where practical;
+then add a pre-release consistency check.
+\end{commonerror}
+
+\section{Document control and distribution}
+
+The version table records meaningful issued states, not every keystroke. A row
+should state the version, date, change, author, reviewer or approver as required.
+Version control preserves fine-grained source history; the issued report table
+records milestones relevant to recipients.
+
+A distribution statement names authorised recipients or the public repository,
+handling rules, and superseded versions. If a report changes after approval,
+issue a new controlled version rather than silently replacing the archived PDF.
+
+\section{Write the executive summary last}
+
+Although it appears first, write the executive summary after the findings and
+recommendations have stabilised. It should enable the intended decision without
+requiring the reader to reconstruct the entire analysis. A strong pattern is:
+
+\begin{description}[style=nextline,leftmargin=1.6em]
+  \item[Decision required] The precise choice and decision owner.
+  \item[Evidence and finding] The most decision-relevant result, with scale and
+  uncertainty.
+  \item[Recommendation] The action proposed and its conditions.
+  \item[Principal risks] Consequences, uncertainty, and unresolved constraints.
+  \item[Next step] Owner, evidence of completion, and due date.
+\end{description}
+
+Do not introduce numbers that cannot be located in the main report. Avoid an
+executive summary that merely promises what later sections contain.
+
+\section{Purpose, scope, and assumptions}
+
+Define the system, population, sites, dates, configurations, data, and questions
+covered. State exclusions. An ``out of scope'' section prevents reasonable but
+unsupported generalisation.
+
+List assumptions that affect interpretation, then distinguish them from facts.
+For each consequential assumption, record how it was checked or how a decision
+would change if it failed. A vague assumption list at the end of an appendix
+does not manage risk.
+
+\section{Methods and assurance}
+
+Methods should allow a competent reviewer to assess the work. Record data
+sources, collection or simulation, inclusion and exclusion rules, equipment and
+calibration where applicable, preprocessing, equations, software, uncertainty,
+review, and deviations from the plan.
+
+Use stable labels to connect methods and findings. If the report states a paired
+difference, define its direction once:
+
+\begin{latexcode}{Direction made explicit}
+\begin{equation}
+  d_i = B_i-A_i.
+  \label{eq:report-difference}
+\end{equation}
+Positive values therefore indicate that method B is higher.
+\end{latexcode}
+
+Without the last sentence, a later ``positive bias'' can be interpreted in two
+directions.
+
+\begin{scienceinpractice}
+An engineering qualification report can separate test execution, data
+reduction, acceptance criteria, results, non-conformances, and disposition. A
+failed criterion must remain visible even if an authorised decision accepts the
+risk; the report should not rewrite failure as success.
+\end{scienceinpractice}
+
+\section{Findings are not recommendations}
+
+Keep four statement types distinct:
+
+\begin{enumerate}
+  \item \textbf{Observation:} what the data or inspection records show.
+  \item \textbf{Interpretation:} what the observation means under stated
+        assumptions.
+  \item \textbf{Recommendation:} what the author proposes should happen.
+  \item \textbf{Decision:} what the authorised owner has chosen.
+\end{enumerate}
+
+For example, ``Method B averaged \SI{0.18}{\milli\metre} higher'' is an
+observation. ``The offset is acceptable'' is an interpretation requiring a
+tolerance. ``Proceed to validation'' is a recommendation. ``The programme board
+approved validation on [date]'' is a decision with a record.
+
+\section{Use tables and figures for decisions}
+
+A decision table can connect evidence to consequence:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{.23\textwidth}XX@{}}
+  \toprule
+  Finding & Decision significance & Required response \\
+  \midrule
+  Mean paired offset observed & Possible calibration difference & Compare with approved tolerance \\
+  Tolerance not prespecified & Acceptability cannot be concluded & Obtain decision-owner approval \\
+  Data are simulated & No operational evidence & Conduct controlled empirical study \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+Figures should answer a question that the text names. Captions must identify
+simulated or illustrative data, define reference lines, units, and uncertainty,
+and remain legible when printed in grayscale. Avoid dashboard colour without a
+semantic key.
+
+\section{Risk and uncertainty}
+
+Risk statements should name cause, event, and consequence. A practical register
+may include likelihood, impact, existing controls, owner, action, and residual
+risk, but scales must be defined. Numbers that resemble precision without a
+calibrated basis are not automatically better than transparent categories.
+
+Statistical uncertainty and project risk are related but different. A
+confidence interval describes an inferential procedure under assumptions;
+``high operational risk'' combines probability, consequence, and context. Do
+not translate one into the other without an explicit model.
+
+\begin{goodpractice}
+Put acceptance criteria in the protocol or report before looking at outcomes.
+If a criterion changes, record the rationale, authority, date, and effect rather
+than overwriting the earlier state.
+\end{goodpractice}
+
+\section{Recommendations must be executable}
+
+A recommendation needs an action verb, owner, completion evidence, and where
+appropriate priority and due date. Compare:
+
+\begin{quote}
+Weak: Further study is recommended.
+
+Actionable: The study lead shall submit a paired validation protocol defining
+the acceptance tolerance and calibration controls to the decision owner by
+[date]; approval of that protocol is the completion evidence.
+\end{quote}
+
+Avoid assigning an owner who has not accepted responsibility. If authority has
+not been confirmed, retain a placeholder and flag it before issue.
+
+\section{Limitations and non-conformances}
+
+Limitations define the boundary of a claim; they are not ritual self-criticism.
+State their likely direction or consequence where possible. A small convenience
+sample may limit generalisability; missing calibration records may make the
+cause of an offset indeterminate.
+
+Record deviations and non-conformances with identifiers, evidence, impact,
+disposition, authority, and closure status. Never remove an adverse result from
+a final report merely because corrective action was later completed; document
+the sequence.
+
+\section{Appendices and evidence registers}
+
+Appendices can hold detailed protocols, data dictionaries, calculation checks,
+large tables, drawings, approval records, and a release checklist. Every
+appendix should be cited from the main report when it supports a claim.
+
+An evidence register gives each object an ID, description, version, location,
+owner, and access condition. The issued PDF should refer to immutable or
+versioned evidence rather than a mutable personal folder.
+
+\section{Release and archival workflow}
+
+Before issue:
+
+\begin{enumerate}
+  \item complete independent technical and editorial review;
+  \item resolve comments or record authorised dispositions;
+  \item reproduce headline findings from source evidence;
+  \item verify status, identifiers, dates, classification, and approval;
+  \item build and inspect a clean PDF;
+  \item create a file manifest and checksum if required;
+  \item place the release in the controlled repository;
+  \item notify authorised recipients and supersede earlier versions visibly.
+\end{enumerate}
+
+Keep the signed or approved record separate if inserting a signature image would
+weaken the security or validity of the approval process. Follow organisational
+policy rather than inventing a scanned-signature convention.
+
+\section{Code lab: build a decision-facing report}
+
+\begin{codelab}
+Compile this report, replace the placeholder decision, and add one finding.
+Then move the recommendation above the evidence and decide whether the new
+order helps or weakens the reader's decision trail.
+\end{codelab}
+
+\begin{latexcode}{A compact report that ends in an action}
+\documentclass{report}
+\usepackage[margin=28mm]{geometry}
+\usepackage{booktabs}
+
+\title{Method Verification Report}
+\author{Prepared for: Client or laboratory placeholder}
+\date{2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\textbf{Decision required:} approve, revise, or reject the proposed method.
+\end{abstract}
+\tableofcontents
+
+\chapter{Objective}
+Assess whether the method meets the stated acceptance criterion.
+
+\chapter{Findings}
+The simulated trial produced the following summary.
+\begin{center}
+\begin{tabular}{lr}
+  \toprule
+  Criterion & Simulated result \\
+  \midrule
+  Mean recovery & 94.8\% \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\chapter{Recommendation}
+Repeat the trial with an independent sample before adoption.
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Build \file{templates/technical\_report/main.tex}. Choose a fictional decision
+owner and add a shared command for the report ID, version, date, and status.
+Write one evidence-backed finding, one conditional recommendation, and one risk
+with an owner. Confirm that the executive summary and main report use exactly
+the same headline value and decision condition.
+\end{miniproject}
+
+\chaptersummary
+
+A technical report is organised around a defined decision. Controlled metadata
+identifies the report's status; an executive summary compresses the evidence and
+recommendation; methods establish assurance; and findings remain distinct from
+interpretations, recommendations, and authorised decisions. Action owners,
+evidence registers, limitations, review, and archival controls make the report
+operationally trustworthy as well as readable.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Audience, decision, scope, exclusions, and deadline are explicit.
+  \item Report ID, version, date, status, and handling markings agree everywhere.
+  \item Executive-summary values and conditions match the body.
+  \item Methods, acceptance criteria, uncertainty, and deviations are traceable.
+  \item Observations, interpretations, recommendations, and decisions are distinct.
+  \item Every action has a realistic owner and completion evidence.
+  \item The approved release and evidence manifest are archived immutably.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Write a one-sentence commissioning statement for a laboratory report.
+  \item Turn a vague executive summary into the five-move structure.
+  \item Classify eight sentences as observations, interpretations,
+        recommendations, or decisions.
+  \item Define a three-level risk scale without false numerical precision.
+  \item Rewrite ``further work is needed'' as an owned, verifiable action.
+  \item Create a document-control table for three issued versions.
+  \item Design an evidence register for data, code, figures, and approvals.
+  \item Challenge: audit a report package for contradictory status metadata.
+\end{chapterexercises}

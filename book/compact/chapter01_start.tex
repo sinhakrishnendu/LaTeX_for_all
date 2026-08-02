@@ -1,0 +1,160 @@
+\chapter{Start, Compile, Change}
+\label{chap:start}
+
+\begin{learningoutcomes}
+  \item Compile a complete document.
+  \item Recognise the preamble and document body.
+  \item Type reserved characters correctly.
+  \item Use the log to repair the first common errors.
+\end{learningoutcomes}
+
+\section{Build this first}
+
+Create a folder, place a file named \file{main.tex} inside it, and type:
+
+\begin{latexcode}{Complete example: first document}
+\documentclass{article}
+
+\begin{document}
+Hello, world!
+
+This is my first \LaTeX{} document.
+\end{document}
+\end{latexcode}
+
+Compile from an editor or from a terminal:
+
+\begin{terminalcode}{Compile and rebuild when the source changes}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+The result is \file{main.pdf}. Edit the words, save, and compile again. That
+write--compile--inspect loop is the central skill in this book.
+
+\section{Read the source by jobs}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Source & Job \\
+\midrule
+\code{\textbackslash documentclass\{article\}} & Select the basic document
+shape. \\
+Preamble & Load packages and define reusable commands. \\
+\code{\textbackslash begin\{document\}} & Start material that will be printed. \\
+Body & Hold headings, paragraphs, equations, tables, and figures. \\
+\code{\textbackslash end\{document\}} & Stop the document. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Commands begin with a backslash. Required arguments use braces. Optional
+arguments use square brackets:
+
+\begin{latexcode}{Command pattern}
+\command[optional setting]{required content}
+\end{latexcode}
+
+\section{Add a title and sections}
+
+\begin{latexcode}{Complete example: a short report}
+\documentclass{article}
+
+\title{A Short Measurement Report}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Question}
+Do the two measurements agree?
+
+\section{Method}
+We measured each sample twice.
+
+\section{Result}
+The mean difference was small.
+
+\section{Conclusion}
+The methods produced similar values in this trial.
+\end{document}
+\end{latexcode}
+
+Change the title and add a \cmd{subsection}. Do not type section numbers;
+\LaTeX{} creates them.
+
+\section{Characters that already have jobs}
+
+The characters below are instructions in source. Add a backslash when you want
+most of them printed:
+
+\begin{latexcode}{Complete example: reserved characters}
+\documentclass{article}
+\begin{document}
+Success rate: 95\%.
+
+Budget: \$500.
+
+Variables: A\_1 and A\_2.
+
+Groups: research \& teaching.
+
+Literal symbols: \# \{ \}.
+
+A backslash: \textbackslash
+\end{document}
+\end{latexcode}
+
+\begin{commonerror}
+\textbf{Symptom:} the build stops near an ampersand or underscore.
+
+\textbf{Fix:} use \code{\textbackslash\&} in ordinary text and
+\code{\textbackslash\_} for a literal underscore. Read the first error in the
+log, repair it, and compile again.
+\end{commonerror}
+
+\section{Paragraphs, spaces, and comments}
+
+A blank source line starts a paragraph. Several ordinary spaces become one.
+A percent sign starts a comment:
+
+\begin{latexcode}{Paragraphs and comments}
+This is one paragraph.
+It continues on the next source line.
+
+This is a new paragraph. % This note is not printed.
+\end{latexcode}
+
+\begin{codelab}
+Compile the short report. Add one subsection, one percentage, one literal
+underscore, and one comment. Then remove a closing brace, compile, read the
+first error, restore the brace, and compile successfully.
+\end{codelab}
+
+\section{Keep this working pattern}
+
+\begin{latexcode}{Minimal reusable starting file}
+\documentclass{article}
+
+% Packages and commands go here.
+
+\title{Document Title}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Start writing here.
+
+\end{document}
+\end{latexcode}
+
+\begin{chapterchecklist}
+  \item The main file has a document class and matching document environment.
+  \item Every opening brace or environment has a closing partner.
+  \item The PDF was inspected after the latest compilation.
+  \item The source and PDF are stored together.
+\end{chapterchecklist}

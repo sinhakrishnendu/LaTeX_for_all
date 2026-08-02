@@ -1,0 +1,124 @@
+\chapter{Turn One File into a Project}
+\label{chap:long}
+
+\begin{learningoutcomes}
+  \item Split a long document into readable files.
+  \item Keep packages and commands in predictable places.
+  \item Compile only from one root file.
+\end{learningoutcomes}
+
+\section{Use this small project shape}
+
+\begin{terminalcode}{Project tree}
+project/
+|-- main.tex
+|-- preamble/
+|   |-- packages.tex
+|   +-- commands.tex
+|-- chapters/
+|   |-- introduction.tex
+|   +-- methods.tex
+|-- figures/
++-- references.bib
+\end{terminalcode}
+
+Only \file{main.tex} has a document class and document environment. Chapter
+files contain chapter or section material, not complete documents.
+
+\section{Write the root file}
+
+\begin{latexcode}{Complete example: a multi-file book driver}
+\documentclass{book}
+
+\input{preamble/packages}
+\input{preamble/commands}
+
+\begin{document}
+\frontmatter
+\tableofcontents
+
+\mainmatter
+\include{chapters/introduction}
+\include{chapters/methods}
+
+\backmatter
+\end{document}
+\end{latexcode}
+
+Use \cmd{input} for small structural files and \cmd{include} for chapter-sized
+units. Compile \file{main.tex}, never an included chapter by itself.
+
+\section{Keep packages separate}
+
+\begin{latexcode}{preamble/packages.tex}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\end{latexcode}
+
+Load \pkg{hyperref} near the end and \pkg{cleveref} after it.
+
+\section{Keep project commands separate}
+
+\begin{latexcode}{preamble/commands.tex}
+\newcommand{\species}[1]{\textit{#1}}
+\newcommand{\projecttitle}{Measurement Study}
+\newcommand{\todo}[1]{\textbf{TODO: #1}}
+\end{latexcode}
+
+Remove draft commands such as \cmd{todo} from the final document or redefine
+them to do nothing after every item is resolved.
+
+\section{Write chapter files without wrappers}
+
+\begin{latexcode}{chapters/introduction.tex}
+\chapter{Introduction}
+\label{chap:introduction}
+
+This chapter states the problem and objective.
+
+\section{Objective}
+The objective is to compare two measurement methods.
+\end{latexcode}
+
+\begin{latexcode}{chapters/methods.tex}
+\chapter{Methods}
+\label{chap:methods}
+
+We recorded paired measurements under the same conditions.
+\end{latexcode}
+
+\section{Compile from a clean root}
+
+\begin{terminalcode}{Build the complete project}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+\begin{terminalcode}{Remove generated build files}
+latexmk -C main.tex
+\end{terminalcode}
+
+Generated files can be recreated; source, figures, data, and bibliography
+records cannot. Back up the latter together.
+
+\begin{commonerror}
+\textbf{Symptom:} compiling a chapter reports a missing document class.
+
+\textbf{Fix:} select \file{main.tex} as the root document and compile it.
+\end{commonerror}
+
+\begin{codelab}
+Split one working article into \file{main.tex}, \file{packages.tex}, and two
+section files. Compile only the root file. Then rename one included file,
+observe the error, and repair the path.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item One root file controls the build.
+  \item Project-relative paths are used throughout.
+  \item Packages and personal commands are each defined in one place.
+  \item Generated files are kept separate from irreplaceable source material.
+\end{chapterchecklist}

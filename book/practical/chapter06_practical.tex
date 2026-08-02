@@ -1,0 +1,35 @@
+\section{Complete Practical Coding}
+\label{sec:practical-06}
+
+The complete file below combines inline, displayed, numbered, and aligned
+mathematics.
+
+\begin{latexcode}{Complete practical file: essential mathematics}
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+For observations $x_1,\ldots,x_n$, the arithmetic mean is
+\begin{equation}
+  \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+  \label{eq:mean}
+\end{equation}
+
+For paired measurements, define
+\begin{align}
+  d_i &= x_i-y_i, \\
+  \overline{d} &= \frac{1}{n}\sum_{i=1}^{n}d_i, \\
+  \operatorname{MAE} &= \frac{1}{n}\sum_{i=1}^{n}|d_i|.
+\end{align}
+
+Equation~\ref{eq:mean} is numbered automatically. A square root can
+be written inline as $s=\sqrt{s^2}$.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Add a weighted mean, refer to it by label, then insert another equation before
+it and confirm that the printed reference remains correct.
+\end{codelab}

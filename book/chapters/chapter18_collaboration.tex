@@ -1,0 +1,322 @@
+\chapter{Collaboration and Reproducibility}
+\label{chap:collaboration}
+\index{collaboration}\index{reproducibility}\index{version control}\index{Git}\index{backup}\index{README file}
+
+A document that builds only in one author's long-lived folder is not yet a
+reproducible scholarly object. Collaboration exposes hidden assumptions: an
+unshared image, a local font, an absolute path, an unexplained command, or a
+revision whose author and purpose cannot be recovered.
+
+\begin{learningoutcomes}
+  \item Organise and name project files for readers and collaborators.
+  \item Write comments, semantic commands, and a practical README.
+  \item Compare versioned copies, cloud editing, change marking, and Git.
+  \item Share a complete, licensed, permission-aware source package.
+  \item Reproduce a document build in a clean environment.
+  \item Design backups and releases that can be restored and audited.
+\end{learningoutcomes}
+
+\section{Reproducible means reconstructable}
+
+For a \LaTeX{} document, reproducible compilation means that an authorised reader
+can obtain the stated output from the preserved source, dependencies, assets,
+and instructions. It does not imply that the underlying scientific result is
+valid. Computational reproducibility additionally asks whether data and code
+regenerate the reported values, tables, and figures.
+
+Record the boundary. A document may be fully rebuildable while sensitive raw
+data remain restricted. In that case, provide permitted derived material,
+metadata, access conditions, and a test data set where useful.
+
+\begin{classroomnote}
+``It compiles on my computer'' is evidence about one environment. A clean build
+from a newly copied project tests whether the project itself contains the
+dependencies it claims to contain.
+\end{classroomnote}
+
+\section{Names are navigation}
+
+Choose short, descriptive, portable names:
+
+\begin{terminalcode}{A readable project}
+measurement_article/
+|-- main.tex
+|-- preamble.tex
+|-- sections/methods.tex
+|-- figures/method_comparison.pdf
+|-- data/simulated_measurements.csv
+|-- analysis/check_results.R
+|-- references.bib
+`-- README.md
+\end{terminalcode}
+
+Prefer one case convention and avoid ambiguous dates. ISO-style dates such as
+\file{2026-08-01} sort chronologically. Spaces can be supported, but simple
+ASCII names with hyphens or underscores reduce shell, archive, and service
+friction. Never encode confidential participant information in filenames.
+
+Generated files need not masquerade as source. Keep build products in a
+documented output directory or ignore them in version control. Do not call a
+working draft \file{final-final-2.tex}; use a revision system and meaningful
+release tags.
+
+\begin{tryit}
+List the ten most important files in one current project. Rename two ambiguous
+files on a disposable copy, update their references, and compile. Note whether
+case-only changes behave correctly on your file system.
+\end{tryit}
+
+\section{Comments explain reasons}
+
+The percent sign begins a \LaTeX{} comment. Use comments for purpose, constraints,
+and temporary diagnostics:
+
+\begin{latexcode}{Comments that retain context}
+% Journal requires continuous line numbers for review.
+% Remove the review option only after editorial acceptance.
+\documentclass[review]{publisherclass}
+
+% Equality line, not a fitted regression.
+\includegraphics{figures/method_comparison.pdf}
+\end{latexcode}
+
+Avoid comments that repeat the code or preserve whole obsolete paragraphs
+indefinitely. Version history can recover removed text. Delete resolved draft
+notes before release, and search for project-specific markers such as
+\code{TODO}, \code{FIXME}, and \code{[PLACEHOLDER]}.
+
+\section{Custom commands define a shared language}
+
+Semantic commands give collaborators one controlled notation:
+
+\begin{latexcode}{Shared scientific notation}
+\newcommand{\MeanDifference}{\ensuremath{\bar d}}
+\newcommand{\MethodA}{\textsc{Method A}}
+\end{latexcode}
+
+Place them in a small shared preamble file and document non-obvious arguments.
+Choose names that reveal meaning. Do not redefine familiar \LaTeX{} commands or
+create private abbreviations for ordinary prose.
+
+\begin{pausepredict}
+If the notation for the mean difference changes from $\bar d$ to $\Delta$, how
+many edits are required when the source uses a semantic command? What new risk
+appears if some authors typed the symbol directly?
+\end{pausepredict}
+
+\section{Four ways to manage revision}
+
+Different teams need different levels of history and access.
+
+\subsection{Numbered snapshots}
+
+For a brief solo project, dated archive copies can preserve milestones. Keep one
+working source and write protected snapshots outside it. A directory containing
+five competing main files invites compilation of the wrong version.
+
+\subsection{Cloud \LaTeX{} collaboration}
+
+Services such as Overleaf provide shared projects, an editor, compilation,
+comments, and history features whose exact availability can depend on the
+current service and plan. Agree on the main file, TeX engine, review practice,
+and who resolves conflicts. Export complete source snapshots at milestones;
+cloud convenience is not a backup policy by itself.
+
+\subsection{Visible change marking}
+
+Packages such as \pkg{changes} or \pkg{latexdiff} can show additions and
+deletions. Their output is a review artefact, not automatically the final source.
+Complex commands, moved text, citations, and floats need manual inspection.
+Retain an accepted clean version and verify that no change markup survives.
+
+\subsection{Git and hosted repositories}
+
+Git records snapshots of text files efficiently. Hosting services add remote
+collaboration, issues, review, and releases. This is optional advanced tooling,
+not a prerequisite for writing \LaTeX{}.
+
+\begin{terminalcode}{A small Git cycle}
+git status
+git diff
+git add chapters/methods.tex
+git commit -m "Clarify paired-difference definition"
+\end{terminalcode}
+
+Commits should describe a coherent change. Inspect the diff before staging.
+Never commit credentials, private keys, confidential raw data, or files whose
+licence prohibits redistribution. A public repository is a publication action.
+
+\begin{advancedtopic}
+A useful branch strategy can be modest: one protected main branch, short-lived
+branches for substantial changes, review before merging, and tagged releases
+for submissions. Complex branching without a team agreement can obscure rather
+than improve the scholarly record.
+\end{advancedtopic}
+
+\section{Resolve collaboration at the level of ownership}
+
+Assign responsibility by scholarly unit: one author owns Methods, another
+validates analyses, and a corresponding author controls the submission release.
+Ownership does not prevent review; it prevents simultaneous uncoordinated edits
+to the same sentences.
+
+Record decisions in an issue, meeting note, or commit message. A useful record
+states the question, evidence considered, decision, owner, and date. Email alone
+can scatter the rationale across private inboxes.
+
+\begin{commonerror}
+\textbf{Symptom:} two correct revisions overwrite one another or leave half of
+each argument in the final paragraph.
+
+\textbf{Cause:} both collaborators edited the same unit without a merge and
+review convention.
+
+\textbf{Repair:} designate an owner, compare changes explicitly, resolve the
+scientific meaning before resolving punctuation, and compile the merged result.
+\end{commonerror}
+
+\section{README as the first reproducibility test}
+
+A README should answer:
+
+\begin{itemize}
+  \item What is this project, and are its data real or simulated?
+  \item Which file is the official entry point?
+  \item Which TeX engine, bibliography tool, and extra tools are required?
+  \item What command creates the document and generated figures or tables?
+  \item Where do inputs come from and what are their licences or restrictions?
+  \item Which placeholders or manual steps remain?
+  \item Where should generated output appear?
+\end{itemize}
+
+\begin{latexcode}{A concise build statement}
+% README.md (shown as plain text)
+Build: latexmk -pdf main.tex
+Main file: main.tex
+Data: simulated teaching values in data/
+Analysis check: Rscript analysis/check_results.R
+\end{latexcode}
+
+The listing is README text, not commands to place in a TeX source file. Use
+Markdown code fences in the actual README.
+
+\section{Pin what affects the build}
+
+Record the engine and important tool versions. A minimal environment record can
+include TeX distribution and date, \pkg{latexmk}, Biber or BibTeX, custom class
+versions, and required fonts. If a package behaviour is critical, preserve the
+authorised class or style file and its licence when distribution permits.
+
+A container or continuous-integration build can strengthen repeatability, but
+it also needs maintenance. The simplest adequate solution may be a current TeX
+Live release plus a documented command. Do not introduce a complex platform
+that no collaborator can repair.
+
+\section{Avoid absolute paths}
+
+This source works only for one account:
+
+\begin{latexcode}{Non-portable figure path}
+\includegraphics{/Users/name/Desktop/project/figure1.pdf}
+\end{latexcode}
+
+Use a project-relative path:
+
+\begin{latexcode}{Portable figure path}
+\includegraphics{figures/figure1.pdf}
+\end{latexcode}
+
+The same rule applies to bibliography databases, data imports, and scripts.
+Check case exactly: \file{Figure1.pdf} and \file{figure1.pdf} may be different
+files on the collaborator's system.
+
+\section{Backups need independent copies}
+
+Synchronisation protects availability but can synchronise accidental deletion
+or corruption. A robust pattern keeps multiple copies, on more than one medium,
+with at least one versioned or offline/off-site copy. Test restoration.
+
+Back up source, data permitted by governance, analysis, figure sources,
+bibliography, README, licences, approvals, and released PDFs. Auxiliary files
+can usually be rebuilt. Encrypt and control access where required; a backup is
+not exempt from data-protection obligations.
+
+\section{Licence and permission awareness}
+
+Distinguish four questions:
+
+\begin{enumerate}
+  \item May the team use the material for this research?
+  \item May it be redistributed with source?
+  \item May it be modified?
+  \item What attribution, notice, or share-alike terms apply?
+\end{enumerate}
+
+Copyright, data licences, software licences, consent, confidentiality, and
+publisher agreements are related but not interchangeable. Record the source,
+creator, licence, permission, and required credit for each external asset.
+
+\begin{scienceinpractice}
+A geological report may use an openly licensed base map, confidential sampling
+coordinates, an author's original plot, and a publisher-reused diagram under
+written permission. The source package cannot simply be made public as one
+undifferentiated object.
+\end{scienceinpractice}
+
+\section{The clean-room rehearsal}
+
+Create a fresh directory, copy only the files named by the release manifest,
+and follow the README as if you were a new collaborator. A successful rehearsal
+checks filenames, paths, tool order, missing dependencies, and unstated manual
+steps. Compare the resulting page count or checksum only when deterministic
+output is expected; timestamps and tool versions can legitimately change bytes.
+
+\begin{goodpractice}
+Make the release from a known version, run the numerical verification, build
+the document, inspect the log and PDF, and archive the exact inputs and outputs
+together. A release is more than the latest file in a synchronised folder.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Open the running article's README. From a fresh copy, run the base-R result check
+and compile \file{main.tex}. Add one comment explaining why the difference is
+defined as B minus A and one semantic command for a repeated notation. Create a
+manifest of the files another scientist needs; exclude rebuildable auxiliary
+files and identify the original source of each figure.
+\end{miniproject}
+
+\chaptersummary
+
+Collaboration depends on shared meaning, visible ownership, and reconstructable
+releases. Descriptive names, purposeful comments, semantic commands, one main
+file, a complete README, relative paths, and tested backups reduce hidden
+assumptions. Cloud editors, change-marking tools, and Git solve different
+revision problems. Reproducible sharing also requires licences, permissions,
+access controls, environment records, a clean build, and an exact release
+manifest.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item File and folder names are descriptive, portable, and privacy-safe.
+  \item Comments explain constraints and no unresolved draft markers remain.
+  \item The main file, engine, tools, and build commands are documented.
+  \item Collaborators know ownership, review, and merge conventions.
+  \item Paths are relative and all permitted dependencies are included.
+  \item Licences, permissions, and restricted materials are recorded.
+  \item Backups can be restored and the release builds in a clean directory.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Rename four poorly named files and explain your convention.
+  \item Distinguish a synchronised folder, version history, and a backup.
+  \item Write a README for a three-file article and its bibliography.
+  \item Replace two absolute paths with project-relative paths.
+  \item Compare numbered snapshots, change markup, Overleaf, and Git for a team.
+  \item Design an asset-permission register for four figure types.
+  \item Plan a clean-room build test and define its success evidence.
+  \item Challenge: create a release manifest that separates public, restricted,
+        generated, and rebuildable files.
+\end{chapterexercises}

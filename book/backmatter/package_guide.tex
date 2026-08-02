@@ -1,0 +1,246 @@
+\chapter*{Package guide}
+\addcontentsline{toc}{chapter}{Package guide}
+
+Load a package to solve a named requirement. Check its current manual, class
+compatibility, engine support, licence, and build implications. A package listed
+here is a useful category example, not a universal recommendation.
+
+\begin{longtable}{@{}p{.22\textwidth}p{.32\textwidth}p{.38\textwidth}@{}}
+\toprule
+Package or tool & Main purpose & Use and cautions \\
+\midrule
+\endhead
+\pkg{amsmath} &
+Structured displayed mathematics. &
+Provides \code{align}, \code{gather}, \code{cases}, \cmd{text}, and robust
+equation tools. Prefer it to legacy display environments. \\
+\addlinespace
+\pkg{amssymb} and \pkg{amsfonts} &
+Additional mathematical symbols and fonts. &
+Load when their symbol sets are used; verify that a publisher class does not
+already provide them. \\
+\addlinespace
+\pkg{mathtools} &
+Extensions and refinements to \pkg{amsmath}. &
+Useful for paired delimiters, specialised alignment, and mathematical tools.
+Read its manual before adopting convenience commands. \\
+\addlinespace
+\pkg{amsthm} &
+Theorem-like environments and proof styling. &
+Define theorem structures once and follow the mathematical venue's numbering
+convention. Some classes provide their own theorem interface. \\
+\addlinespace
+\pkg{siunitx} &
+Numbers, quantities, units, and numeric table columns. &
+Use \cmd{num}, \cmd{qty}, \cmd{unit}, and \code{S}. Version 3 syntax differs
+from older examples; consult the installed manual. \\
+\addlinespace
+\pkg{graphicx} &
+Insert and transform external graphics. &
+Use project-relative paths and meaningful placed size. Keep editable or
+generated figure sources and permission records. \\
+\addlinespace
+\pkg{caption} &
+Caption formatting and options. &
+Generic classes benefit from its interface, but publisher classes may control
+captions and conflict with local restyling. \\
+\addlinespace
+\pkg{subcaption} &
+Subfigures and subtables. &
+Provides panel environments and labels. It builds on \pkg{caption}; verify class
+compatibility and avoid the obsolete \pkg{subfigure} package. \\
+\addlinespace
+\pkg{booktabs} &
+Restrained professional table rules. &
+Use top, middle, and bottom rules; avoid vertical rules and double-rule grids
+unless a domain-specific requirement says otherwise. \\
+\addlinespace
+\pkg{array} &
+Extended column definitions. &
+Useful for custom alignment and paragraph-column modifiers. Keep definitions
+readable and local to a documented need. \\
+\addlinespace
+\pkg{tabularx} &
+Tables with columns that fill a target width. &
+The \code{X} column wraps prose. Combine cautiously with numeric columns and
+avoid over-constrained width specifications. \\
+\addlinespace
+\pkg{longtable} &
+Tables that break across pages. &
+Runs directly in the page stream rather than as an ordinary float. Define
+repeating headers and continuation rules. \\
+\addlinespace
+\pkg{xcolor} &
+Named colours and colour models. &
+Use colour sparingly, maintain contrast and grayscale meaning, and obey venue
+rules. Colour cannot be the only carrier of information. \\
+\addlinespace
+\pkg{microtype} &
+Subtle typographic protrusion and font expansion. &
+Often improves justified text under pdf\LaTeX{}. Support depends on engine and
+font; inspect rather than expecting a visible effect. \\
+\addlinespace
+\pkg{geometry} &
+Explicit page dimensions and margins. &
+Appropriate for generic documents with known requirements. Do not override
+publisher or institutional page design without permission. \\
+\addlinespace
+\pkg{fancyhdr} &
+Running headers and footers. &
+Clear inherited fields, set a sufficient head height, and define a separate
+plain style for opening pages when needed. \\
+\addlinespace
+\pkg{titlesec} &
+Heading format and spacing in generic classes. &
+Useful for a controlled house design; can conflict with specialist classes and
+should not be used to imitate publisher formatting. \\
+\addlinespace
+\pkg{setspace} &
+Single, one-and-a-half, and double spacing. &
+Use when a verified review or thesis requirement asks for it. It handles more
+contexts than guessing a baseline-stretch value. \\
+\addlinespace
+\pkg{pdflscape} &
+Landscape pages with PDF rotation metadata. &
+Use for genuinely wide tables or figures. Inspect orientation, headers, and
+printed output. \\
+\addlinespace
+\pkg{multicol} &
+Balanced multiple text columns. &
+Suitable for compact reference material; awkward for wide mathematics,
+figures, reading order, and accessibility. \\
+\addlinespace
+\pkg{enumitem} &
+List labels and spacing. &
+Define restrained reusable list styles. Excessively compressed lists reduce
+readability and may violate a class design. \\
+\addlinespace
+\pkg{listings} &
+Typeset source code without shell execution. &
+Configure language, wrapping, escape behaviour, and captions. It is a
+typesetting tool, not a syntax validator. \\
+\addlinespace
+\pkg{minted} &
+Syntax highlighting through Pygments. &
+Can provide richer highlighting but normally requires external execution and a
+Python dependency. Use only when the build and security policy permit it. \\
+\addlinespace
+\pkg{tcolorbox} &
+Breakable pedagogical or technical boxes. &
+Offers many optional libraries and dependencies. Keep visual hierarchy modest
+and verify page breaks in long boxes. \\
+\addlinespace
+\pkg{csquotes} &
+Context-sensitive quotation commands and bibliography integration. &
+Recommended with many \pkg{biblatex} language workflows. It does not decide
+whether a quotation is licensed or accurately attributed. \\
+\addlinespace
+\pkg{biblatex} &
+Citation and bibliography management in \LaTeX{}. &
+Select a style and backend deliberately. Publisher workflows may require
+BibTeX, a generated \file{.bbl}, or their own system instead. \\
+\addlinespace
+Biber &
+Bibliography backend commonly used with \pkg{biblatex}. &
+It is a separate program. Run it through \pkg{latexmk} or the documented
+sequence; do not substitute BibTeX when the project specifies Biber. \\
+\addlinespace
+\pkg{natbib} &
+Author--year and numeric citation commands for BibTeX-era styles. &
+Widely used by publisher classes. Do not load alongside \pkg{biblatex} unless
+explicit compatibility documentation supports the setup. \\
+\addlinespace
+\pkg{hyperref} &
+Links, anchors, bookmarks, and PDF metadata. &
+Usually load late. Supply plain bookmark text for complex headings and audit
+anonymous metadata. \\
+\addlinespace
+\pkg{cleveref} &
+Type-aware cross-references such as Figure 3. &
+Load after \pkg{hyperref}; configure names for custom environments and preserve
+semantic labels. \\
+\addlinespace
+\pkg{varioref} &
+Contextual page-aware references. &
+Useful in some long works; automatic phrases can become awkward after
+pagination changes, so proofread the final text. \\
+\addlinespace
+\pkg{makeidx} &
+Basic index collection and printing. &
+Requires an indexing pass. Index terms editorially rather than marking every
+occurrence. \\
+\addlinespace
+\pkg{imakeidx} &
+Enhanced index management. &
+Supports multiple indexes and build integration; may require shell or build
+configuration depending on the workflow. \\
+\addlinespace
+\pkg{glossaries} &
+Generated glossaries, acronym lists, and symbols. &
+Powerful for large projects but adds database and build complexity. Document
+the glossary tool and define terms at first use in prose. \\
+\addlinespace
+\pkg{acronym} &
+Focused acronym definition and use. &
+Can suit a moderate acronym list. Compare with \pkg{glossaries} and a manual
+list rather than loading both without a plan. \\
+\addlinespace
+\pkg{mhchem} &
+Chemical formulae and reaction notation. &
+Use \cmd{ce} according to the current manual. Verify conventions for isotopes,
+charges, states, equilibrium, and specialist chemistry. \\
+\addlinespace
+\pkg{chemfig} &
+Programmatic chemical structure diagrams. &
+Useful for editable structures; complex source and disciplinary validation are
+still required. \\
+\addlinespace
+\pkg{algorithmicx} with \pkg{algpseudocode} &
+Structured pseudocode. &
+Define inputs, outputs, and semantics in prose. Do not confuse an algorithm
+float, its pseudocode language, and executable validation. \\
+\addlinespace
+\pkg{tikz} and PGF &
+Programmatic vector diagrams and plots. &
+Excellent for reproducible simple diagrams. Large graphics can slow builds;
+externalise only with a documented toolchain and preserve original source. \\
+\addlinespace
+\pkg{pgfplots} &
+Data-driven scientific plots using PGF/TikZ. &
+Set a compatibility version, keep source data, and audit axes and uncertainty.
+For large data, generate a vector figure in analysis software instead. \\
+\addlinespace
+\pkg{standalone} &
+Compile individual figures or snippets independently. &
+Useful for original TikZ figures. Record the source-to-PDF build and include
+only the derived PDF in workflows that prohibit shell execution. \\
+\addlinespace
+\pkg{lineno} &
+Review line numbers. &
+Inspect behaviour around equations, floats, and two-column layouts. A publisher
+class may supply its own line-number option. \\
+\addlinespace
+\pkg{changes} and \pkg{latexdiff} &
+Visible revision markup and source comparison. &
+Review generated markup carefully, especially commands and moved text. Remove
+change apparatus from a clean accepted release unless requested. \\
+\addlinespace
+\pkg{latexmk} &
+Dependency-aware build automation. &
+Configure the main engine, bibliography, index, glossary, and output directory
+in a project-level file. A successful run still needs log and PDF inspection. \\
+\bottomrule
+\end{longtable}
+
+\section*{Package-selection checklist}
+
+\begin{enumerate}
+  \item Name the missing capability.
+  \item Check whether the class or kernel already provides it.
+  \item Read the current package introduction, minimal example, options, and
+        compatibility notes.
+  \item Add the package once with the smallest needed configuration.
+  \item Compile an MWE and the complete document.
+  \item Record extra programs, permissions, or security requirements.
+  \item Remove the package if its capability is no longer used.
+\end{enumerate}

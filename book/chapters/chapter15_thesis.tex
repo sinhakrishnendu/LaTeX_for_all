@@ -1,0 +1,365 @@
+\chapter{Building a Thesis or Dissertation}
+\label{chap:thesis}
+\index{thesis}\index{dissertation}\index{front matter}\index{institutional requirements}
+
+A thesis is both a sustained scientific argument and an institutional record.
+Its \LaTeX{} project must therefore serve two authorities: the research logic and
+the current regulations of the degree-granting institution. The generic
+template supplied with this book teaches durable structure while leaving local
+legal and administrative wording as visible placeholders.
+
+\begin{learningoutcomes}
+  \item Map verified institutional requirements onto a multi-file project.
+  \item Build title, declaration, certificate, dedication, acknowledgement,
+        abstract, lists, chapters, references, and appendices.
+  \item Control Roman-numbered front matter and Arabic-numbered main matter.
+  \item Manage shared metadata, abbreviations, figures, and bibliography.
+  \item Distinguish generic examples from authorised institutional wording.
+  \item Compile and audit the independent thesis template.
+\end{learningoutcomes}
+
+\section{Requirements come before styling}
+
+Obtain the current thesis manual, official class or template, deposit guide,
+and any school-specific supplement. Record the version or access date. Extract
+testable requirements: paper size, margins, order, wording, numbering, maximum
+file size, font policy, accessibility, embargo, and signature procedure.
+
+\begin{submissioncheck}
+Never infer a declaration, certificate, approval, or licence from a sample.
+These statements can carry legal or academic meaning. Use the institution's
+authorised text and preserve placeholders until it has been verified.
+\end{submissioncheck}
+
+If an official class exists, begin with its documentation and minimal example.
+Do not pour a generic preamble over it. The class may already own margins,
+titles, spacing, lists, and chapter openings.
+
+\section{Tour the supplied project}
+
+The complete template is in
+\file{templates/thesis/}. It builds independently from its own directory:
+
+\begin{terminalcode}{Build the thesis template}
+cd templates/thesis
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Its top-level organisation separates administrative material from scholarly
+chapters:
+
+\begin{terminalcode}{Thesis template map}
+thesis/
+|-- main.tex
+|-- metadata.tex
+|-- frontmatter/
+|-- chapters/
+|-- appendices/
+|-- figures/
+|-- references.bib
+`-- README.md
+\end{terminalcode}
+
+The README identifies \file{main.tex} as the entry point and states that the
+results are simulated. A future reader should not need oral instructions to
+discover how the project builds.
+
+\section{Centralise identity and title metadata}
+
+The template stores frequently repeated fields in \file{metadata.tex}:
+
+\begin{latexcode}{Editable thesis metadata}
+\newcommand{\ThesisTitle}{[Full approved title]}
+\newcommand{\ThesisAuthor}{[Candidate's full name]}
+\newcommand{\ThesisDegree}{[Full degree name]}
+\newcommand{\ThesisInstitution}{[Institution]}
+\newcommand{\ThesisDate}{[Month Year]}
+\end{latexcode}
+
+Edit each fact once. Use the spelling, punctuation, degree title, and date form
+required by the official record. Avoid embedding a supervisor's name in five
+files where a late correction can become inconsistent.
+
+\begin{commonerror}
+\textbf{Symptom:} the title page, PDF metadata, declaration, and deposit form
+show slightly different titles.
+
+\textbf{Cause:} the same fact was typed independently in several places.
+
+\textbf{Repair:} designate one approved title string and derive every permitted
+occurrence from it. Recheck systems that require manual entry.
+\end{commonerror}
+
+\section{Design the main driver}
+
+Only \file{main.tex} declares the class, loads shared packages, registers the
+bibliography, and determines the order:
+
+\begin{latexcode}{Thesis life cycle}
+\begin{document}
+\frontmatter
+\input{frontmatter/title}
+\input{frontmatter/abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+\include{chapters/introduction}
+\include{chapters/methods}
+\include{chapters/results}
+
+\appendix
+\include{appendices/supplementary_material}
+
+\backmatter
+\printbibliography
+\end{document}
+\end{latexcode}
+
+With the \code{book} class, \cmd{frontmatter} selects Roman numbering and
+unnumbered chapter behaviour. \cmd{mainmatter} starts Arabic page numbering and
+numbered chapters. \cmd{appendix} changes later chapter labels to letters; the
+author does not type ``Appendix A'' manually.
+
+\begin{pausepredict}
+Suppose a chapter is moved before \cmd{appendix}. Which is safer: changing a
+typed ``Appendix B'' title, or allowing the structural command to recompute the
+letter and every cross-reference? Explain what else may need recompilation.
+\end{pausepredict}
+
+\section{Build front matter deliberately}
+
+Common components include a title page, candidate declaration, supervisor
+certificate, dedication, acknowledgements, abstract, contents, and lists. Their
+names and order vary. Some institutions forbid a certificate; others require
+precise wording. Some accept electronic approval rather than a scanned
+signature.
+
+Unnumbered chapters need explicit contents entries when the class or local
+template does not add them:
+
+\begin{latexcode}{An unnumbered abstract in the contents}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\end{latexcode}
+
+Hyperlinked documents may also need \cmd{phantomsection} immediately before a
+manual contents entry, depending on the class and package setup. Test the link,
+not merely its coloured appearance.
+
+The abstract must stand alone. Define abbreviations, report the question and
+approach, state the principal findings with scale where appropriate, acknowledge
+important limitations, and identify the contribution. Follow the verified word
+limit. Citations in an abstract are often discouraged and complicate database
+display.
+
+\section{Lists, abbreviations, and symbols}
+
+Lists of figures and tables are generated from captions. They need repeat
+compilation after changes. Use meaningful short captions if a full caption is
+too long for a list.
+
+The generic template uses a small manual abbreviations table, keeping its build
+portable. A large, changing nomenclature may justify \pkg{glossaries} or a
+discipline-specific tool. The decision depends on scale:
+
+\begin{itemize}
+  \item define every abbreviation at first substantive use even if it is listed;
+  \item distinguish scalar symbols, vectors, units, and operators;
+  \item order entries consistently and use one definition per concept;
+  \item document any extra glossary build step in the README.
+\end{itemize}
+
+\section{Shape a chapter as an argument}
+
+A chapter is not merely a container of results. Begin by stating its purpose
+and relationship to the whole thesis. End by resolving its question and making
+the transition to the next chapter. In an integrated thesis, repetition should
+be controlled through cross-references. In a thesis by publication, each paper
+may need to remain intelligible while the surrounding synthesis explains
+overlap and co-authorship.
+
+Typical empirical units are introduction, literature context, methods,
+results, discussion, and conclusion. These are patterns, not universal laws.
+A mathematical thesis may organise itself around definitions and proofs; a
+design thesis around requirements, artefacts, evaluation, and reflection.
+
+\begin{scienceinpractice}
+A multi-study environmental thesis may share a notation chapter and general
+methods, then give one results chapter per study. A cross-chapter synthesis
+should compare findings and limitations rather than repeat each chapter's final
+paragraph.
+\end{scienceinpractice}
+
+\section{Published and joint work}
+
+Where published papers are incorporated, verify the permitted manuscript
+version, copyright, co-author permissions, required attribution, and the
+institution's declaration of candidate contribution. Do not assume that being
+an author permits reuse of a publisher-formatted PDF.
+
+Keep a contribution record while the work is active. State which material is
+joint, who performed analyses, and what has appeared elsewhere. If a chapter
+retains a journal's internal bibliography, decide with the institution whether
+the thesis needs chapter bibliographies or one consolidated list.
+
+\section{Figures, tables, and generated evidence}
+
+Store editable source or generation instructions beside derived figures. The
+template includes an original simulated comparison figure, not an image copied
+from the web. Its caption states what the diagonal means and avoids claiming it
+is a fitted model.
+
+For generated results:
+
+\begin{enumerate}
+  \item keep raw inputs read-only where policy requires;
+  \item generate clean analysis data through a scripted step;
+  \item generate values, tables, and figures from versioned code;
+  \item preserve software versions and environment information;
+  \item make the document consume stable outputs;
+  \item archive the release identified in the deposited thesis.
+\end{enumerate}
+
+Avoid copying the same number into prose, a table, and a figure annotation by
+hand. A correction should have one computational source.
+
+\section{Appendices and supplements}
+
+An appendix is part of the thesis PDF. A supplement may be a separate deposited
+object. Put supporting detail where readers can find it, but do not exile
+essential methods or reasoning to inaccessible files.
+
+The template's evidence register prompts for a persistent identifier, version,
+licence, and access condition. For restricted data, describe how qualified
+readers can request access; do not promise public availability that ethics,
+consent, law, or contracts prohibit.
+
+\section{Selective drafting and full builds}
+
+During revision, \cmd{includeonly} can shorten a chapter build:
+
+\begin{latexcode}{Draft two chapters}
+\includeonly{chapters/methods,chapters/results}
+\end{latexcode}
+
+It relies on stored auxiliary information for excluded chapters. Remove or
+comment out \cmd{includeonly} and perform a clean, complete build before review
+or deposit. Otherwise stale labels, citations, or list entries can masquerade
+as current output.
+
+\section{Institutional compliance matrix}
+
+Convert prose regulations into an auditable table:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{.20\textwidth}Xp{.22\textwidth}@{}}
+  \toprule
+  Requirement & Implementation & Evidence \\
+  \midrule
+  Page size and margins & Official class or documented geometry & Measured PDF page \\
+  Declaration text & Authorised source copied verbatim & Manual comparison \\
+  Numbering & Front/main matter commands & Page audit \\
+  File and font rules & Build configuration & Preflight report \\
+  Accessibility & Tagged workflow or required remediation & Accessibility check \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+If a requirement cannot be met with pdf\LaTeX{} or the prescribed template, raise
+the issue with the graduate office early. A last-minute visual approximation is
+not evidence of compliance.
+
+\begin{goodpractice}
+Schedule a deposit rehearsal. Build on a clean machine or service, open the PDF
+in more than one viewer, test links and bookmarks, verify page numbers and
+fonts, and upload to any validation service while changes are still possible.
+\end{goodpractice}
+
+\section{Code lab: assemble a thesis from small files}
+
+\begin{codelab}
+Create the three files below in one folder. Compile \path{main.tex}; then add a
+second chapter file and one more \verb|\include| line. This is the smallest
+useful rehearsal of a multi-file thesis.
+\end{codelab}
+
+\begin{latexcode}{main.tex}
+\documentclass[12pt,oneside]{report}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+\pagenumbering{roman}
+\input{title-page}
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+\include{chapter-one}
+
+\appendix
+\chapter{Supplementary method}
+Record enough detail for the method to be reproduced.
+\end{document}
+\end{latexcode}
+
+\begin{latexcode}{title-page.tex}
+\begin{titlepage}
+  \centering
+  {\Large Thesis Title\par}
+  \vfill
+  Your Name\\
+  Institution placeholder\\
+  2026
+\end{titlepage}
+\end{latexcode}
+
+\begin{latexcode}{chapter-one.tex}
+\chapter{Introduction}
+\label{chap:introduction}
+State the problem, scope, and thesis structure here.
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Build \file{templates/thesis/main.tex}. Replace the title, candidate, degree,
+department, institution, supervisor, and date placeholders with clearly marked
+fictional practice values. Add a sixth chapter file and reference it from the
+introduction. Then remove the chapter and confirm that a clean build removes
+its contents and cross-reference data.
+\end{miniproject}
+
+\chaptersummary
+
+A thesis project translates current institutional requirements into a durable
+scientific structure. One driver controls front, main, appendix, and back
+matter; shared metadata prevents contradictions; chapter files carry the
+argument; and generated lists and references require a complete build. Legal,
+administrative, contribution, and repository statements must remain explicit
+placeholders until verified. Clean compilation and a compliance matrix turn a
+plausible-looking PDF into an auditable submission candidate.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Current institutional rules and the official template are identified.
+  \item Every placeholder and required approval is visible.
+  \item Roman and Arabic numbering change at the correct structural points.
+  \item Title metadata is consistent across the project and deposit record.
+  \item Lists, citations, cross-references, and appendices survive a clean build.
+  \item Joint work, prior publication, data access, and contributions are stated.
+  \item The final PDF is inspected and preflighted before deposit.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Map five requirements from a real or supplied thesis manual to files.
+  \item Explain why declaration wording is not suitable for creative adaptation.
+  \item Add a nomenclature entry for a vector, scalar, and SI unit.
+  \item Create an appendix and refer to it without typing its letter.
+  \item Use \cmd{includeonly}, then explain why a later full build is mandatory.
+  \item Design a contribution statement for a fictional joint chapter.
+  \item Write a reproducibility record for one generated thesis figure.
+  \item Challenge: produce a compliance matrix with automated and manual tests.
+\end{chapterexercises}

@@ -1,0 +1,59 @@
+% Encoding, language, and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{microtype}
+\microtypesetup{nopatch=footnote}
+
+% Page structure and typography
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{ragged2e}
+
+% Mathematics and scientific notation
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{siunitx}
+
+% Tables and figures
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+
+% Lists, code, and teaching boxes
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,listings}
+
+% Bibliography and index
+\usepackage{csquotes}
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  sorting=nyt,
+  maxcitenames=2,
+  maxbibnames=99,
+  giveninits=true,
+  uniquename=init,
+  doi=true,
+  url=true,
+  isbn=true
+]{biblatex}
+\usepackage{makeidx}
+
+% Links and intelligent references (load near the end)
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}

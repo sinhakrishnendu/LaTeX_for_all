@@ -1,0 +1,87 @@
+\section{Complete Practical Coding}
+\label{sec:practical-21}
+
+This final single-file capstone combines structure, mathematics, a table, a
+figure, cross-references, and a bibliography.
+
+\begin{latexcode}{Complete practical file: compact scholarly capstone}
+\begin{filecontents*}{capstone-references.bib}
+@article{example2026,
+  author       = {Researcher, Ada and Researcher, Ben},
+  title        = {A Demonstration Measurement Study},
+  journaltitle = {Example Journal},
+  year         = {2026},
+  volume       = {1},
+  pages        = {1--10}
+}
+\end{filecontents*}
+
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\addbibresource{capstone-references.bib}
+
+\title{Comparison of Two Demonstration Groups}
+\author{Your Name}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Two simulated groups were compared to demonstrate a complete workflow.
+\end{abstract}
+
+\section{Introduction}
+\textcite{example2026} represents a checked source record. The objective is
+to compare two demonstration means.
+
+\section{Methods}
+The mean was calculated as
+\begin{equation}
+  \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+  \label{eq:mean}
+\end{equation}
+
+\section{Results}
+\begin{table}[htbp]
+  \centering
+  \caption{Simulated group summaries.}
+  \label{tab:capstone}
+  \begin{tabular}{lrr}
+    \toprule
+    Group & Mean & SD \\
+    \midrule
+    A & 12.4 & 1.8 \\
+    B & 16.7 & 2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\rule{0pt}{35mm}\rule{.75\linewidth}{0pt}}
+  \caption{Placeholder for a project-relative result figure.}
+  \label{fig:capstone}
+\end{figure}
+
+\section{Discussion}
+\Cref{tab:capstone} shows the larger demonstration mean in Group B.
+The calculation follows \cref{eq:mean}; \cref{fig:capstone} marks where
+the checked graphic belongs.
+
+\section{Conclusion}
+The file contains the core components of a reproducible article.
+
+\printbibliography
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Replace the simulated question, values, figure placeholder, and bibliography
+record with checked project material. Compile from a clean directory and
+inspect every cross-reference before release.
+\end{codelab}

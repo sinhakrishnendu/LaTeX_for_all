@@ -1,0 +1,47 @@
+\section{Complete Practical Coding}
+\label{sec:practical-07}
+
+This file adds cases, a matrix, and a theorem without building a custom macro
+system.
+
+\begin{latexcode}{Complete practical file: advanced mathematics}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+Define the absolute-value function by
+\[
+|x|=\begin{cases}
+  x,  & x\ge 0, \\
+  -x, & x<0.
+\end{cases}
+\]
+
+The transformation
+\[
+  \begin{bmatrix}u\\v\end{bmatrix}
+  =
+  \begin{bmatrix}a&b\\c&d\end{bmatrix}
+  \begin{bmatrix}x\\y\end{bmatrix}
+\]
+uses ordinary matrix notation.
+
+\begin{proposition}
+For every real number $x$, $|x|\ge 0$.
+\end{proposition}
+
+\begin{proof}
+The result follows directly from the two cases in the definition.
+\end{proof}
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Add a three-case function and a second proposition. Keep each display inside
+the sentence that introduces or explains it.
+\end{codelab}

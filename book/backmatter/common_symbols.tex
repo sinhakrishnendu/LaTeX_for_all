@@ -1,0 +1,149 @@
+\chapter*{Common symbols}
+\addcontentsline{toc}{chapter}{Common symbols}
+
+Symbols acquire meaning from a discipline and document; this guide gives \LaTeX{}
+input and a common reading, not a universal definition. Define every symbol in
+your work, distinguish variables from units, and consult the relevant style or
+standard. Type the examples in mathematics mode unless stated otherwise.
+
+\section*{Greek letters}
+
+\begin{longtable}{@{}p{.18\textwidth}p{.22\textwidth}p{.20\textwidth}p{.30\textwidth}@{}}
+\toprule
+Output & Input & Uppercase & Example use \\
+\midrule
+\endhead
+$\alpha$ & \cmd{alpha} & $A$ (\code{A}) & angle, level, coefficient \\
+$\beta$ & \cmd{beta} & $B$ (\code{B}) & coefficient, type-II error \\
+$\gamma$ & \cmd{gamma} & $\Gamma$ (\cmd{Gamma}) & rate, gamma function \\
+$\delta$ & \cmd{delta} & $\Delta$ (\cmd{Delta}) & small change; finite change \\
+$\epsilon$, $\varepsilon$ & \cmd{epsilon}, \cmd{varepsilon} & $E$ & error or small positive value \\
+$\zeta$ & \cmd{zeta} & $Z$ & damping ratio or function \\
+$\eta$ & \cmd{eta} & $H$ & efficiency or parameter \\
+$\theta$, $\vartheta$ & \cmd{theta}, \cmd{vartheta} & $\Theta$ (\cmd{Theta}) & angle or unknown parameter \\
+$\iota$ & \cmd{iota} & $I$ & index or embedding \\
+$\kappa$ & \cmd{kappa} & $K$ & curvature or agreement coefficient \\
+$\lambda$ & \cmd{lambda} & $\Lambda$ (\cmd{Lambda}) & wavelength, eigenvalue, rate \\
+$\mu$ & \cmd{mu} & $M$ & population mean or micro prefix \\
+$\nu$ & \cmd{nu} & $N$ & frequency or degrees of freedom \\
+$\xi$ & \cmd{xi} & $\Xi$ (\cmd{Xi}) & random variable or coordinate \\
+$o$ & Latin \code{o} & $O$ & omicron normally uses the Latin shape \\
+$\pi$, $\varpi$ & \cmd{pi}, \cmd{varpi} & $\Pi$ (\cmd{Pi}) & constant or product \\
+$\rho$, $\varrho$ & \cmd{rho}, \cmd{varrho} & $P$ & density or correlation \\
+$\sigma$, $\varsigma$ & \cmd{sigma}, \cmd{varsigma} & $\Sigma$ (\cmd{Sigma}) & standard deviation or sum \\
+$\tau$ & \cmd{tau} & $T$ & time constant or rank correlation \\
+$\upsilon$ & \cmd{upsilon} & $\Upsilon$ (\cmd{Upsilon}) & particle or variable \\
+$\phi$, $\varphi$ & \cmd{phi}, \cmd{varphi} & $\Phi$ (\cmd{Phi}) & angle, potential, distribution function \\
+$\chi$ & \cmd{chi} & $X$ & chi-squared statistic component \\
+$\psi$ & \cmd{psi} & $\Psi$ (\cmd{Psi}) & wavefunction or function \\
+$\omega$ & \cmd{omega} & $\Omega$ (\cmd{Omega}) & angular frequency; sample space \\
+\bottomrule
+\end{longtable}
+
+\section*{Relations and operations}
+
+\begin{longtable}{@{}p{.17\textwidth}p{.30\textwidth}p{.43\textwidth}@{}}
+\toprule
+Output & Input & Common reading \\
+\midrule
+\endhead
+$a=b$ & \code{a=b} & equal \\
+$a\ne b$ & \code{a\textbackslash ne b} & not equal \\
+$a<b$, $a>b$ & \code{a<b}, \code{a>b} & less than, greater than \\
+$a\le b$, $a\ge b$ & \cmd{le}, \cmd{ge} & less/greater than or equal \\
+$a\approx b$ & \cmd{approx} & approximately equal \\
+$a\sim b$ & \cmd{sim} & similar, distributed as, or asymptotic relation; define context \\
+$a\propto b$ & \cmd{propto} & proportional to \\
+$a\equiv b$ & \cmd{equiv} & identically or definitionally equivalent; define use \\
+$a\pm b$ & \cmd{pm} & plus or minus \\
+$a\mp b$ & \cmd{mp} & minus or plus \\
+$a\times b$ & \cmd{times} & multiplication or Cartesian product \\
+$a\cdot b$ & \cmd{cdot} & centred product \\
+$a\div b$ & \cmd{div} & division symbol; fractions are usually clearer \\
+$a\circ b$ & \cmd{circ} & composition or circle operation \\
+$a\cap b$, $a\cup b$ & \cmd{cap}, \cmd{cup} & intersection and union \\
+$a\in A$, $a\notin A$ & \cmd{in}, \cmd{notin} & is/is not an element of \\
+$A\subseteq B$ & \cmd{subseteq} & subset, allowing equality \\
+$A\supseteq B$ & \cmd{supseteq} & superset, allowing equality \\
+$\varnothing$ & \cmd{varnothing} & empty set \\
+$\forall x$ & \cmd{forall} & for all \\
+$\exists x$ & \cmd{exists} & there exists \\
+$p\land q$, $p\lor q$ & \cmd{land}, \cmd{lor} & logical and, logical or \\
+$\neg p$ & \cmd{neg} & logical negation \\
+$p\Rightarrow q$ & \cmd{Rightarrow} & implies \\
+$p\Leftrightarrow q$ & \cmd{Leftrightarrow} & if and only if \\
+\bottomrule
+\end{longtable}
+
+\section*{Arrows, calculus, and linear algebra}
+
+\begin{longtable}{@{}p{.20\textwidth}p{.32\textwidth}p{.38\textwidth}@{}}
+\toprule
+Output & Input & Common reading \\
+\midrule
+\endhead
+$a\to b$ & \cmd{to} or \cmd{rightarrow} & maps, tends, or reacts; define context \\
+$a\mapsto b$ & \cmd{mapsto} & maps an element to an image \\
+$a\leftrightarrow b$ & \cmd{leftrightarrow} & bidirectional relation \\
+$\uparrow$, $\downarrow$ & \cmd{uparrow}, \cmd{downarrow} & increase/decrease or reaction product notation \\
+$\sum_{i=1}^{n}x_i$ & \code{\textbackslash sum\_\{i=1\}\^\{n\}x\_i} & finite sum \\
+$\prod_{i=1}^{n}x_i$ & \cmd{prod} with limits & finite product \\
+$\int_a^b f(x)\,\mathrm{d}x$ & \cmd{int} with limits & definite integral \\
+$\iint_A f\,\mathrm{d}A$ & \cmd{iint} & double integral \\
+$\partial f/\partial x$ & \cmd{partial} & partial derivative \\
+$\nabla f$ & \cmd{nabla} & gradient; operator depends on context \\
+$\lim_{x\to0}f(x)$ & \cmd{lim}\code{\_\{x\textbackslash to0\}} & limit \\
+$\infty$ & \cmd{infty} & infinity \\
+$\mathbf{x}$ & \cmd{mathbf}\required{x} & bold Latin vector by one convention \\
+$\boldsymbol{\theta}$ & \cmd{boldsymbol}\required{\textbackslash theta} & bold Greek symbol \\
+$\mathbf{A}^{\mathsf T}$ & \cmd{mathbf}\required{A}\code{\^\{\textbackslash mathsf T\}} & matrix transpose \\
+$\mathbf{A}^{-1}$ & \code{\textbackslash mathbf\{A\}\^\{-1\}} & inverse matrix \\
+$\det(\mathbf A)$ & \cmd{det} & determinant \\
+$\lVert\mathbf x\rVert$ & \cmd{lVert}\ldots\cmd{rVert} & norm; define which norm \\
+$\langle x,y\rangle$ & \cmd{langle}\ldots\cmd{rangle} & inner product or ordered pairing \\
+\bottomrule
+\end{longtable}
+
+\section*{Statistics and probability}
+
+\begin{longtable}{@{}p{.20\textwidth}p{.27\textwidth}p{.43\textwidth}@{}}
+\toprule
+Output & Input & Possible meaning \\
+\midrule
+\endhead
+$n$, $N$ & Latin letters & sample size, population size; define explicitly \\
+$\bar x$ & \cmd{bar}\required{x} & sample mean \\
+$\hat\theta$ & \cmd{hat}\required{\textbackslash theta} & estimator or estimate \\
+$s$, $\sigma$ & Latin and \cmd{sigma} & sample and population standard deviation by a common convention \\
+$s^2$, $\sigma^2$ & superscript \code{2} & sample and population variance \\
+$\operatorname{SE}(\hat\theta)$ & \cmd{operatorname}\required{SE} & standard error \\
+$P(A)$ & Latin \code{P} & probability of event $A$ \\
+$P(A\mid B)$ & \cmd{mid} & conditional probability \\
+$X\sim\mathcal N(\mu,\sigma^2)$ & \cmd{sim}\cmd{mathcal}\required{N} & normally distributed, if defined \\
+$E(X)$ & Latin \code{E} & expectation; an operator command can enforce style \\
+$\operatorname{Var}(X)$ & \cmd{operatorname}\required{Var} & variance \\
+$r$, $\rho$ & Latin and \cmd{rho} & sample and population correlation by a common convention \\
+$p$ & Latin \code{p} & probability or $p$-value; distinguish the uses \\
+$\alpha$ & \cmd{alpha} & prespecified significance level or another parameter \\
+$\mathrm{CI}$ & \cmd{mathrm}\required{CI} & confidence interval abbreviation after definition \\
+\bottomrule
+\end{longtable}
+
+\section*{Scientific notation and discipline-specific forms}
+
+\begin{longtable}{@{}p{.25\textwidth}p{.34\textwidth}p{.31\textwidth}@{}}
+\toprule
+Output or concept & Suggested input & Note \\
+\midrule
+\endhead
+$6.02\times10^{23}$ & \cmd{num}\required{6.02e23} & Scientific notation with \pkg{siunitx}. \\
+\qty{9.81}{\metre\per\second\squared} & \cmd{qty}\required{value}\newline\required{unit expression} & Value and SI unit. \\
+$\mathrm{H_2O}$ & \cmd{mathrm}\required{H\_2O} & Basic upright chemical formula; complex chemistry benefits from a chemistry package. \\
+Chemical equation & \cmd{ce}\required{2H2 + O2 -> 2H2O} & Optional; available only after deliberately loading \pkg{mhchem}. \\
+\textit{Homo sapiens} & \cmd{textit}\required{Homo sapiens} & Genus and species; follow disciplinary rules for authorities and strains. \\
+$5'\text{-}\mathrm{ACGT}\text{-}3'$ & mixed math and text & A short orientation example; databases use machine-readable sequence text. \\
+$E=mc^2$ & ordinary mathematics & Define energy, mass, speed, and units in context. \\
+$\Delta G$ & \cmd{Delta}\code{ G} & Finite change in Gibbs energy when defined. \\
+$\lambda=\qty{532}{\nano\metre}$ & \cmd{qty}\required{532}\required{\textbackslash nano\textbackslash metre} & Keep the unit upright and spacing controlled. \\
+\bottomrule
+\end{longtable}

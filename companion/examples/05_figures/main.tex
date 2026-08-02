@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+
+\begin{document}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    node distance=12mm,
+    process/.style={draw,rounded corners,minimum width=26mm,minimum height=8mm},
+    flow/.style={-{Latex[length=2mm]},thick}
+  ]
+    \node[process] (source) {Write source};
+    \node[process,right=of source] (build) {Compile};
+    \node[process,right=of build] (check) {Check PDF};
+    \draw[flow] (source) -- (build);
+    \draw[flow] (build) -- (check);
+  \end{tikzpicture}
+  \caption{A simple document workflow drawn directly in \LaTeX{}.}
+  \label{fig:workflow}
+\end{figure}
+
+Figure~\ref{fig:workflow} remains sharp at any print size.
+
+\end{document}

@@ -1,0 +1,225 @@
+\chapter{Lists, Quotations, and Notes}
+\label{chap:lists}
+\index{list!bulleted}\index{list!numbered}\index{list!description}\index{quotation}
+
+Methods often contain criteria; reports contain recommendations; teaching
+documents contain steps. A list can make those relationships visible, but a
+list used for every pair of sentences fragments the argument. \LaTeX{} provides
+structures for unordered, ordered, and labelled items, plus distinct forms for
+short and multi-paragraph quotations.
+
+\begin{learningoutcomes}
+  \item Create unordered, ordered, and description lists.
+  \item Nest lists without losing their logical hierarchy.
+  \item Choose between the \code{quote} and \code{quotation} environments.
+  \item Insert footnotes at suitable locations.
+  \item Explain when margin notes are unsafe or unnecessary.
+  \item Customise list spacing conservatively with \pkg{enumitem}.
+\end{learningoutcomes}
+
+\section{Unordered lists with itemize}
+
+Use \code{itemize} when sequence does not change meaning:
+
+\begin{latexcode}{Complete example: an unordered list}
+\documentclass{article}
+\begin{document}
+The comparison requires:
+\begin{itemize}
+  \item paired measurements;
+  \item a recorded unit; and
+  \item an explicit missing-data rule.
+\end{itemize}
+\end{document}
+\end{latexcode}
+
+Each \cmd{item} begins an item. The punctuation is part of the sentence
+surrounding the list: these fragments use semicolons and the last ends with a
+full stop. Complete-sentence items can each end with a full stop instead.
+
+\section{Ordered lists with enumerate}
+
+Use \code{enumerate} when order, rank, or later reference matters:
+
+\begin{latexcode}{Complete example: a procedure}
+\begin{enumerate}
+  \item Record the Method A value.
+  \item Record the Method B value.
+  \item Calculate the paired difference.
+  \item Inspect the result before summarising it.
+\end{enumerate}
+\end{latexcode}
+
+This fragment belongs inside a document body. \LaTeX{} supplies the numbers and
+renumbers later items when one is inserted. If the prose must refer repeatedly
+to a particular item, attach a label rather than typing its number; labels are
+introduced in Chapter~\ref{chap:references}.
+
+\begin{pausepredict}
+Add a new second item. Predict the number of the original second item and every
+item after it. What maintenance problem would arise if the numbers were typed
+as ordinary text?
+\end{pausepredict}
+
+\section{Description lists}
+
+A description list pairs a term with its explanation:
+
+\begin{latexcode}{Complete example: labelled definitions}
+\begin{description}
+  \item[Method A] The reference teaching method.
+  \item[Method B] The comparison teaching method.
+  \item[Difference] Method B minus Method A for one pair.
+\end{description}
+\end{latexcode}
+
+The text in square brackets is the item label, not an automatically numbered
+optional setting. Keep labels short enough to remain readable. For a large
+alphabetical vocabulary, a glossary is more suitable than a very long list in
+the middle of a chapter.
+
+\section{Nested lists}
+
+A list can contain another list when the hierarchy is genuine:
+
+\begin{latexcode}{Complete example: one nested level}
+\begin{enumerate}
+  \item Validate the input.
+    \begin{itemize}
+      \item Check that each pair has an identifier.
+      \item Check that both values use the same unit.
+    \end{itemize}
+  \item Calculate the differences.
+\end{enumerate}
+\end{latexcode}
+
+Indentation helps readers of the source see which environment is inside which.
+Deeply nested lists are difficult to read in source and PDF. If the hierarchy
+needs three or four levels, consider headings, a table, or separate procedural
+stages.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Something's wrong--perhaps a missing \cmd{item}''.
+
+\textbf{Likely cause:} text has been placed directly inside a list before its
+first \cmd{item}, or an item command is missing.
+
+\textbf{Repair:} inspect the first lines after \cmd{begin}\required{itemize} or
+\cmd{begin}\required{enumerate}. Make every list entry begin with \cmd{item}.
+\end{commonerror}
+
+\section{Short and long quotations}
+
+Use the \code{quote} environment for a short displayed quotation. Use
+\code{quotation} when the quoted material contains multiple paragraphs; it
+marks their paragraph structure.
+
+\begin{latexcode}{Displayed quotation pattern}
+The protocol defines repeatability as follows:
+\begin{quote}
+  [Insert a short, verified quotation and cite its source.]
+\end{quote}
+The analysis applies that definition to simulated values.
+\end{latexcode}
+
+The bracketed sentence is a placeholder, not a quotation. Do not invent words
+and place them in quotation marks. When exact wording is needed, check the
+source, quote only what is necessary, preserve its meaning, and cite it. Most
+scholarly explanation should paraphrase responsibly in the author's own voice.
+
+\begin{scienceinpractice}
+A standards report may need one exact definition because later requirements
+depend on its wording. A literature review rarely needs long blocks of copied
+text. In both cases, quotation formatting is separate from permission,
+accuracy, and citation responsibility.
+\end{scienceinpractice}
+
+\section{Footnotes and optional margin notes}
+
+Footnotes are useful for a concise qualification that would interrupt the
+main sentence. Put the command after the word or punctuation associated with
+the note, following the chosen style consistently. Do not put a full data table
+or indispensable method in a footnote.
+
+Margin notes require a package or class command and can collide with floats,
+two-column layouts, or binding margins. They are therefore optional advanced
+material, not a default scholarly annotation system.
+
+\begin{advancedtopic}
+Some classes provide \cmd{marginpar}\required{text}. Before using it, check
+whether the document is one- or two-sided and whether the target venue permits
+margin material. Draft reminders are often safer as source comments because
+they cannot accidentally become publication content.
+\end{advancedtopic}
+
+\section{Careful customisation with enumitem}
+
+The \pkg{enumitem} package can adjust labels and spacing. Load it in the
+preamble, then state a local purpose:
+
+\begin{latexcode}{Complete example: a compact local list}
+\documentclass{article}
+\usepackage{enumitem}
+\begin{document}
+\begin{enumerate}[label=Step \arabic*:,itemsep=0.25em]
+  \item Import the paired values.
+  \item Confirm the unit.
+  \item Calculate differences.
+\end{enumerate}
+\end{document}
+\end{latexcode}
+
+The option changes this list only. Avoid setting every list to zero spacing;
+the apparent saving can make a dense technical page harder to scan. A class
+may already define list spacing appropriate to its layout.
+
+\begin{goodpractice}
+Choose a list because the relationship is unordered, sequential, or
+term-and-definition. Keep parallel grammatical form: do not mix ``Record the
+value'', ``Calculation of the mean'', and ``The plot is inspected'' in one
+procedural list.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+In the Methods section of the running article, add a three-item ordered list
+describing data validation, difference calculation, and inspection. Add an
+unordered list of two inclusion criteria. Keep the items grammatically
+parallel. Add a source comment for a future verified definition; do not insert
+an invented quotation.
+\end{miniproject}
+
+\chaptersummary
+
+\code{itemize} expresses an unordered set, \code{enumerate} a sequence, and
+\code{description} a labelled relationship. Nested lists should reflect a
+real, shallow hierarchy. \code{quote} suits a short displayed quotation;
+\code{quotation} supports multiple quoted paragraphs. Footnotes hold concise
+supplements, while margin notes are optional and layout-sensitive.
+\pkg{enumitem} can customise a list when the reason is explicit.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item I chose the list type from the relationship between items.
+  \item Every entry begins with \cmd{item}.
+  \item Nested environments close in the reverse order they opened.
+  \item My list items use parallel grammar and consistent punctuation.
+  \item Any exact quotation has a verified source.
+  \item Important methods and evidence remain in the main text.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Choose a list type for materials, a protocol, and a glossary of three
+        terms.
+  \item Convert three manually numbered lines into \code{enumerate}.
+  \item Add one nested checklist under the first procedural step.
+  \item Repair a list whose first entry lacks \cmd{item}.
+  \item Explain the difference between \code{quote} and \code{quotation}.
+  \item Rewrite a list so that all items begin with active verbs.
+  \item Give a reason to keep a draft note as a source comment rather than a
+        margin note.
+  \item Challenge: redesign a dense list from a report as either prose, a
+        table, or two smaller lists, and justify the choice.
+\end{chapterexercises}

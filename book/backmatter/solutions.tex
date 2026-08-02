@@ -1,0 +1,429 @@
+\chapter*{Concise exercise solutions}
+\addcontentsline{toc}{chapter}{Concise exercise solutions}
+
+These concise solutions support checking after an honest attempt. Open-ended
+responses can differ while still showing sound reasoning.
+
+\section*{Chapter 0}
+
+\begin{enumerate}[label=0.\arabic*,leftmargin=2.4em,itemsep=0.55em]
+  \item A source file is editable plain text containing content and \LaTeX{}
+        instructions. A compiler interprets that source. An output file is the
+        resulting typeset document, commonly a PDF.
+  \item Editing the PDF does not normally edit \file{main.tex}. The next build
+        from unchanged source can recreate the old value. Edit the source,
+        compile, and inspect the new PDF.
+  \item Only the line \code{Hello, \LaTeX{}!} appears as ordinary document text.
+  \item Any two defensible examples, such as cross-references, many equations,
+        a large bibliography, repeated chapter structure, or reproducible
+        builds.
+  \item Results paragraph: content. \code{book}: class. Bibliography toolbox:
+        package. \file{report.pdf}: output.
+  \item Free positioning and visual collaboration may be more direct in a
+        graphics editor; choosing \LaTeX{} would add source-editing work without
+        an evident structural benefit.
+  \item Answers vary. A good answer names concrete structures such as chapters,
+        methods, numbered equations, figures, tables, citations, appendices,
+        and declarations.
+\end{enumerate}
+
+\section*{Chapter 1}
+
+\begin{enumerate}[label=1.\arabic*,leftmargin=2.4em,itemsep=0.55em]
+  \item The correct source contains a class declaration, matching document
+        environment, and body text. A direct comparison should reveal missing
+        backslashes, braces, or lines.
+  \item \code{article} is the class that supplies broad document rules;
+        \code{document} is the environment enclosing visible content.
+  \item Two ordinary lines without a blank line form one paragraph and the
+        source line ending acts like a space.
+  \item Answers vary. Only the body-text line needs to change.
+  \item Add the backslash: \cmd{begin}\required{document}.
+  \item A compiler checks whether it can interpret the source. It cannot
+        validate scientific claims, complete reasoning, figure accessibility,
+        or compliance with an external submission guide.
+  \item Results may differ slightly because of engine, class, font, or TeX
+        distribution versions. Record the environment before diagnosing.
+\end{enumerate}
+
+\section*{Chapter 2}
+
+\begin{enumerate}[label=2.\arabic*,leftmargin=2.4em,itemsep=0.55em]
+  \item Command: \cmd{documentclass}; optional argument: \optional{12pt};
+        required argument: \required{book}.
+  \item Their roles are defined by the command. Braces supply the required
+        class name; square brackets supply an optional class choice.
+  \item Five lines with no blank line normally form one paragraph.
+  \item One valid source sentence is
+        \code{Accuracy was 95\textbackslash\% for sample\textbackslash\_7.}
+  \item Replace \cmd{end}\required{article} with
+        \cmd{end}\required{document}.
+  \item The broken body contains \code{Method A \string& Method B}; the
+        correction is \code{Method A \textbackslash\& Method B}. Include the
+        class and document environment in both versions.
+  \item Changing five lines weakens the test because several possible causes
+        change together. A one-change experiment gives clearer evidence.
+  \item Answers vary. A successful MWE remains complete and preserves the same
+        symptom after unrelated content and packages are removed.
+\end{enumerate}
+
+\section*{Chapter 3}
+\begin{enumerate}[label=3.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item A source line ending normally becomes interword space; a blank line ends
+        one paragraph and begins another.
+  \item Remove the forced breaks and leave ordinary source lines inside one
+        paragraph; use a blank line only at the intended paragraph boundary.
+  \item Use the correct two grave accents to open and two apostrophes to close
+        the quoted word, as shown in Chapter 3.
+  \item Use an en dash for pages 4--9, a hyphen for evidence-based, and an em
+        dash or suitable punctuation for the interruption.
+  \item A brief explanatory aside can suit a footnote; an essential method or
+        result should remain in the main argument.
+  \item Write \cmd{textit}\required{Escherichia coli}; after definition, a
+        discipline-appropriate \textit{E. coli} may be used.
+  \item A literal percentage is \code{50\textbackslash\%}; an unescaped percent
+        begins a comment.
+  \item Answers vary; credit choices tied to meaning rather than manual visual
+        decoration.
+\end{enumerate}
+
+\section*{Chapter 4}
+\begin{enumerate}[label=4.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item \cmd{title} stores metadata; \cmd{maketitle} produces the title block at
+        its location.
+  \item Add, for example, \cmd{date}\required{1 August 2026} in the preamble.
+  \item Replace a manual bold line with the appropriate \cmd{section} or lower
+        structural command.
+  \item All later automatically numbered sections increase by one; references
+        update after compilation.
+  \item Keyword placement and syntax are defined by the target class or venue,
+        not by the generic article class.
+  \item Place \cmd{appendix} once, then use two normal section or chapter commands.
+  \item Move the abstract environment after
+        \cmd{begin}\required{document}, normally after \cmd{maketitle}.
+  \item Answers vary; a good hierarchy has no skipped levels and every heading
+        represents a genuine division of the argument.
+\end{enumerate}
+
+\section*{Chapter 5}
+\begin{enumerate}[label=5.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Materials normally use \code{itemize}, an ordered protocol
+        \code{enumerate}, and labelled terms \code{description}.
+  \item Put the lines between \cmd{begin}\required{enumerate} and its matching
+        end, beginning each with \cmd{item}; delete typed numbers.
+  \item Nest a second list inside the first \cmd{item}, keeping environments
+        properly paired.
+  \item Add \cmd{item} before the first entry.
+  \item \code{quote} suits a short quotation; \code{quotation} supports multiple
+        paragraphs and paragraph indentation.
+  \item Answers vary; parallel verbs should describe actions at the same
+        grammatical level.
+  \item A source comment can record a private drafting reason without entering
+        the visible document.
+  \item Credit a redesign that identifies the reader task and reduces cognitive
+        load without hiding necessary evidence.
+\end{enumerate}
+
+\section*{Chapter 6}
+\begin{enumerate}[label=6.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item \code{\$E=mc\^2\$}.
+  \item Use \code{x\_\{ij\}}.
+  \item \code{\textbackslash frac\{x-\textbackslash mu\}\{\textbackslash sigma\}}.
+  \item Use \cmd{sin}, for example \code{\textbackslash sin(x)}.
+  \item Put two rows in \code{align} and place \code{\&} before each equals sign.
+  \item Put \cmd{label}\required{eq:key} inside the numbered equation and refer
+        with \cmd{eqref}\required{eq:key} or \cmd{cref}.
+  \item The double-dollar form bypasses \LaTeX{} display conventions; \code{eqnarray}
+        has inferior spacing and alignment compared with \pkg{amsmath}.
+  \item Answers vary; require defined symbols, correct notation, and colleague
+        feedback about scientific meaning.
+\end{enumerate}
+
+\section*{Chapter 7}
+\begin{enumerate}[label=7.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Use \code{equation} containing \code{aligned}, with line breaks inside.
+  \item Use \code{cases}; put conditions in \cmd{text}\required{...}.
+  \item Use \code{pmatrix} and \code{bmatrix}, with ampersands between columns.
+  \item A two-column matrix row needs one ampersand; remove the extra separator.
+  \item Example: \code{\textbackslash int\_a\^b f(x)\textbackslash,\textbackslash mathrm\{d\}x}.
+  \item Give \code{definition} a counter and declare lemma and theorem to share it.
+  \item Section-based numbering helps long technical works; it can clutter a
+        short paper whose numbering is already unambiguous.
+  \item Answers vary; every inference and notational convention must be
+        mathematically and typographically reviewable.
+\end{enumerate}
+
+\section*{Chapter 8}
+\begin{enumerate}[label=8.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Use \cmd{num}\required{1250000} and
+        \cmd{qty}\required{2.5e-6}\required{\textbackslash metre}.
+  \item Use \cmd{qtyrange}\required{4}\required{9}
+        \required{\textbackslash milli\textbackslash gram}.
+  \item With configured separate uncertainty, use
+        \cmd{qty}\required{7.2 +- 0.4}\required{\textbackslash centi\textbackslash metre}.
+  \item A suitable declaration is \code{S[table-format=-2.2]}.
+  \item Decimal places are formatting; measurement process, uncertainty,
+        calibration, and analysis establish defensible precision.
+  \item Use \cmd{qty}\required{20}\required{\textbackslash degreeCelsius} and
+        \cmd{qty}\required{95}\required{\textbackslash percent}.
+  \item \cmd{ce} typesets chemical formulae and equations and is supplied by
+        \pkg{mhchem}.
+  \item Credit an audit that checks units, definitions, rounding, uncertainty,
+        missingness, and the underlying evidence.
+\end{enumerate}
+
+\section*{Chapter 9}
+\begin{enumerate}[label=9.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Declare two columns in \code{tabular}; each row has one ampersand and
+        ends with a row terminator.
+  \item Remove the separator that creates a third cell, or intentionally add and
+        define a third column.
+  \item Load \pkg{booktabs}, use top/mid/bottom rules, and remove vertical bars
+        from the column specification.
+  \item Use \code{tabularx} at \cmd{textwidth} with an \code{X} description column.
+  \item Use an \code{S} column whose table format includes a sign and enough digits.
+  \item The caption and note must say values are simulated, define units and
+        abbreviations, and identify the reader task.
+  \item \code{longtable} performs its own multi-page output and is not an ordinary
+        float placed inside \code{table}.
+  \item Answers vary; require a named task, preserved evidence, and an omission log.
+\end{enumerate}
+
+\section*{Chapter 10}
+\begin{enumerate}[label=10.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Photograph and scanned map are primarily raster; logo and line plot are
+        preferably vector when original paths are available.
+  \item Use \cmd{includegraphics}\optional{width=.5\textbackslash linewidth}
+        \required{figure.pdf}.
+  \item Put \cmd{label} immediately after \cmd{caption} inside \code{figure}.
+  \item The option is a placement preference; float size, order, and page
+        constraints may prevent placement at the source location.
+  \item Use two \code{subfigure} environments with panel captions and labels,
+        followed by one overall caption and label.
+  \item Use distinguishable shapes/line styles and direct labels or patterns;
+        retain adequate luminance contrast.
+  \item Replace the personal absolute path with the actual project-relative path
+        and include the file.
+  \item Credit audits covering data fidelity, effective resolution, readable
+        scale, non-colour meaning, caption, alt-description need, source, and rights.
+\end{enumerate}
+
+\section*{Chapter 11}
+\begin{enumerate}[label=11.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Use distinct semantic keys such as \code{sec:methods},
+        \code{eq:model}, \code{tab:summary}, and \code{fig:growth}.
+  \item Use \cmd{eqref}\required{eq:model} and
+        \cmd{pageref}\required{eq:model}.
+  \item Pass both comma-separated keys to one \cmd{cref}; compatible targets are
+        pluralised automatically.
+  \item Move the label after the caption so it records the figure counter.
+  \item Match key case exactly in both \cmd{label} and the reference.
+  \item Duplicate labels can silently make several references resolve to the
+        same, wrong target.
+  \item Compare \pkg{hyperref} title and author fields with the approved visible
+        metadata and anonymity state.
+  \item Replace typed numbers with labels and semantic reference commands, then
+        insert an earlier object to test stability.
+\end{enumerate}
+
+\section*{Chapter 12}
+\begin{enumerate}[label=12.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item The key identifies a database entry; the citation is the in-text marker;
+        a reference is one formatted record; the bibliography is their collection.
+  \item Answers vary; compare all fields with the article's authoritative
+        publisher record and preserve the DOI exactly.
+  \item Use \cmd{textcite}\required{key} and \cmd{parencite}\required{key}.
+  \item Use one citation command with both keys and a documented postnote, for
+        example \cmd{parencite}\optional{p.~12}\required{key1,key2}.
+  \item Add \cmd{printbibliography} at the intended location, then run the full
+        backend sequence.
+  \item A DOI identifies an object; it does not show that the object was read or
+        that it supports the nearby claim.
+  \item Retain the publisher workflow when the official class and current
+        instructions require it.
+  \item Credit a record-by-record audit with authoritative URLs, dates, and
+        documented corrections.
+\end{enumerate}
+
+\section*{Chapter 13}
+\begin{enumerate}[label=13.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Use \code{article}, \code{report}, and \code{book}, respectively, subject
+        to any official specialist class.
+  \item In \code{[11pt,a4paper,twoside,openright]}, the options request base size,
+        paper size, two-sided layout, and right-hand chapter openings.
+  \item Run \code{texdoc package-name}; success opens the installed manual.
+  \item Use \pkg{geometry} with explicit \code{inner} and \code{outer} values in
+        a two-sided generic document.
+  \item Define the \pkg{fancyhdr} fields and separately redefine or select the
+        \code{plain} style for chapter openings.
+  \item Find the first package load in the log and arrange one compatible option
+        source rather than loading the package twice.
+  \item The publisher class encodes production constraints and can conflict
+        with local packages; visual imitation is not compliance.
+  \item Credit each retained package only when a used command or verified
+        requirement demonstrates its purpose.
+\end{enumerate}
+
+\section*{Chapter 14}
+\begin{enumerate}[label=14.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Use \cmd{input} for the table and preamble; use \cmd{include} for a
+        page-starting thesis chapter.
+  \item A sound tree has one root driver, metadata/preamble, five chapter files,
+        front matter, appendices, figures, bibliography, and README.
+  \item Add \cmd{listoffigures} and \cmd{listoftables}; later passes read caption
+        entries written during earlier passes.
+  \item Call \cmd{appendix} once and include two normally titled chapter files.
+  \item Example: \cmd{newcommand}\required{\textbackslash MeanDifference}
+        \required{\textbackslash ensuremath\{\textbackslash bar d\}}.
+  \item Use \code{figures/result.pdf}, preserving the project structure.
+  \item A clean build proves the source contains its declared dependencies
+        instead of relying on stale or private state.
+  \item Split at stable units, keep one main preamble, preserve labels, and
+        compare clean PDFs and logs.
+\end{enumerate}
+
+\section*{Chapter 15}
+\begin{enumerate}[label=15.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Answers vary; each row must cite the official requirement, destination
+        file, implementation, and verification evidence.
+  \item Declaration text can carry legal and academic meaning and must come from
+        the authorised institution, not creative paraphrase.
+  \item Example entries: vector $\mathbf v$, scalar $T$, and unit
+        \unit{\kelvin}, each with an explicit definition.
+  \item Call \cmd{appendix}, include the new file, label it, and refer using
+        \cmd{cref}; do not type its letter.
+  \item \cmd{includeonly} relies on stored auxiliary data; a later complete clean
+        build removes stale numbering and validates every chapter.
+  \item A valid fictional statement distinguishes conception, analysis, writing,
+        review, and accountability by named initials.
+  \item Record data and code inputs, environment, command, figure source, output,
+        version, creator, licence, and verification.
+  \item Credit matrices that separate automated dimensions/log checks from
+        manual wording, scientific, permission, and visual reviews.
+\end{enumerate}
+
+\section*{Chapter 16}
+\begin{enumerate}[label=16.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Each row needs the exact instruction, authoritative source, manuscript
+        implementation, responsible person, and verification evidence.
+  \item Replace causal or general claims with the measured relationship, design,
+        population, and simulated status actually supported.
+  \item Include problem, essential method, principal numeric result, and bounded
+        conclusion within the verified word limit.
+  \item Possible leaks include PDF properties, filename, acknowledgements,
+        self-identifying repository links, self-citation wording, comments,
+        tracked changes, and embedded figure metadata.
+  \item Statements must use explicit fictional facts and venue-appropriate
+        absence wording; they cannot be inferred from the result.
+  \item A table provides precise values while a figure reveals a pattern,
+        distribution, or relationship not duplicated by reading cells.
+  \item Include only the main source, section files, required class/styles,
+        bibliography, figures, supplements, README, and manifest.
+  \item Credit a migration log that starts from the publisher sample, records
+        class interfaces, and verifies every resulting difference.
+\end{enumerate}
+
+\section*{Chapter 17}
+\begin{enumerate}[label=17.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Example: This report evaluates calibrated assay comparisons so the
+        laboratory director can decide whether to authorise validation by the
+        review date, excluding routine deployment.
+  \item Supply the decision, finding with uncertainty, recommendation, principal
+        risk, and owned next step.
+  \item Observations report evidence; interpretations assign meaning;
+        recommendations propose action; decisions record authorised choice.
+  \item Define, for example, low, moderate, and high using explicit consequence
+        and likelihood descriptions rather than arbitrary scores.
+  \item Name the action, owner, due date or condition, and objective completion
+        evidence.
+  \item Use dated rows for initial draft, reviewed draft, and approved issue,
+        recording change and responsible roles.
+  \item Give each data, code, figure, and approval object an ID, version,
+        location, owner, and access condition.
+  \item Compare cover, headers, filename, control table, metadata, repository,
+        and distribution notice for one consistent state.
+\end{enumerate}
+
+\section*{Chapter 18}
+\begin{enumerate}[label=18.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Answers vary; prefer descriptive lowercase portable names with one
+        separator convention and no confidential identifiers.
+  \item Synchronisation mirrors current state, version history records changes,
+        and a backup is an independent recoverable copy.
+  \item The README must state purpose, simulated/real status, main file, engine,
+        bibliography tool, build command, dependencies, and output.
+  \item Replace user-root locations with paths such as
+        \file{figures/plot.pdf} relative to the documented build root.
+  \item Snapshots suit small milestones; change markup supports visible review;
+        Overleaf supports shared editing; Git gives detailed distributed history.
+  \item Record creator, source, licence, permission, required credit, allowed
+        modification, redistribution, and access restrictions.
+  \item Copy only manifested files to a fresh directory, follow the README,
+        regenerate analysis and PDF, and retain log plus visual-check evidence.
+  \item Classify exact files by access and provenance; generated assets name
+        their source, while rebuildable auxiliaries are excluded.
+\end{enumerate}
+
+\section*{Chapter 19}
+\begin{enumerate}[label=19.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Later messages can be consequences of the first structural failure; the
+        first meaningful error usually has the least corrupted context.
+  \item Close the missing group, restore matching math delimiters, and make
+        begin/end names and nesting identical.
+  \item Retain only the class, \pkg{graphicx}, document environment, and one
+        failing \cmd{includegraphics} line with the same asset/path.
+  \item Check key, database registration, backend execution, and later \LaTeX{}
+        passes in that order.
+  \item Legitimate: allow a break or redesign a wide object. Poor: hide all
+        warnings globally or shrink the entire document indiscriminately.
+  \item Clean when logs or a major tool change indicate stale incompatible
+        generated state, not as a substitute for source diagnosis.
+  \item Include an anonymised MWE, exact command, first error, expected/actual
+        result, versions, and clean-build status.
+  \item With halving, a single planted error in $n$ roughly equal-sized lines
+        should need about $\lceil\log_2 n\rceil$ isolation decisions, plus builds
+        that confirm repair.
+\end{enumerate}
+
+\section*{Chapter 20}
+\begin{enumerate}[label=20.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Each of ten rows needs instruction, source/version, implementation,
+        owner, status, and evidence.
+  \item Record result name, authoritative output, value, unit, rounding, and
+        every occurrence in abstract, table, prose, figure, and discussion.
+  \item Effective pixels per inch equal pixels across the dimension divided by
+        placed inches; compute each dimension and compare with current rules.
+  \item Compare author, title, date, venue, pages, version, and DOI with the
+        publisher or other authoritative record and confirm claim support.
+  \item Source-only examples include hidden comments; PDF-only examples include
+        clipping; portal-only examples include conversion order or metadata errors.
+  \item Include required source, assets, bibliography, permitted styles,
+        supplements, README, and manifest; exclude caches, drafts, secrets, and
+        restricted or unlicensed material.
+  \item Record thesis identifier, version, source commit, environment, files,
+        checksums if used, approvals, access, embargo, date, and repository ID.
+  \item Credit a rehearsal with separate operator/verifier roles and retained
+        evidence for build, PDF, metadata, package, proof, and archive checks.
+\end{enumerate}
+
+\section*{Chapter 21}
+\begin{enumerate}[label=21.\arabic*,leftmargin=2.4em,itemsep=0.45em]
+  \item Articles serve bounded journal claims, theses sustained degree arguments,
+        and reports named decisions; scenario answers must use audience and authority.
+  \item Shared components include source, evidence, figures, references, and
+        builds; form-specific components include journal declarations, thesis
+        front matter, and report control/action records.
+  \item Answers vary; explanations must identify each command's structural or
+        build effect, not merely its visible appearance.
+  \item The article has compact sequential pages, the thesis distinct matter and
+        chapter numbering, and the report controlled cover and decision sections;
+        all use Biber through independent builds.
+  \item Replace only facts that are supplied or explicitly fictional; leave
+        legal, institutional, authorship, and approval data as visible placeholders.
+  \item Each manifest names exact source, bibliography, figures, supplements,
+        README, output, versions, rights, and excluded restricted dependencies.
+  \item Use the article, thesis, or report checklist and record each item as
+        pass, fail, or not applicable with evidence.
+  \item Credit two outputs that share one versioned analysis but maintain
+        form-specific claims, metadata, permissions, approvals, and release archives.
+\end{enumerate}

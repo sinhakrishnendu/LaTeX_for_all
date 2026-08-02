@@ -1,0 +1,36 @@
+name: Book or code problem
+description: Report a reproducible editorial, LaTeX, build, or layout problem.
+title: "[Issue]: "
+labels: [triage]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - Book text or code
+        - Interior layout
+        - Cover
+        - Companion example
+        - Build or verification tooling
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: State what happened and what you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction details
+      description: Include the file, page or chapter, command, TeX distribution, and first relevant error.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Suggested correction
+      description: Optional proposed wording or code.

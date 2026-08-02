@@ -1,0 +1,251 @@
+\chapter{Writing Mathematics from the Beginning}
+\label{chap:math-beginning}
+\index{mathematics}\index{equation}\index{math mode}\index{align environment}
+
+Mathematics in a scientific document is part of a sentence. It must be
+accurate, readable, and connected to the variables around it. \LaTeX{} gives
+mathematics a separate mode because symbols such as a minus sign, a variable,
+and a fraction need different spacing from ordinary prose.
+
+\begin{learningoutcomes}
+  \item Distinguish inline and displayed mathematics.
+  \item Create scripts, fractions, roots, Greek letters, and functions.
+  \item Size brackets around structured expressions.
+  \item Align related equations with \pkg{amsmath}.
+  \item Number, label, and refer to an equation.
+  \item Avoid obsolete display syntax and manual spacing repairs.
+\end{learningoutcomes}
+
+\section{Inline mathematics belongs in a sentence}
+
+Place short mathematics between \code{\$} delimiters:
+
+\begin{latexcode}{Complete example: inline mathematics}
+\documentclass{article}
+\begin{document}
+Let $d_i = B_i - A_i$ be the difference for pair $i$.
+\end{document}
+\end{latexcode}
+
+The dollar signs switch mathematics on and off; they do not print. Letters in
+math mode are treated as variables and normally appear italic. The minus sign
+has mathematical spacing. Keep sentence punctuation outside or after the
+formula as grammar requires.
+
+\begin{commonerror}
+\textbf{Symptom:} the rest of a paragraph appears in mathematical italics or
+the compiler reports a missing dollar sign.
+
+\textbf{Cause:} an opening \code{\$} has no matching closing delimiter.
+
+\textbf{Repair:} inspect the equation and the source just before the reported
+line. Match the delimiters, then compile again.
+\end{commonerror}
+
+\section{Displayed mathematics}
+
+Use \code{\textbackslash[} and \code{\textbackslash]} for an unnumbered
+display:
+
+\begin{latexcode}{Unnumbered display}
+The arithmetic mean is
+\[
+  \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i.
+\]
+\end{latexcode}
+
+The display is still part of the sentence, so it ends with a full stop.
+Indentation is for source readability.
+
+Do not use \code{\$\$ ... \$\$}. That plain-TeX form bypasses \LaTeX{}'s display
+management and can give inconsistent spacing. Numbered displays use an
+appropriate environment, not a manually typed number.
+
+\section{Scripts need groups}
+
+The caret creates a superscript and the underscore a subscript in mathematics:
+
+\begin{latexcode}{Scripts and grouping}
+$x^2$, $x_i$, $x_{ij}$, $10^{-3}$, and $a^{n+1}$
+\end{latexcode}
+
+Without braces, only the next token belongs to the script. Thus
+\code{x\_ij} makes only \code{i} a subscript and leaves \code{j} at the main
+level. Group multi-character scripts: \code{x\_\{ij\}}.
+
+\begin{tryit}
+Compile \code{\$x\_ij\$} and \code{\$x\_\{ij\}\$} side by side. Describe the
+baseline of the letter \code{j} in each output.
+\end{tryit}
+
+\section{Fractions, roots, and Greek letters}
+
+\cmd{frac} takes a numerator and denominator. \cmd{sqrt} takes the expression
+under a root and accepts an optional root index.
+
+\begin{latexcode}{Complete example: common constructions}
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\[
+  z = \frac{x - \mu}{\sigma}, \qquad
+  r = \sqrt{x^2 + y^2}, \qquad
+  q = \sqrt[3]{V}.
+\]
+\end{document}
+\end{latexcode}
+
+Commands such as \cmd{mu}, \cmd{sigma}, \cmd{alpha}, and \cmd{Delta} insert
+Greek letters. Upper- and lower-case command names can represent different
+symbols. Do not paste a look-alike Unicode character into an otherwise ASCII
+formula without checking the engine and font support.
+
+The \code{\textbackslash qquad} spacing in this compact demonstration separates
+three independent expressions. It should not be used to repair the internal
+structure of one badly expressed formula.
+
+\section{Functions and operators}
+
+Standard functions have upright names and mathematical spacing:
+
+\begin{latexcode}{Functions and operators}
+$\sin \theta$, $\log x$, $\exp(-kt)$, and $\max_i x_i$
+\end{latexcode}
+
+Use the supplied commands rather than typing italic letters such as
+\code{sin}. For a recurring named operator not supplied by \LaTeX{},
+\pkg{amsmath} provides \cmd{DeclareMathOperator}; define it once in the
+preamble after understanding its mathematical role.
+
+Ordinary words inside mathematics use \cmd{text} from \pkg{amsmath}:
+
+\begin{latexcode}{Words inside a formula}
+\[
+  y = \begin{cases}
+    1, & \text{if the pair is complete},\\
+    0, & \text{otherwise}.
+  \end{cases}
+\]
+\end{latexcode}
+
+The ampersand marks the alignment point and \code{\\} ends a row inside this
+structured environment. They are not paragraph-formatting tricks.
+
+\section{Brackets that fit}
+
+Ordinary parentheses do not grow automatically around a tall fraction.
+\cmd{left} and \cmd{right} request paired delimiters sized to their contents:
+
+\begin{latexcode}{Sized delimiters}
+\[
+  \left(\frac{a+b}{c+d}\right)^2
+\]
+\end{latexcode}
+
+Every \cmd{left} needs a matching \cmd{right}. When only one visible delimiter
+is required, a full stop can act as an invisible partner, but that technique
+should be introduced only with a real notation need. The \pkg{mathtools}
+package also supports reusable paired-delimiter commands for larger projects.
+
+\section{Numbering and referencing an equation}
+
+The \code{equation} environment numbers one display. Place the label after the
+equation begins and give it a descriptive prefix:
+
+\begin{equation}
+  \bar{d}=\frac{1}{n}\sum_{i=1}^{n}(B_i-A_i).
+  \label{eq:mean-difference}
+\end{equation}
+
+The source is:
+
+\begin{latexcode}{Numbered and labelled equation}
+\begin{equation}
+  \bar{d}=\frac{1}{n}\sum_{i=1}^{n}(B_i-A_i).
+  \label{eq:mean-difference-example}
+\end{equation}
+
+Equation~\eqref{eq:mean-difference-example} defines the mean difference.
+\end{latexcode}
+
+\cmd{eqref} prints the equation number with parentheses. Compilation may need
+a repeat pass after a new label. A label is a stable name; the visible number
+can change when an earlier equation is inserted.
+
+\begin{scienceinpractice}
+In the running comparison, $A_i$ and $B_i$ are paired simulated values and
+$\bar{d}$ estimates their mean signed difference. The equation does not by
+itself establish agreement; the surrounding methods must define sampling,
+units, missingness, and interpretation.
+\end{scienceinpractice}
+
+\section{Aligned equations}
+
+Use \code{align} for related lines. The ampersand marks the alignment point,
+usually before a relation such as equals:
+
+\begin{latexcode}{Complete example: aligned equations}
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{align}
+  d_i &= B_i-A_i, \\
+  \bar{d} &= \frac{1}{n}\sum_{i=1}^{n}d_i.
+\end{align}
+\end{document}
+\end{latexcode}
+
+Use \code{align*} when none of the lines should be numbered. Use
+\cmd{notag} selectively when a single line in a numbered alignment should not
+receive a number.
+
+Do not use the older \code{eqnarray} environment. Its spacing around relation
+symbols is inferior and its control is limited. Do not align equations by
+inserting guessed spaces; state the alignment point structurally.
+
+\begin{goodpractice}
+Define every symbol near its first use, keep notation consistent, and inspect
+the meaning as well as the typesetting. A perfectly aligned equation with an
+undefined variable is not publication-ready.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Load \pkg{amsmath} and \pkg{mathtools} in the running article. In Methods,
+define $d_i=B_i-A_i$. Add a labelled equation for the mean difference and refer
+to it from the prose with \cmd{eqref}. State clearly that the values are
+simulated and that the sign depends on the chosen subtraction order.
+\end{miniproject}
+
+\chaptersummary
+
+Dollar delimiters create inline mathematics; \code{\textbackslash[} and
+\code{\textbackslash]} create an unnumbered display. Braces group scripts and
+arguments. Mathematical commands produce fractions, roots, symbols, functions,
+text, and sized delimiters. \code{equation} numbers one display; \code{align}
+organises related lines. Labels and \cmd{eqref} replace typed numbers.
+Avoid \code{\$\$}, \code{eqnarray}, and manual spacing repairs.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Every math delimiter and brace has a partner.
+  \item Multi-character scripts are grouped.
+  \item Function names are upright commands.
+  \item Display punctuation follows the surrounding sentence.
+  \item Equation references come from labels.
+  \item Every symbol in the running article is defined.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Write inline source for $E=mc^2$.
+  \item Correct \code{x\_ij} so both letters form the subscript.
+  \item Typeset the fraction $(x-\mu)/\sigma$ with a built-up fraction.
+  \item Replace italic \code{sin} with the mathematical function command.
+  \item Create two equations aligned at their equals signs.
+  \item Label an equation and refer to it without typing its number.
+  \item Explain why \code{\$\$} and \code{eqnarray} are discouraged.
+  \item Challenge: typeset and define one equation from your discipline, then
+        ask a colleague whether the notation is unambiguous.
+\end{chapterexercises}

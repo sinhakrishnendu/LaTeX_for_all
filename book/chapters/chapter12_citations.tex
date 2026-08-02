@@ -1,0 +1,279 @@
+\chapter{Citations and Bibliographies}
+\label{chap:citations}
+\index{citation}\index{bibliography}\index{Bib\LaTeX{}}\index{Biber}\index{DOI}
+
+A citation links a statement to a source; a reference gives the reader enough
+information to identify that source. \LaTeX{} can format and renumber citations,
+but it cannot decide whether a source supports a claim or whether its metadata
+is true. We therefore begin with responsibility and data before software.
+
+\begin{learningoutcomes}
+  \item Distinguish citations, references, bibliographies, keys, and styles.
+  \item Create verified records in a \file{.bib} database.
+  \item Use \pkg{biblatex} with Biber to cite and print a bibliography.
+  \item Produce textual, parenthetical, multiple, and page-specific citations.
+  \item Recognise records for articles, books, chapters, datasets, software,
+        theses, reports, and websites.
+  \item Explain when a publisher's BibTeX or \pkg{natbib} workflow must be kept.
+  \item Apply responsible practices for sources, permissions, and AI assistance.
+\end{learningoutcomes}
+
+\section{Concepts before commands}
+
+A \term{citation} is the marker in the prose, such as an author and year or a
+number. A \term{reference} is the fuller bibliographic description. A
+\term{bibliography} is the organised set of references printed by the
+document. A \term{bibliography database} is the separate source file, commonly
+\file{references.bib}, that stores records.
+
+Each record has a \term{citation key}, a private source identifier such as
+\code{lamport1994}. The key is not printed. A \term{citation style} controls
+the visible markers and bibliography. A DOI is a persistent identifier, not a
+complete reference and not a guarantee that a source supports a claim.
+
+\section{One verified record}
+
+A Bib\LaTeX{} record starts with an entry type, key, and fields:
+
+\begin{latexcode}{references.bib: a genuine book record}
+@book{lamport1994,
+  author    = {Lamport, Leslie},
+  title     = {\LaTeX{}: A Document Preparation System},
+  edition   = {2},
+  publisher = {Addison-Wesley},
+  date      = {1994},
+  isbn      = {9780201529838}
+}
+\end{latexcode}
+
+The record was checked against the publisher and the \LaTeX{} Project's book
+list. The key could be different, but it must remain unique. Family-name-first
+input helps Bib\LaTeX{} parse names. Do not guess a DOI because a book title looks
+familiar.
+
+\begin{goodpractice}
+Open the source record or publisher page and verify author order, title,
+container, year, volume, issue, pages, edition, and identifiers. Reference-
+manager exports are starting data, not proof of accuracy.
+\end{goodpractice}
+
+\section{Connect the database with biblatex}
+
+In the preamble, load \pkg{biblatex}, select Biber as the backend, and add the
+database resource:
+
+\begin{latexcode}{Complete example: Bib\LaTeX{} and Biber}
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{references.bib}
+
+\begin{document}
+\textcite{lamport1994} provides a recognised \LaTeX{} reference.
+Structured source is also discussed in literate programming
+\parencite{knuth1984}.
+
+\printbibliography
+\end{document}
+\end{latexcode}
+
+This complete project needs the two genuine records in
+\file{references.bib}. \cmd{addbibresource} declares the database.
+\cmd{textcite} places the author naturally in the sentence;
+\cmd{parencite} produces a parenthetical citation. \cmd{printbibliography}
+prints cited records in the selected style.
+
+The reliable build command remains:
+
+\begin{terminalcode}{Automated bibliography build}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Internally, pdf\LaTeX{} writes citation requests, Biber reads the database and
+creates formatted data, and pdf\LaTeX{} incorporates it on later passes. The
+current Bib\LaTeX{} manual documents the data model and citation commands
+\parencite{biblatexManual}.
+
+\section{Useful citation forms}
+
+\begin{latexcode}{Citation patterns}
+\textcite{lamport1994} explains the document system.
+
+The source-and-output distinction is longstanding
+\parencite{lamport1994}.
+
+Several source types can be cited together
+\parencite{knuth1984,fisherIris}.
+
+One passage can be identified precisely
+\parencite[see][pp. 97--99]{knuth1984}.
+\end{latexcode}
+
+The first optional note appears before the citation and the second after it.
+Page-specific citations help a reader verify a focused claim in a paginated
+source. Do not add a page to a web page that has no stable pages.
+
+\begin{pausepredict}
+If a style changes from author--year to numeric, which part should remain
+stable: the citation keys in source or the visible markers? This separation is
+why keys should describe records rather than their temporary numbers.
+\end{pausepredict}
+
+\section{Records for scholarly source types}
+
+The project database contains genuine examples of each major type:
+
+\begin{itemize}
+  \item journal article: \textcite{knuth1984};
+  \item book: \textcite{lamport1994};
+  \item chapter in a book: \textcite{chiroma2023};
+  \item dataset: \textcite{fisherIris};
+  \item software: \textcite{rproject};
+  \item doctoral thesis: \textcite{heffernan2020};
+  \item technical standard/report: \textcite{iso5725}; and
+  \item website/documentation: \textcite{latexprojectDocumentation}.
+\end{itemize}
+
+Entry types select suitable fields and formatting. For software used in an
+analysis, obtain the citation from that installed version when possible; the R
+documentation recommends its \code{citation()} function. For datasets, cite
+the version and persistent identifier supplied by the repository. For a web
+resource that changes, record an access date.
+
+\section{Common bibliography failures}
+
+\begin{commonerror}
+\textbf{Symptom:} citation keys appear as bold text or question marks and the
+bibliography is absent.
+
+\textbf{Checks:} confirm the key exists and matches case; confirm the database
+path; read the Biber log; make sure \cmd{printbibliography} is present; and run
+the correct build sequence. An earlier \LaTeX{} error can prevent a valid control
+file from reaching Biber.
+\end{commonerror}
+
+A warning about an empty bibliography can mean that nothing was cited. Use
+\cmd{nocite}\required{*} only when the document intentionally needs every
+database record, not as a way to hide missing citations.
+
+Special characters in names and titles need correct Bib\LaTeX{} encoding. Protect
+capital letters whose case must remain, such as an acronym, with braces after
+checking the style behaviour. Do not wrap every title in extra braces; that can
+defeat style-controlled case conversion.
+
+\section{Publisher workflows: BibTeX and natbib}
+
+Many publishers supply older but valid workflows built around BibTeX,
+\pkg{natbib}, and \file{.bst} bibliography-style files. BibTeX reads
+\file{.bib} data and uses the \file{.bst} file to format a \file{.bbl};
+\pkg{natbib} supplies citation commands for many author--year and numerical
+styles.
+
+\begin{submissioncheck}
+If a journal template uses BibTeX or \pkg{natbib}, follow its current
+instructions. Do not load \pkg{biblatex} alongside it or replace its
+bibliography system merely because this chapter uses Bib\LaTeX{} for teaching.
+Submit the \file{.bbl} when the journal requests it.
+\end{submissioncheck}
+
+The educational default and a publisher requirement can legitimately differ.
+The important skill is recognising the existing workflow and building it in
+the documented sequence.
+
+\section{Scholarly responsibility}
+
+A citation must support the nearby statement. Citing a paper after reading only
+its title or an AI summary is not sufficient. Read the relevant source, prefer
+primary evidence for a primary claim, represent uncertainty honestly, and do
+not cite a review as though it performed every study it summarises.
+
+Quotation requires exactness and sometimes permission. Figures, questionnaires,
+and substantial table content can require permissions even when cited. Data
+and software are research contributions and should be credited using the
+records their creators request.
+
+AI-assisted tools may help search, reformat, or inspect a draft record, but they
+can invent authors, titles, dates, and DOIs. The author remains responsible for
+checking each record and claim, complying with disclosure rules, protecting
+confidential information, and following publisher or institutional policy.
+
+\begin{scienceinpractice}
+The Iris dataset record identifies a repository DOI and an explicit dataset
+type \parencite{fisherIris}. That citation acknowledges the data source; it
+does not automatically justify using the dataset for a new scientific claim.
+The methods must still explain selection, processing, and limitations.
+\end{scienceinpractice}
+
+\section{Code lab: build a bibliography from two files}
+
+\begin{codelab}
+Create \path{main.tex} and \path{references.bib} in the same folder. Run
+\pkg{latexmk} as shown. Then change the citation key in only the source file,
+observe the warning, and restore the matching key.
+\end{codelab}
+
+\begin{latexcode}{main.tex}
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{references.bib}
+
+\begin{document}
+The system is maintained by the \textcite{latexproject}.
+Its documentation is available online \parencite{latexproject}.
+\printbibliography
+\end{document}
+\end{latexcode}
+
+\begin{latexcode}{references.bib}
+@online{latexproject,
+  author  = {{The \LaTeX{} Project}},
+  title   = {The \LaTeX{} Project},
+  url     = {https://www.latex-project.org/},
+  urldate = {2026-07-31}
+}
+\end{latexcode}
+
+\begin{terminalcode}{Build the document and its bibliography}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+\chapterproject
+
+\begin{miniproject}
+Create \file{references.bib} for the running article. Add the verified ISO
+measurement-method standard and one verified \LaTeX{}/software record used by the
+workflow. Load \pkg{biblatex} with Biber, cite sources only where they support
+the prose, and print the bibliography. Run \pkg{latexmk}; correct every
+undefined citation before continuing.
+\end{miniproject}
+
+\chaptersummary
+
+Citations connect claims to references stored as verified database records.
+Keys are stable source identifiers; styles control visible form. Bib\LaTeX{} and
+Biber support structured entry types and varied citation commands.
+\pkg{latexmk} automates the required passes. Publisher BibTeX/\pkg{natbib}
+workflows must be preserved when required. Accuracy, relevance, permission,
+data/software credit, and responsible AI use remain the author's obligations.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Every record was checked against an authoritative source.
+  \item Citation keys are unique, stable, and meaningful.
+  \item Each citation supports the claim beside it.
+  \item Data and software used in the work receive appropriate credit.
+  \item The selected workflow matches the journal or institutional instruction.
+  \item No undefined citation or empty bibliography warning remains.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Distinguish a citation key, citation, reference, and bibliography.
+  \item Create a verified \code{@article} record from a publisher page.
+  \item Produce textual and parenthetical citations to one record.
+  \item Cite two records together and add a page-specific postnote.
+  \item Diagnose a missing bibliography caused by an absent print command.
+  \item Explain why a DOI alone is not evidence that a source supports a claim.
+  \item State when to keep a publisher's BibTeX/\pkg{natbib} workflow.
+  \item Challenge: audit five records for metadata accuracy and document the
+        authoritative page used for each check.
+\end{chapterexercises}

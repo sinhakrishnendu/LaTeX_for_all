@@ -1,0 +1,113 @@
+\chapter{Debug the Build Systematically}
+\label{chap:debugging}
+
+\begin{learningoutcomes}
+  \item Find the first actionable error.
+  \item Reduce a problem to a minimal example.
+  \item Distinguish source, package, path, and build-sequence failures.
+\end{learningoutcomes}
+
+\section{Use one repair loop}
+
+\begin{enumerate}
+  \item Save the source.
+  \item Compile the root file.
+  \item Read the first error, not the last page of the log.
+  \item Inspect the named line and the few lines before it.
+  \item Make one repair.
+  \item Compile again.
+\end{enumerate}
+
+Later errors are often consequences of the first missing brace, command, file,
+or environment ending.
+
+\section{Recognise the common messages}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Message fragment & First check \\
+\midrule
+Undefined control sequence & Command spelling and required package. \\
+File not found & Filename, extension, capitalisation, and relative path. \\
+Missing \code{\}} inserted & Braces on the current and preceding lines. \\
+\code{\textbackslash begin} ended by \code{\textbackslash end} & Environment
+names and nesting. \\
+Extra alignment tab & Ampersands compared with table columns. \\
+Citation undefined & Citation key, bibliography file, and Biber run. \\
+Reference undefined & Label spelling and repeated compilation. \\
+Overfull box & Long word, URL, equation, table, or code line. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Make a minimal working example}
+
+Copy the failing idea into this file and add material until the error returns:
+
+\begin{latexcode}{Complete example: debugging shell}
+\documentclass{article}
+
+% Load only packages needed to reproduce the problem.
+
+\begin{document}
+The smallest content that demonstrates the problem.
+\end{document}
+\end{latexcode}
+
+If the small file works, the problem depends on something removed. If it fails,
+the shorter log is easier to interpret.
+
+\section{Compare a broken and repaired line}
+
+\begin{latexcode}{Broken example: reserved characters}
+The success rate was 95% in sample_A.
+\end{latexcode}
+
+\begin{latexcode}{Corrected line}
+The success rate was 95\% in sample\_A.
+\end{latexcode}
+
+\begin{latexcode}{Broken example: mismatched environment}
+\begin{itemize}
+  \item First item
+\end{enumerate}
+\end{latexcode}
+
+\begin{latexcode}{Corrected environment}
+\begin{itemize}
+  \item First item
+\end{itemize}
+\end{latexcode}
+
+\section{Force a clean rebuild}
+
+\begin{terminalcode}{Clean and rebuild}
+latexmk -C main.tex
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Clean only generated files. Never use a broad deletion command to diagnose a
+build.
+
+\section{Check for silent layout failures}
+
+A successful compilation can still contain clipped tables, tiny figures,
+empty pages, or unresolved warnings. Search the log and inspect the PDF:
+
+\begin{terminalcode}{Search a build log}
+rg "Overfull|undefined|multiply defined" main.log
+\end{terminalcode}
+
+\begin{codelab}
+Introduce one missing brace, one wrong environment name, and one bad path into
+separate copies of a working file. Repair each using only the first error and
+the nearby source.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item The first error was repaired before later messages.
+  \item Only one change was tested at a time.
+  \item A minimal example was used when the cause was unclear.
+  \item The PDF was inspected even after a successful build.
+\end{chapterchecklist}

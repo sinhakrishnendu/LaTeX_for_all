@@ -1,0 +1,245 @@
+\chapter{Adding and Managing Figures}
+\label{chap:figures}
+\index{figure}\index{graphics!raster}\index{graphics!vector}\index{caption}\index{subfigure}
+
+A figure should let the reader see evidence, a process, or a relationship that
+would be harder to grasp in prose. \LaTeX{} does not create most scientific plots;
+it places a prepared graphic, supplies a caption and number, and integrates the
+figure with the document.
+
+\begin{learningoutcomes}
+  \item Distinguish raster and vector graphics and choose suitable formats.
+  \item Include an image from a relative path and scale it safely.
+  \item Build a numbered figure with caption and label.
+  \item Explain float placement without treating movement as an error.
+  \item Create a multi-panel figure with \pkg{subcaption}.
+  \item Check resolution, colour, grayscale, and caption accessibility.
+\end{learningoutcomes}
+
+\section{Prepare the graphic before placing it}
+
+A \term{raster image} stores a grid of pixels. Photographs, microscopy images,
+and scans are naturally raster; PNG and JPEG are common formats. A
+\term{vector graphic} stores geometric paths and text. Diagrams, line drawings,
+and many statistical plots remain sharp when scaled; PDF is the most convenient
+vector format for pdf\LaTeX{}.
+
+Use JPEG for continuous-tone photographs when appropriate, PNG for lossless
+raster graphics, and PDF for vector artwork. Do not convert a low-resolution
+JPEG to PDF and call it vector; the pixels remain.
+
+\begin{goodpractice}
+Export plots at their intended publication dimensions with readable labels.
+Keep editable plot code or source beside the export. Do not enlarge a small
+raster image in \LaTeX{} and expect new detail to appear.
+\end{goodpractice}
+
+\section{The smallest included graphic}
+
+Load \pkg{graphicx}, place the file inside the project, and use a relative
+path:
+
+\begin{latexcode}{Complete project example: include one PDF graphic}
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\includegraphics[width=0.75\linewidth]{method_comparison.pdf}
+\end{document}
+\end{latexcode}
+
+This complete source assumes the original file
+\file{method\_comparison.pdf} is beside \file{main.tex}. The optional argument
+sets the displayed width to 75\% of the current line width; the height changes
+proportionally. Do not give both width and height unless distortion is intended.
+
+\section{Caption, label, and float}
+
+Wrap the graphic in a \code{figure} environment:
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\linewidth]
+    {figures/original/method_comparison.pdf}
+  \caption{Relationship between two methods for simulated paired values. The
+  dashed line marks equality; points above it have larger Method B values.}
+  \label{fig:method-comparison}
+\end{figure}
+
+The source uses \cmd{centering} inside the float, includes the graphic, writes
+an informative caption, and labels the number produced by the caption. The
+figure is original and the graphic itself states that the data are simulated.
+
+\begin{scienceinpractice}
+The dashed line in \cref{fig:method-comparison} provides a reference, but a
+cloud near that line is not a complete agreement analysis. A figure must not
+imply a stronger scientific conclusion than the method supports.
+\end{scienceinpractice}
+
+\section{Why a figure moves}
+
+A float is allowed to move so that \LaTeX{} can avoid large gaps, stranded
+captions, and figures cut by page boundaries. The placement letters
+\code{h}, \code{t}, \code{b}, and \code{p} mean here, top, bottom, and float
+page. \LaTeX{} considers them with size and page constraints.
+
+Place a figure near its first discussion in source and refer to it by label.
+If it moves one page, the reference remains correct. Repeatedly adding stronger
+placement commands can make the surrounding pages worse.
+
+\begin{commonerror}
+\textbf{Symptom:} a figure appears later than its source position.
+
+\textbf{Cause:} insufficient legal space remained on the page, or earlier
+floats were waiting.
+
+\textbf{Response:} confirm that the graphic is sensibly sized and placed near
+its first mention. Inspect nearby floats. Treat movement as layout behaviour,
+not automatically as failure.
+\end{commonerror}
+
+\section{Multi-panel figures}
+
+Load \pkg{subcaption}. Each \code{subfigure} gets its own caption and label,
+while the outer figure gets the overall caption and number.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]
+      {figures/original/method_comparison.pdf}
+    \caption{Paired values and equality line.}
+    \label{fig:multi-values}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]
+      {figures/original/difference_plot.pdf}
+    \caption{Difference against pair mean.}
+    \label{fig:multi-differences}
+  \end{subfigure}
+  \caption{Two views of the same simulated teaching data. Panel (a) shows the
+  original paired scale; panel (b) makes signed differences visible.}
+  \label{fig:multi-panel-comparison}
+\end{figure}
+
+Panel labels should be referenced automatically. The overall caption explains
+why the panels belong together and defines visual encodings that are not
+obvious. Make axis type, units, and sample size visible in the figure or
+caption as the target style requires.
+
+\section{Landscape and rotated material}
+
+Large maps or wide tables may need a landscape page. The \pkg{pdflscape}
+package provides a \code{landscape} environment and rotates the PDF view for a
+reader:
+
+\begin{latexcode}{Optional landscape pattern}
+\usepackage{pdflscape}
+
+\begin{landscape}
+  % Place one genuinely wide figure or table here.
+\end{landscape}
+\end{latexcode}
+
+This is a preamble fragment followed by a body fragment. Do not rotate a figure
+merely because its labels were exported too small. First redesign the graphic.
+Publisher systems may request landscape figures as separate files.
+
+\section{Quality and accessibility checks}
+
+Before submission, inspect the graphic at 100\% PDF view and on a printed test
+if print matters. Check:
+
+\begin{itemize}
+  \item labels, symbols, and lines at final size;
+  \item units and definitions of abbreviations;
+  \item raster resolution against current venue instructions;
+  \item embedded or outlined fonts where required;
+  \item colour combinations in grayscale and for colour-vision differences;
+  \item distinction by shape, line style, or label rather than colour alone;
+  \item a caption that communicates the figure's purpose and evidence.
+\end{itemize}
+
+An informative caption assists all readers, but it is not a complete substitute
+for tagged-PDF alternative text in an accessible publishing workflow. Ask the
+publisher which accessibility metadata and source they accept.
+
+\begin{submissioncheck}
+Open every final exported figure rather than trusting its filename. Confirm
+that no crop removed labels, no panel order changed, and the manuscript cites
+the correct file. Keep permission and licence records for every non-original
+asset.
+\end{submissioncheck}
+
+\section{Code lab: a figure that still compiles during drafting}
+
+\begin{codelab}
+Place a file named \path{measurement-methods.pdf} beside this source and
+compile. Rename the image temporarily and compile again. The framed fallback
+keeps the draft buildable while making the missing asset visible.
+\end{codelab}
+
+\begin{latexcode}{A complete figure document with a visible fallback}
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{figure}[htbp]
+  \centering
+  \IfFileExists{measurement-methods.pdf}{%
+    \includegraphics[width=.82\linewidth]
+      {measurement-methods.pdf}%
+  }{%
+    \fbox{\rule{0pt}{45mm}\rule{.78\linewidth}{0pt}}%
+  }
+  \caption{Agreement between two simulated measurement methods.}
+  \label{fig:agreement}
+\end{figure}
+
+Figure~\ref{fig:agreement} is referenced from the prose.
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Add the supplied original \file{method\_comparison.pdf} to the running article
+with a caption that says the values are simulated. Add the two-panel figure as
+a later diagnostic. Label the outer figure and both panels. Mention each figure
+from Results without typing a number. Record the editable TikZ sources and
+their original status in the asset log.
+\end{miniproject}
+
+\chaptersummary
+
+Raster graphics store pixels; vector graphics store scalable geometry.
+\pkg{graphicx} includes files from relative paths and scales them
+proportionally. A \code{figure} float integrates placement, caption, number,
+and label. Movement is normal page design. \pkg{subcaption} organises panels;
+\pkg{pdflscape} can support genuinely wide material. Publication checks cover
+resolution, labels, units, grayscale, accessibility, provenance, and captions.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item The chosen format suits photographic or line-based content.
+  \item The file path is relative and portable.
+  \item Caption and label follow the included graphic.
+  \item Text and lines remain legible at final size.
+  \item Meaning does not depend on colour alone.
+  \item Original or licensed provenance is recorded.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Classify a photograph, logo, line plot, and scanned map as primarily
+        raster or vector.
+  \item Include a PDF graphic at half the line width.
+  \item Add a caption and correctly positioned label.
+  \item Explain why the \optional{h} request may not place a float exactly here.
+  \item Build two subfigures with an overall caption.
+  \item Identify two ways to preserve meaning in grayscale.
+  \item Diagnose a ``file not found'' error caused by a machine-specific path.
+  \item Challenge: audit one figure for evidence, resolution, accessibility,
+        caption completeness, and provenance.
+\end{chapterexercises}

@@ -1,0 +1,94 @@
+\tcbset{
+  bookbox/.style={
+    breakable,
+    colback=white,
+    colframe=black,
+    colbacktitle=BookTint,
+    coltitle=black,
+    fonttitle=\bfseries,
+    boxrule=0.85pt,
+    titlerule=0.55pt,
+    arc=0pt,
+    left=1em,
+    right=1em,
+    top=0.7em,
+    bottom=0.7em,
+    before skip=0.85\baselineskip,
+    after skip=0.95\baselineskip
+  },
+  booklisting/.style={
+    breakable,
+    colback=CodeBackground,
+    colframe=black,
+    colbacktitle=BookTint,
+    coltitle=black,
+    fonttitle=\bfseries,
+    boxrule=0.85pt,
+    titlerule=0.55pt,
+    arc=0pt,
+    left=0.6em,
+    right=0.6em,
+    top=0.4em,
+    bottom=0.4em,
+    before skip=0.85\baselineskip,
+    after skip=0.95\baselineskip
+  }
+}
+
+\newtcolorbox{classroomnote}[1][]{bookbox,title={Classroom Note},#1}
+\newtcolorbox{tryit}[1][]{bookbox,title={Try It Now},#1}
+\newtcolorbox{pausepredict}[1][]{bookbox,title={Pause and Predict},#1}
+\newtcolorbox{commonerror}[1][]{bookbox,title={Common Error},#1}
+\newtcolorbox{goodpractice}[1][]{bookbox,title={Good Practice},#1}
+\newtcolorbox{scienceinpractice}[1][]{bookbox,title={Science in Practice},#1}
+\newtcolorbox{advancedtopic}[1][]{bookbox,title={Advanced Topic},#1}
+\newtcolorbox{submissioncheck}[1][]{bookbox,title={Submission Check},#1}
+\newtcolorbox{miniproject}[1][]{bookbox,title={Mini Project},#1}
+\newtcolorbox{codelab}[1][]{
+  bookbox,
+  title={Code Lab},
+  colback=CodeBackground,
+  colframe=black,
+  colbacktitle=BookTint,
+  #1
+}
+
+\lstdefinestyle{booklatex}{
+  language=[LaTeX]TeX,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{black}\bfseries,
+  commentstyle=\color{black}\itshape,
+  stringstyle=\color{black},
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=2,
+  aboveskip=0pt,
+  belowskip=0pt
+}
+
+\newtcblisting{latexcode}[1]{
+  booklisting,
+  title={#1},
+  listing only,
+  listing options={style=booklatex}
+}
+
+\newtcblisting{terminalcode}[1]{
+  booklisting,
+  title={#1},
+  listing only,
+  listing options={
+    basicstyle=\ttfamily\small,
+    columns=fullflexible,
+    keepspaces=true,
+    upquote=true,
+    breaklines=true,
+    showstringspaces=false,
+    aboveskip=0pt,
+    belowskip=0pt
+  }
+}

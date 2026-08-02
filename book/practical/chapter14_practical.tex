@@ -1,0 +1,45 @@
+\section{Complete Practical Coding}
+\label{sec:practical-14}
+
+This single tutorial file creates two chapter files so the complete multi-file
+pattern can be compiled immediately.
+
+\begin{latexcode}{Complete practical file: multi-file book project}
+\begin{filecontents*}{practical-introduction.tex}
+\chapter{Introduction}
+\label{chap:practical-introduction}
+State the question and objective here.
+\end{filecontents*}
+
+\begin{filecontents*}{practical-methods.tex}
+\chapter{Methods}
+\label{chap:practical-methods}
+Describe materials, design, and analysis here.
+\end{filecontents*}
+
+\documentclass{book}
+\usepackage{hyperref}
+
+\title{A Multi-File Project}
+\author{Your Name}
+\date{}
+
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\include{practical-introduction}
+\include{practical-methods}
+
+\backmatter
+\chapter*{Project note}
+Compile only the root file.
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+After the first build, move the two generated chapter files into a
+\file{chapters/} folder, update both paths, and compile only \file{main.tex}.
+\end{codelab}

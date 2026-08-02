@@ -1,0 +1,348 @@
+\chapter{Hello, \LaTeX{}!}
+\label{chap:hello}
+\index{\LaTeX{}!advantages}\index{source-to-PDF workflow}\index{WYSIWYM}
+
+Imagine that you are preparing a report with three equations, a table, and a
+figure. You insert a new paragraph near the beginning. The figure moves, a
+heading remains at the bottom of a page, and every later figure number must be
+checked. The scientific argument has not changed, but the page has demanded
+your attention.
+
+\LaTeX{} offers a different division of labour. You describe the document's
+content and structure in a plain-text source file. A program interprets those
+instructions and builds the typeset document. You still make design decisions,
+but you make them as rules and relationships rather than repeated adjustments
+to individual pages.
+
+\begin{learningoutcomes}
+  \item Explain what \LaTeX{} is and what it is not.
+  \item Distinguish a source file from a compiled PDF.
+  \item Describe the job of a compiler, document class, and package.
+  \item Compare a structured \LaTeX{} workflow with a word-processor workflow.
+  \item Identify situations in which \LaTeX{} is useful and situations in which
+        another tool may be more practical.
+  \item Describe the learning route from a minimal document to a scholarly
+        manuscript, thesis, and report.
+\end{learningoutcomes}
+
+\section{A document preparation system}
+
+\LaTeX{} is a \term{document preparation system}: a collection of rules and
+programs for turning structured instructions into typeset output. It is widely
+used for scientific and technical communication, particularly when a document
+contains mathematics, references, numbered elements, or many interdependent
+parts. The \LaTeX{} Project describes it as a system for preparing documents and
+provides the core documentation maintained with the software
+\parencite{latexprojectDocumentation}.
+
+\LaTeX{} is not simply a font menu or a single visual editor. The familiar part
+of the work is writing sentences. The unfamiliar part is that some plain-text
+instructions tell \LaTeX{} what those sentences mean. For example, a heading is
+identified as a heading rather than made larger by hand. A figure is given a
+caption and a permanent label rather than assigned a typed number.
+
+\begin{classroomnote}
+The name is pronounced in several ways. You may hear something close to
+``lay-tech'' or ``lah-tech''. Pronunciation does not affect the work. The
+capitalisation is written \emph{\LaTeX{}} in ordinary prose.
+\end{classroomnote}
+
+\section{Two files with different jobs}
+
+A beginning \LaTeX{} project normally has at least two forms of the document:
+
+\begin{description}[style=nextline,leftmargin=1.6em]
+  \item[The source file]
+  A plain-text file such as \file{main.tex}. It contains your words and \LaTeX{}
+  instructions. You edit this file.
+
+  \item[The output file]
+  A typeset file such as \file{main.pdf}. It contains the pages you read,
+  print, share, or submit. You inspect this file, but you normally do not use a
+  PDF editor to change its content.
+\end{description}
+
+The source is a little like a recipe: it states the ingredients and the
+operations. The PDF is the prepared result. The analogy has limits---a PDF can
+be built repeatedly from the same source without consuming anything---but it
+helps us keep the two files' roles separate.
+
+\begin{figure}[htbp]
+  \centering
+  \input{figures/diagrams/source_to_pdf}
+  \caption{The basic \LaTeX{} cycle. We edit the source, compile it, inspect the
+  PDF, and revise the source.}
+  \label{fig:source-to-pdf}
+\end{figure}
+
+The program that reads the source and creates output is a \term{compiler}.
+The act of running it is \term{compilation}. As \cref{fig:source-to-pdf}
+shows, compilation is not a final ceremony. It is part of a short cycle:
+write a small amount, compile, inspect, and improve.
+
+\begin{pausepredict}
+Suppose you find a misspelt word in the PDF. Which file should you edit: the
+PDF or \file{main.tex}? Predict what must happen after the edit before reading
+on.
+
+You edit \file{main.tex}, compile again, and inspect the newly generated PDF.
+\end{pausepredict}
+
+\section{A first look at source}
+
+The next chapter will build and explain the smallest useful document. For now,
+look at its shape:
+
+\begin{latexcode}{Preview: a minimal \LaTeX{} document}
+\documentclass{article}
+\begin{document}
+Hello, \LaTeX{}!
+\end{document}
+\end{latexcode}
+
+The lines beginning with a backslash are \term{commands}: instructions for
+\LaTeX{}. The word in braces after \cmd{documentclass} selects a broad type of
+document. Here, \code{article} supplies general rules suitable for a short
+scholarly document. The paired \cmd{begin}\required{document} and
+\cmd{end}\required{document} lines mark the region whose contents should
+appear on the page. The ordinary sentence between them becomes ordinary
+typeset text.
+
+\expectedoutput
+
+After successful compilation, the PDF contains a single page with the words
+``Hello, \LaTeX{}!'' near the upper-left area of the text block. It does not show
+the commands. They guided the construction of the page.
+
+\begin{tryit}
+Without compiling, point to the line that selects the document type, the line
+that starts the visible content, the visible sentence, and the line that ends
+the visible content. This simple source-reading habit will make later error
+messages easier to investigate.
+\end{tryit}
+
+\section{Class, packages, and content}
+
+Three layers will recur throughout the book.
+
+\begin{enumerate}
+  \item A \term{document class} supplies the broad architecture. The standard
+        classes \code{article}, \code{report}, and \code{book} make different
+        structural assumptions.
+  \item A \term{package} is a specialised toolbox added for a purpose. A
+        package might manage units, improve tables, or include graphics.
+  \item Your content includes the prose, data, equations, figures, citations,
+        and document structure that communicate your work.
+\end{enumerate}
+
+We will not load a large toolbox before we need it. The first working document
+uses only a class and a body. Later, each package will arrive with a problem it
+solves, a smallest example, and an explanation.
+
+\begin{scienceinpractice}
+A physicist may use the same \code{article} class for equations, a zoologist
+for a species description, and a computer scientist for an algorithm. Their
+content differs, but the structural ideas---title, sections, figures,
+references, and bibliography---remain recognisable. Discipline-specific tools
+can be added without rebuilding the document from nothing.
+\end{scienceinpractice}
+
+\section{How this differs from a word processor}
+
+The difference is not that one tool has buttons and the other has none. Many
+\LaTeX{} editors provide buttons, menus, and PDF previews. The deeper difference
+is the working model.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Two common approaches to preparing a document. The descriptions
+  are tendencies, not absolute rules.}
+  \label{tab:workflow-comparison}
+  \begin{tabularx}{\textwidth}{@{}
+    >{\RaggedRight\arraybackslash\bfseries}p{0.23\textwidth}
+    >{\RaggedRight\arraybackslash}X
+    >{\RaggedRight\arraybackslash}X@{}}
+    \toprule
+    Question & Visual word-processor approach & Structured \LaTeX{} approach \\
+    \midrule
+    What do you edit? & A visual representation of the pages & Plain-text
+      source that describes content and structure \\
+    How is a heading made? & Often by choosing visual properties or a style &
+      By identifying text as a section or subsection \\
+    How are numbers updated? & Automatically when features are used
+      consistently; manually when typed & From labels and references during
+      compilation \\
+    Where is broad design stored? & In document styles and direct formatting &
+      Mainly in the class, packages, and preamble \\
+    What is shared for editing? & Usually one document file & Source files,
+      bibliography, figures, and build instructions \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+A well-structured word-processor document can also use styles, automatic
+captions, and references. A poorly structured \LaTeX{} file can also contain
+fragile manual adjustments. The benefit comes from the method, not from the
+file extension alone.
+
+\section{Where \LaTeX{} is especially useful}
+
+\LaTeX{} deserves serious consideration when a document has several of the
+following features:
+
+\begin{itemize}
+  \item mathematical notation or many numbered equations;
+  \item a large bibliography with a defined citation style;
+  \item figures, tables, sections, and appendices that refer to one another;
+  \item repeated structures across many chapters;
+  \item a journal, conference, or institution that supplies a \LaTeX{} class;
+  \item source that must remain inspectable, portable, and suitable for
+        version control;
+  \item output that must be rebuilt reliably after revisions.
+\end{itemize}
+
+Those strengths help with articles, theses, technical reports, books, lecture
+notes, and documentation. They do not mean that \LaTeX{} is automatically the
+best tool for every page.
+
+\section{Realistic limitations}
+
+There is an initial learning cost. A missing character can stop compilation,
+and an error message may look forbidding before you know which line matters.
+Highly visual free-form layouts can take more work than they do in a design
+application. Collaborators who do not use \LaTeX{} may need a different review
+workflow. Accessibility remediation and publisher conversion still require
+care; attractive PDF pages alone do not guarantee an accessible document.
+
+Some tasks are simply quicker elsewhere. A one-page event poster may suit a
+graphics editor. A form that colleagues must edit visually may suit a word
+processor. A data graphic is usually created in statistical or illustration
+software and then included in \LaTeX{}. Good scholarly practice means choosing a
+tool for the work, not defending one tool for every purpose.
+
+\begin{goodpractice}
+Before adopting a journal or thesis template, verify its current official
+instructions. Do not replace its class, bibliography system, margins, or font
+choices merely because a personal setup looks more familiar.
+\end{goodpractice}
+
+\section{What happens when compilation goes wrong}
+
+The compiler reads literal instructions. If an instruction is incomplete, it
+cannot reliably guess what you intended. It writes a \term{log}: a technical
+record of the build, including errors and warnings. An editor may display a
+shorter explanation beside the source.
+
+\begin{commonerror}
+\textbf{Mistake:} treating the first red message as a judgement on the whole
+document.
+
+\textbf{What it means:} the compiler has reported a specific point where its
+reading failed or became uncertain. Later messages may be consequences of the
+first problem.
+
+\textbf{First response:} save the source, read the first meaningful error,
+note the reported line, and inspect that line and the few lines before it. We
+will practise this routine throughout the book.
+\end{commonerror}
+
+Warnings do not always stop a build. A warning may report a line that is too
+wide or a reference that needs another pass. Errors and warnings therefore
+need interpretation, not panic or automatic deletion.
+
+\section{The journey ahead}
+
+Our sequence is cumulative. First we make one page. Then we understand the
+source, organise prose, write mathematics and quantities, build tables and
+figures, connect references, and manage a bibliography. Only after those
+pieces are familiar do we control large projects and complete the three major
+document types.
+
+The end point is independence: you should be able to decide what the document
+needs, build the smallest useful version, inspect it, locate reliable package
+documentation, and prepare a clean submission without mysterious copied
+preamble fragments.
+
+\section{Code lab: source in, PDF out}
+
+\begin{codelab}
+Create a new project containing only the file below. Compile it once, change
+the title, add a second paragraph, and compile again. Your useful evidence is
+the changed PDF---not whether you memorised the commands.
+\end{codelab}
+
+\begin{latexcode}{A complete first experiment}
+\documentclass{article}
+
+\title{My first \LaTeX{} experiment}
+\author{Your Name}
+
+\begin{document}
+\maketitle
+
+This sentence came from a source file.
+
+This is a second paragraph.
+\end{document}
+\end{latexcode}
+
+Now delete the closing brace after \verb|\title{|, compile, and read the first
+error. Restore the brace immediately. You have completed the full working
+cycle: edit, compile, inspect, diagnose, repair.
+
+\chapterproject
+
+\begin{miniproject}
+Create a folder named \file{measurement-methods-article}. Do not add a complex
+template. In a plain-text note, write the following three statements:
+
+\begin{enumerate}
+  \item The project will compare Method A and Method B using simulated
+        demonstration data.
+  \item The values do not represent a real experiment or clinical study.
+  \item The eventual document will contain an abstract, sections, equations,
+        a table, figures, references, an appendix, and submission checks.
+\end{enumerate}
+
+This note defines the scholarly task before we choose formatting. In the next
+chapter, it becomes your first compilable source file.
+\end{miniproject}
+
+\chaptersummary
+
+\LaTeX{} turns structured plain-text source into typeset output. The source and
+PDF have different jobs, and a compiler connects them. A document class
+provides broad architecture; packages add specialised tools. \LaTeX{} is strong
+when a scholarly document has many structured, numbered, or reusable parts,
+but it has a learning cost and is not the best tool for every visual task. Our
+working habit will be to edit, compile, inspect, and revise in small steps.
+
+\chaptercheck
+
+\begin{chapterchecklist}
+  \item I can identify the source file and the output PDF.
+  \item I can explain compilation without using unexplained jargon.
+  \item I can state the different roles of a class and a package.
+  \item I can give one reason to choose \LaTeX{} and one reason to choose another
+        tool.
+  \item I have created the planning folder and labelled the future data as
+        simulated.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+
+\begin{chapterexercises}
+  \item In one sentence each, define \emph{source file}, \emph{compiler}, and
+        \emph{output file}.
+  \item A colleague changes a number directly in a PDF and expects the \LaTeX{}
+        source to update. Explain the broken link in this workflow.
+  \item Read the preview source in this chapter. Predict which line would be
+        visible as ordinary text in the PDF.
+  \item Name two document features that make a structured workflow valuable.
+  \item Classify each item as class, package, content, or output: a results
+        paragraph; \code{book}; a bibliography toolbox; \file{report.pdf}.
+  \item A collaborator needs a freely positioned one-page infographic and
+        will never edit source. Give a reason not to choose \LaTeX{} automatically.
+  \item Challenge: describe a document from your field that you would like to
+        build by the end of this book. List its recurring structures.
+\end{chapterexercises}

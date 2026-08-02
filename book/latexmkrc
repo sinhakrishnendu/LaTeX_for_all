@@ -1,0 +1,11 @@
+$pdf_mode = 1;
+$out_dir = 'build';
+$aux_dir = 'build';
+$bibtex_use = 2;
+$biber = 'biber %O %S';
+$makeindex = 'makeindex %O -o %D %S';
+$interaction = 'nonstopmode';
+$halt_on_error = 1;
+$recorder = 1;
+
+@generated_exts = (@generated_exts, 'run.xml', 'bcf', 'blg');

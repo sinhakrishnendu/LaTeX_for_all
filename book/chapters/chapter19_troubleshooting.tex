@@ -1,0 +1,379 @@
+\chapter{Troubleshooting \LaTeX{} Systematically}
+\label{chap:troubleshooting}
+\index{troubleshooting}\index{error message}\index{minimal working example}\index{auxiliary files}
+
+The most intimidating \LaTeX{} log often begins with one small structural mistake.
+A useful debugging habit is therefore conservative: preserve the failing case,
+read the first meaningful error, reduce the search area, test one hypothesis,
+and compile again.
+
+\begin{learningoutcomes}
+  \item Read the first meaningful error and its source context.
+  \item Diagnose braces, environments, commands, files, packages, and Unicode.
+  \item Create a minimal working example and isolate a failing section.
+  \item Repair citations, references, bibliography builds, floats, and boxes.
+  \item Decide when stale auxiliary files should be cleared.
+  \item Document a reproducible bug report without sharing confidential content.
+\end{learningoutcomes}
+
+\section{The eight-step debugging loop}
+
+Use this sequence before making broad changes:
+
+\begin{enumerate}
+  \item Save the source and reproduce the failure.
+  \item Read the \emph{first meaningful} error, not only the final stop message.
+  \item Note the named file and line, but inspect several lines around it.
+  \item Check braces, brackets, math delimiters, and environment pairs nearby.
+  \item Reduce the document by commenting out large units or using a minimal file.
+  \item Check the class or package documentation for the command and options.
+  \item Clear generated auxiliary files only when evidence suggests they are stale.
+  \item Rebuild in the required sequence and verify the correction in the PDF.
+\end{enumerate}
+
+TeX reports where it noticed a contradiction, which can be later than where the
+mistake began. An omitted closing brace in a caption may trigger an error at the
+next section. Read backwards through the logical unit.
+
+\begin{tryit}
+Open a successful build log and locate the engine version, loaded class, output
+PDF line, and any warning. Learning the shape of a healthy log makes unusual
+messages easier to recognise.
+\end{tryit}
+
+\section{Preserve the evidence}
+
+Before debugging, make a recoverable snapshot. Record the exact command, main
+file, engine, and whether the failure appears in a clean build. Do not begin by
+updating every package or deleting the entire project; that changes multiple
+variables and may destroy useful evidence.
+
+The terminal command
+
+\begin{terminalcode}{Capture a repeatable build}
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+\end{terminalcode}
+
+stops at a real error while retaining a log. An editor's summary may shorten or
+reorder messages; consult the full \file{.log} when the diagnosis is unclear.
+
+\section{Read an error record}
+
+A typical record contains an error beginning with an exclamation mark, context,
+and a line number:
+
+\begin{terminalcode}{Representative undefined-command report}
+! Undefined control sequence.
+l.42 The result was \qyt{3.2}{\metre}.
+\end{terminalcode}
+
+The engine does not know \cmd{qyt}. The likely repair is the intended
+\cmd{qty} command from \pkg{siunitx}, assuming that package is loaded. Do not
+define a new \cmd{qyt} merely to silence a typographical error.
+
+\begin{pausepredict}
+If the line shown by an error contains only \cmd{end}\required{table}, which
+earlier elements inside the table would you inspect first? Why can the closing
+line be innocent?
+\end{pausepredict}
+
+\section{Minimal working examples}
+
+A \term{minimal working example} (MWE) is the smallest complete document that
+still demonstrates the problem. Start from a copy, never dismantle the only
+working research source.
+
+\begin{latexcode}{Minimal figure test}
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\includegraphics[width=.5\linewidth]{figures/sample.pdf}
+\end{document}
+\end{latexcode}
+
+Remove unrelated packages and prose while preserving the failure. If removing
+a package makes the failure disappear, restore it and test loading order or a
+smaller interaction. An MWE answers whether the cause belongs to the content,
+the preamble, a file, or the larger project.
+
+When material is confidential, replace names and values while retaining the
+same commands and structure. Never post protected data in a public support
+forum.
+
+\section{Binary isolation}
+
+For a long file, comment out roughly half the content. If the failure remains,
+search that half; otherwise search the removed half. Repeating this process
+shrinks the suspect region quickly. Preserve necessary structure: commenting
+out the beginning of an environment but not its end creates a new error.
+
+For multi-file books, temporarily use \cmd{includeonly} or comment complete
+\cmd{input} lines. Once repaired, restore the complete project and rebuild so
+cross-file references and lists are current.
+
+\section{\LaTeX{} First-Aid Clinic}
+
+The following short cases pair a symptom with a local repair. The broken code is
+shown as evidence; do not paste it into a working manuscript unchanged.
+
+\subsection{Undefined control sequence}
+
+\begin{latexcode}{Broken: misspelt command}
+The sample was \emhp{sterile}.
+\end{latexcode}
+
+\begin{latexcode}{Corrected command}
+The sample was \emph{sterile}.
+\end{latexcode}
+
+If the spelling is correct, check whether the defining package or custom-command
+file is loaded before use.
+
+\subsection{Missing closing brace}
+
+\begin{latexcode}{Broken: open argument}
+\textbf{Important result
+The next sentence is ordinary prose.
+\end{latexcode}
+
+\begin{latexcode}{Corrected group}
+\textbf{Important result}
+The next sentence is ordinary prose.
+\end{latexcode}
+
+A missing brace can absorb many later tokens, so the reported line may be far
+from the opening command. Editor brace matching helps, but inspect nested
+commands manually.
+
+\subsection{Mismatched environment}
+
+\begin{latexcode}{Broken: environment names disagree}
+\begin{enumerate}
+  \item Calibrate the instrument.
+\end{itemize}
+\end{latexcode}
+
+\begin{latexcode}{Corrected environment pair}
+\begin{enumerate}
+  \item Calibrate the instrument.
+\end{enumerate}
+\end{latexcode}
+
+Every \cmd{begin}\required{name} needs a later
+\cmd{end}\required{name} of the same type, properly nested.
+
+\subsection{Math delimiter not closed}
+
+\begin{latexcode}{Broken: unclosed inline mathematics}
+The estimate $\hat{\theta} is unbiased.
+\end{latexcode}
+
+\begin{latexcode}{Corrected inline mathematics}
+The estimate $\hat{\theta}$ is unbiased.
+\end{latexcode}
+
+Do not repair this by adding a random dollar sign at the end of the document.
+Find the intended boundary between mathematics and prose.
+
+\subsection{File not found}
+
+\begin{latexcode}{Broken on a case-sensitive system}
+\includegraphics{Figures/Result.PDF}
+\end{latexcode}
+
+If the actual file is \file{figures/result.pdf}, correct the path and case:
+
+\begin{latexcode}{Corrected relative file name}
+\includegraphics{figures/result.pdf}
+\end{latexcode}
+
+Also verify the main build directory and accepted graphic formats. Avoid
+fixing a relative-path problem with an absolute personal path.
+
+\subsection{Missing package or class}
+
+``File \file{name.sty} not found'' means the TeX search path cannot locate a
+required package. Confirm that the name is genuine and required, then install it
+through the TeX distribution's supported manager or use a documented alternative.
+For a publisher class, include the authorised file when redistribution permits.
+Do not download an arbitrary similarly named file from an unverified mirror.
+
+\subsection{Unicode character error}
+
+With a current UTF-8 workflow, many characters work directly, but the engine,
+font, and context still matter. A copied Unicode minus sign, non-breaking space,
+or mathematical symbol may trigger an error or render inconsistently.
+
+Inspect the exact code point. Replace semantic mathematical symbols with \LaTeX{}
+commands, for example \cmd{minus} is not a standard command but a normal binary
+minus is typed as \code{-} in math mode. Use an engine and font configuration
+that intentionally supports needed scripts; do not delete a researcher's name
+or linguistic data to make an error disappear.
+
+\subsection{Undefined reference}
+
+\begin{latexcode}{Reference and target}
+See \cref{fig:growth-curve}.
+% Later:
+\label{fig:growth-curve}
+\end{latexcode}
+
+Check exact label spelling, uniqueness, and placement after the caption. Then
+compile again. Cross-references commonly require two \LaTeX{} passes because the
+label value is written to and read from an auxiliary file.
+
+\subsection{Undefined citation or empty bibliography}
+
+Check four layers:
+
+\begin{enumerate}
+  \item the citation key exactly matches an entry in the \file{.bib} file;
+  \item the database is registered with the correct command and path;
+  \item the chosen backend, Biber or BibTeX, actually ran;
+  \item \LaTeX{} ran again after the backend created bibliography data.
+\end{enumerate}
+
+For a \pkg{biblatex} and Biber workflow, \pkg{latexmk} normally determines the
+sequence. An empty bibliography can also mean that no entries were cited and
+the style prints only cited works.
+
+\subsection{Package option clash}
+
+An option clash often means a class or package already loaded the same package
+with different options. Search the log for the first loading location. Pass
+compatible options before the load or remove the duplicate call. Do not load
+the same package repeatedly in different preamble fragments.
+
+\section{Errors, warnings, and visual problems}
+
+An error prevents a reliable build. A warning signals a condition requiring
+judgement. A PDF can also be wrong without either: a transposed table value,
+misleading caption, tiny label, or hidden placeholder is not necessarily a TeX
+error.
+
+\subsection{Overfull boxes}
+
+An overfull box extends beyond its allotted width; the log reports an amount.
+Inspect the PDF at that location. Common causes are long URLs, unbreakable code,
+wide equations, and tables.
+
+Repair the content structure: allow URL breaks, enable code wrapping, split an
+equation, revise a column, or use a landscape page. Avoid a global
+\cmd{sloppy} setting or shrinking the whole document to conceal one object.
+
+\subsection{Underfull boxes}
+
+An underfull box has poor spacing within a constrained line or page. It may be
+harmless in a short caption, narrow table cell, or intentionally ragged region.
+Inspect rather than mechanically silencing it. Rewording or widening a column
+can help; forced line breaks often create more fragile layout.
+
+\subsection{Float placement}
+
+Figures and tables are floats, so \LaTeX{} balances their preferences with page
+constraints. If a float travels too far:
+
+\begin{itemize}
+  \item ensure it is referenced near its definition;
+  \item use a reasonable width and concise caption;
+  \item offer placement choices such as \code{[htbp]};
+  \item move the float source after the first explanatory paragraph;
+  \item reduce a backlog of large consecutive floats.
+\end{itemize}
+
+Use \code{[H]} only with a deliberate reason and supporting package. Repeated
+forced placement can create blank space and unstable pagination.
+
+\section{When auxiliary files are stale}
+
+Auxiliary files hold cross-references, citations, contents, lists, index data,
+and build state. Clear them when the log suggests corrupted or incompatible
+state, after a major tool or class change, or when an impossible old label
+survives. Use the build tool's clean command in the specific project:
+
+\begin{terminalcode}{Clean generated \LaTeX{} files}
+latexmk -C
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Cleaning is not a first reflex. It costs useful state and does not repair bad
+source. Never use a broad deletion command pointed at an uncertain directory.
+
+\section{Compile in the correct sequence}
+
+A project with citations and an index may need \LaTeX{}, bibliography processing,
+index processing, and further \LaTeX{} passes. \pkg{latexmk} automates dependency
+detection. If working manually, follow the toolchain documented for that project;
+Biber and BibTeX are not interchangeable commands.
+
+Repeated-pass warnings after a stable \pkg{latexmk} build may indicate a value
+that changes every run, a conflicting output directory, or an auxiliary file
+whose path is not writable. Compare the changing files rather than blindly
+increasing the maximum number of passes.
+
+\section{Package documentation and bug reports}
+
+Use \code{texdoc package-name} or the package's authoritative documentation to
+verify syntax and compatibility. When requesting help, provide:
+
+\begin{itemize}
+  \item a minimal working example;
+  \item exact build command and complete first error;
+  \item engine, distribution, class, and relevant package versions;
+  \item expected and actual behaviour;
+  \item whether the problem survives a clean build.
+\end{itemize}
+
+Remove confidential content and credentials. Screenshots of an editor can help
+with visual UI problems, but selectable error text and a compilable example are
+more useful for \LaTeX{} diagnosis.
+
+\begin{goodpractice}
+Change one factor at a time and write down the result. The smallest successful
+repair teaches more than a copied preamble containing twelve unrelated packages.
+After repair, add a test, comment, or README note if the same failure could recur.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Copy the running article to a temporary practice directory. Introduce one
+misspelt command, one mismatched environment, one missing figure path, and one
+bad citation key, one at a time. For each, save the first meaningful error,
+predict the cause, make the smallest correction, and verify the PDF. Finish with
+a clean complete build and restore the unbroken project.
+\end{miniproject}
+
+\chaptersummary
+
+Systematic debugging preserves evidence and reduces uncertainty. Reproduce the
+failure, read the first meaningful error, inspect nearby structure, isolate the
+case, consult documentation, and test one repair. Errors in commands, braces,
+environments, files, packages, Unicode, references, citations, and build order
+have distinct evidence. Box and float warnings require visual judgement.
+Auxiliary cleaning is a targeted remedy, and a minimal example is the strongest
+foundation for useful support.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item The exact failure and build command are reproducible.
+  \item The first meaningful error, file, and nearby source were inspected.
+  \item Braces, delimiters, and environments are balanced.
+  \item The problem survives a reduced example or has been isolated to a unit.
+  \item Package syntax and build sequence match authoritative documentation.
+  \item Warnings were inspected in the PDF, not merely hidden.
+  \item The full project builds after the minimal repair.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Explain why the last error in a log may be less useful than the first.
+  \item Repair three brace, delimiter, or environment mistakes in supplied code.
+  \item Reduce a failing figure document to a minimal working example.
+  \item Diagnose an undefined citation across the four bibliography layers.
+  \item Give two legitimate and two poor responses to an overfull box.
+  \item Explain when cleaning auxiliary files is evidence-based.
+  \item Write a privacy-safe bug report containing all reproducibility details.
+  \item Challenge: use binary isolation to locate a planted error in a long file
+        and record the number of compilation tests required.
+\end{chapterexercises}

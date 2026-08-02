@@ -1,0 +1,201 @@
+\chapter*{Common error-message guide}
+\addcontentsline{toc}{chapter}{Common error-message guide}
+
+Read the first meaningful error in the complete log, note its file and line,
+then inspect the surrounding logical unit. The message reports where TeX
+noticed a failure, not always where it began. Preserve the failing source and
+change one factor at a time.
+
+\begin{longtable}{@{}p{.27\textwidth}p{.31\textwidth}p{.34\textwidth}@{}}
+\toprule
+Message or symptom & Likely causes & First checks and repairs \\
+\midrule
+\endhead
+\texttt{Undefined control sequence} &
+Misspelt command; defining package or custom file not loaded; command belongs
+to another engine or package version. &
+Read the displayed token; compare spelling and case; locate its authoritative
+definition; load the necessary package once or correct the command. \\
+\addlinespace
+\texttt{Missing \} inserted} or runaway argument &
+Unclosed brace or command argument, often earlier than the reported line. &
+Inspect backwards through the paragraph, caption, cell, or heading; use editor
+brace matching; reduce nested commands. \\
+\addlinespace
+\texttt{Extra \}, or forgotten \$} &
+Closing brace without a matching opening brace; math delimiter mismatch. &
+Check group and math boundaries rather than deleting the reported character
+blindly. \\
+\addlinespace
+\texttt{\textbackslash begin\{...\} ended by \textbackslash end\{...\}} &
+Environment names differ or environments overlap instead of nesting. &
+Pair every begin and end by name; indent nested source; reduce the failing
+region to one environment. \\
+\addlinespace
+\texttt{\textbackslash begin\{document\} ended by \textbackslash end\{...\}} &
+An inner environment never closed, so TeX reaches the document end. &
+Search backwards for the last unmatched begin; compare environment counts only
+as a clue, since listings and comments may contain examples. \\
+\addlinespace
+\texttt{File name.sty not found} &
+Package not installed, false package name, or incomplete TeX installation. &
+Confirm the package on CTAN or official source; install through the supported
+distribution manager, or use a documented alternative. \\
+\addlinespace
+\texttt{File figure.pdf not found} &
+Wrong relative path, case, extension, build directory, or missing asset. &
+List the actual file; match case exactly; compile from the documented main
+directory; keep the repair project-relative. \\
+\addlinespace
+\texttt{I can't write on file ...} &
+Output directory absent, file locked, permission denied, or storage unavailable. &
+Verify the exact output path and permissions; create required auxiliary
+subdirectories; close conflicting processes; do not redirect into protected
+locations without authority. \\
+\addlinespace
+\texttt{Option clash for package ...} &
+The class or another file already loaded the package with different options. &
+Find the first load in the log; remove duplication or pass compatible options
+before loading; test the smallest package interaction. \\
+\addlinespace
+\texttt{Command ... already defined} &
+A custom name collides with the class, a package, or an earlier definition. &
+Choose a distinctive semantic name; use renewal only when intentional and
+documented; never overwrite a core command casually. \\
+\addlinespace
+\texttt{Environment ... undefined} &
+Misspelt environment or missing defining package. &
+Check exact case and documentation; load the correct package in the preamble;
+do not invent a same-named empty environment. \\
+\addlinespace
+\texttt{Unicode character ... not set up} &
+Unsupported character, copied typographic symbol, unsuitable engine/font, or
+incorrect file encoding. &
+Identify the code point; use semantic \LaTeX{} input for mathematical notation or
+configure an engine and font that intentionally supports the script. \\
+\addlinespace
+\texttt{Missing \$ inserted} &
+Math-only command used in prose, reserved underscore/caret in text, or unclosed
+mathematics. &
+Inspect the boundary; put mathematical content in math mode; escape a literal
+underscore; do not add random dollar signs. \\
+\addlinespace
+\texttt{Misplaced alignment tab character \&} &
+Literal ampersand in prose or an alignment marker outside a supported table or
+alignment. &
+Use \cmd{\&} for a literal ampersand; check table row and environment structure
+for intended alignment. \\
+\addlinespace
+\texttt{Extra alignment tab has been changed to \textbackslash cr} &
+Too many cell separators for the declared table columns. &
+Count the cells in the failing row, remembering that $n$ columns need $n-1$
+ordinary separators; inspect multicolumn spans. \\
+\addlinespace
+\texttt{There's no line here to end} &
+Forced line break used where no line is active, often after vertical space or a
+section command. &
+Remove unnecessary \cmd{\textbackslash}; use a blank line for paragraphs and
+structural commands for headings. \\
+\addlinespace
+\texttt{Not in outer par mode} &
+A float or similar outer object was placed inside a box, minipage, or another
+float where it cannot float. &
+Move the float outward; inside a minipage use non-floating content with an
+appropriate caption mechanism if truly needed. \\
+\addlinespace
+\texttt{Float(s) lost} &
+Float placed in a context that discards or cannot place it; invalid nesting. &
+Check whether a figure/table is inside another float, box, or output-sensitive
+environment; isolate the smallest float. \\
+\addlinespace
+\texttt{Too many unprocessed floats} &
+A backlog of large or overly constrained floats cannot be placed. &
+Offer reasonable placement choices, resize or rearrange floats, insert
+explanatory prose, and avoid long runs of forced figures. \\
+\addlinespace
+\texttt{Overfull \textbackslash hbox} &
+Content extends horizontally: long URL/code, wide equation, table, or word. &
+Inspect the exact PDF line; allow breaks, revise or split content, change table
+architecture, or use justified landscape layout. \\
+\addlinespace
+\texttt{Underfull \textbackslash hbox} &
+Loose spacing in a constrained line, narrow cell, ragged region, or forced break. &
+Inspect visually; reword or widen the region when distracting. Some warnings
+are harmless and should be documented rather than hidden. \\
+\addlinespace
+\texttt{Underfull \textbackslash vbox} &
+Page could not be filled evenly, often near floats or forced breaks. &
+Inspect page architecture; remove unnecessary page breaks or float constraints;
+accept intentional short pages when structurally correct. \\
+\addlinespace
+\texttt{Label(s) may have changed} &
+Cross-reference information changed on this pass. &
+Run \LaTeX{} again or use \pkg{latexmk}; investigate only if the warning never
+stabilises. \\
+\addlinespace
+\texttt{Reference ... undefined} &
+Missing, misspelt, duplicate, or stale label; insufficient passes. &
+Compare key exactly; place label after the numbered caption or heading; ensure
+uniqueness; rebuild fully. \\
+\addlinespace
+\texttt{Citation ... undefined} &
+Bad citation key, database not registered, backend not run, or stale build data. &
+Check key and \file{.bib} path, run the configured Biber/BibTeX sequence, then
+repeat \LaTeX{}. \\
+\addlinespace
+Bibliography heading appears but entries do not &
+No cited entries, backend failure, wrong database, refsection scope, or filters. &
+Inspect backend log; cite a known valid key in an MWE; confirm whether the style
+prints cited works only. \\
+\addlinespace
+\texttt{Please (re)run Biber} &
+Bibliography control data changed or no current \file{.bbl} exists. &
+Run Biber through the documented build tool, then rerun \LaTeX{} until stable;
+do not run BibTeX as a substitute. \\
+\addlinespace
+\texttt{Rerun to get cross-references right} &
+Contents, labels, bookmarks, or citations changed. &
+Use \pkg{latexmk}; if the state changes indefinitely, compare the changing
+auxiliary files for non-deterministic content. \\
+\addlinespace
+\texttt{destination with the same identifier} &
+Duplicate hyperlink anchor, often from resetting page numbering while anchors
+are active or duplicating labels. &
+Keep PDF page anchors unique, disable them around non-numbered duplicate title
+pages when appropriate, and restore them before normal numbering. \\
+\addlinespace
+\texttt{Token not allowed in a PDF string} &
+Mathematics or formatting command entered a bookmark or metadata string. &
+Supply a plain-text optional heading or use documented PDF-string alternatives;
+check the visible bookmark. \\
+\addlinespace
+\texttt{Font shape ... not available} &
+Requested family/series/shape lacks a matching font and \LaTeX{} substitutes. &
+Check the font package's supported shapes; accept documented substitution or
+choose a family with the required design. \\
+\addlinespace
+PDF has blank or stale content despite a successful message &
+Wrong main file, old output opened, cached viewer, output-directory mismatch,
+or content excluded by a conditional. &
+Compare output path and modification time; identify the main file; inspect
+conditionals and \cmd{includeonly}; make a clean build when justified. \\
+\bottomrule
+\end{longtable}
+
+\section*{A compact first-aid decision tree}
+
+\begin{enumerate}
+  \item If compilation stops, preserve the log and repair the first meaningful
+        error.
+  \item If it completes with undefined items, verify keys and run the complete
+        multi-pass toolchain.
+  \item If it completes with box or float warnings, inspect the named pages.
+  \item If the PDF is scientifically wrong, trace content to data and analysis;
+        the absence of a TeX warning is irrelevant.
+  \item If a problem survives, reduce it to an MWE and consult authoritative
+        documentation with engine and package versions.
+\end{enumerate}
+
+Clear auxiliary files only when evidence suggests stale or incompatible state,
+using the project build tool in the exact project directory. After any repair,
+restore the complete source and verify the final PDF.

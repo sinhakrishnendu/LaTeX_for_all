@@ -1,0 +1,143 @@
+\chapter{Structure and Format Text}
+\label{chap:text}
+
+\begin{learningoutcomes}
+  \item Build a clearly structured article.
+  \item Use emphasis, lists, quotations, and footnotes.
+  \item Define a command once and reuse it.
+\end{learningoutcomes}
+
+\section{Begin with structure, not appearance}
+
+This complete file covers the text tools used in most reports:
+
+\begin{latexcode}{Complete example: structured text}
+\documentclass{article}
+
+\title{Growth Under Two Conditions}
+\author{Your Name}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We compare growth under two simulated conditions.
+\end{abstract}
+
+\section{Introduction}
+The aim is to compare \emph{Condition A} with
+\emph{Condition B}.
+
+\section{Materials and Methods}
+The work followed three steps:
+\begin{enumerate}
+  \item prepare the samples;
+  \item record the measurements; and
+  \item compare the group means.
+\end{enumerate}
+
+\section{Results}
+The main observations were:
+\begin{itemize}
+  \item growth increased in both groups;
+  \item Condition B had the larger mean; and
+  \item no values were missing.
+\end{itemize}
+
+\section{Discussion}
+\textbf{Main result.} Condition B showed greater growth.
+The result is descriptive, not proof of causation.
+
+\section{Conclusion}
+The example demonstrates a compact scientific structure.
+\end{document}
+\end{latexcode}
+
+Use section commands to express hierarchy. Use \cmd{emph} for contextual
+emphasis and \cmd{textbf} for a short label. Do not format every important
+sentence manually.
+
+\section{Choose the right list}
+
+\begin{latexcode}{List recipes}
+% Order matters:
+\begin{enumerate}
+  \item Collect data.
+  \item Check data.
+  \item Analyse data.
+\end{enumerate}
+
+% Order does not matter:
+\begin{itemize}
+  \item source file
+  \item figure file
+  \item bibliography file
+\end{itemize}
+
+% Term and explanation:
+\begin{description}
+  \item[Input] The source supplied to a process.
+  \item[Output] The result produced by the process.
+\end{description}
+\end{latexcode}
+
+\section{Quotations and notes}
+
+\begin{latexcode}{Quotation and footnote}
+Short quoted words remain inside the paragraph.
+
+\begin{quote}
+A longer quotation is set apart from the surrounding text.
+\end{quote}
+
+A footnote holds a brief supporting note.\footnote{Keep
+essential reasoning in the main text.}
+\end{latexcode}
+
+\section{Define repeated material once}
+
+Put custom commands in the preamble:
+
+\begin{latexcode}{Complete example: reusable commands}
+\documentclass{article}
+
+\newcommand{\species}[1]{\textit{#1}}
+\newcommand{\samplecount}{24}
+\newcommand{\studyname}{Growth Trial}
+
+\begin{document}
+\section{\studyname}
+
+We measured \samplecount{} samples of
+\species{Arabidopsis thaliana}.
+
+The \studyname{} used the same sample count in both groups.
+\end{document}
+\end{latexcode}
+
+When a value changes, edit its definition once. Give personal commands
+distinctive names so they do not collide with existing commands.
+
+\section{Control page breaks sparingly}
+
+\begin{latexcode}{Useful page commands}
+\newpage      % finish the current page
+\clearpage    % finish the page and place waiting figures/tables
+\end{latexcode}
+
+Let \LaTeX{} choose ordinary line and page breaks. Forced breaks are for
+deliberate structural boundaries, not routine spacing.
+
+\begin{codelab}
+Start with the structured-text example. Replace the topic, add a description
+list, and define one command for a value repeated three times. Compile after
+each change.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item Headings describe the argument rather than its appearance.
+  \item Lists are used only when they make scanning easier.
+  \item Repeated terms or values are defined once.
+  \item Manual spacing and forced breaks are exceptional.
+\end{chapterchecklist}

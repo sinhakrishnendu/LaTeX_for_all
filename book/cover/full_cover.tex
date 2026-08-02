@@ -1,0 +1,133 @@
+\documentclass{article}
+
+% Full wrap for a 7 x 10 inch trim, 0.125 inch bleed, and a 0.620 inch
+% spine derived from KDP's supplied 0.552 inch width at 235 pages. The
+% current full practical edition is 264 print pages.
+\usepackage[
+  paperwidth=14.870in,
+  paperheight=10.25in,
+  margin=0in,
+  noheadfoot
+]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\definecolor{CoverCream}{HTML}{F2F0E8}
+\definecolor{CoverPaper}{HTML}{FAF9F4}
+\definecolor{CoverSlate}{HTML}{355466}
+\definecolor{CoverSlateDark}{HTML}{243B46}
+\definecolor{CoverMoss}{HTML}{68705D}
+\definecolor{CoverMist}{HTML}{D9DFE0}
+\definecolor{CoverYellow}{HTML}{D9B54A}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Set true only for a design proof. Production artwork should not contain
+% these trim guides unless the printer explicitly requests them.
+\newif\ifshowguides
+\showguidesfalse
+
+\begin{document}
+\begin{tikzpicture}[remember picture,overlay,x=1in,y=1in]
+  \coordinate (O) at (current page.south west);
+
+  % Whole spread and principal panels.
+  \fill[CoverCream] (O) rectangle ++(14.870,10.25);
+  \fill[CoverSlateDark] ($(O)+(7.125,0)$) rectangle ($(O)+(7.745,10.25)$);
+
+  % Back-cover header and footer bands.
+  \fill[CoverSlate] ($(O)+(0,8.45)$) rectangle ($(O)+(7.125,10.25)$);
+  \fill[CoverMist] ($(O)+(0,0)$) rectangle ($(O)+(7.125,0.46)$);
+  \fill[CoverYellow] ($(O)+(0.55,8.04)$) rectangle ++(0.78,0.07);
+
+  % Front-cover line motif, adapted from the supplied style reference.
+  \draw[CoverSlate,line width=3.2pt]
+    ($(O)+(8.300,6.55)$) -- ($(O)+(8.300,9.45)$);
+  \draw[CoverYellow,line width=3.2pt]
+    ($(O)+(8.430,9.08)$) -- ($(O)+(8.430,9.68)$);
+  \draw[CoverYellow,line width=1.3pt]
+    ($(O)+(8.720,9.12)$) -- ($(O)+(9.760,9.12)$);
+
+  % Front-cover photograph. The clipping band preserves the clean title area.
+  \begin{scope}
+    \clip ($(O)+(7.745,1.48)$) rectangle ($(O)+(14.870,5.92)$);
+    \node[inner sep=0pt] at ($(O)+(11.3075,3.70)$) {%
+      \includegraphics[width=7.22in]
+        {../figures/cover/mountain_road_enhanced_300dpi.png}%
+    };
+  \end{scope}
+  \fill[CoverYellow] ($(O)+(7.745,5.86)$) rectangle ++(0.82,0.06);
+
+  % Front-cover typography.
+  \node[anchor=north west,text=CoverSlateDark,text width=5.65in,
+        align=left,font=\sffamily\bfseries\fontsize{31}{34}\selectfont]
+    at ($(O)+(8.700,8.82)$) {\LaTeX{} for All};
+  \node[anchor=north west,text=CoverMoss,text width=5.45in,
+        align=left,font=\sffamily\fontsize{14}{18}\selectfont]
+    at ($(O)+(8.720,7.67)$)
+    {From Your First Document to\\Publication-Ready Scholarly Writing};
+  \node[anchor=west,text=CoverSlate,font=\sffamily\bfseries\fontsize{13}{16}\selectfont]
+    at ($(O)+(8.720,0.90)$) {Krishnendu Sinha};
+
+  % Spine lettering is suitable at this page count.
+  \node[rotate=90,text=white,font=\sffamily\bfseries\fontsize{13}{15}\selectfont]
+    at ($(O)+(7.435,5.34)$) {\LaTeX{} for All};
+  \node[rotate=90,text=CoverYellow,font=\sffamily\fontsize{7.8}{9}\selectfont]
+    at ($(O)+(7.435,1.48)$) {KRISHNENDU SINHA};
+
+  % Back-cover copy.
+  \node[anchor=north west,text=white,text width=5.75in,align=left,
+        font=\sffamily\bfseries\fontsize{18}{22}\selectfont]
+    at ($(O)+(0.68,9.66)$)
+    {Learn by compiling, changing, and repairing real documents.};
+
+  \node[anchor=north west,text=CoverSlateDark,text width=5.66in,align=left,
+        font=\sffamily\fontsize{10.2}{14}\selectfont]
+    at ($(O)+(0.68,7.68)$)
+    {\LaTeX{} for All is a hands-on route from an empty source file to
+     scholarly documents you can compile, diagnose, revise, and share.
+     Every chapter ends with a complete practical coding file, a focused
+     modification task, and a reusable working pattern.};
+
+  \node[anchor=north west,text=CoverSlate,text width=5.7in,align=left,
+        font=\sffamily\bfseries\fontsize{10.5}{13}\selectfont]
+    at ($(O)+(0.68,6.17)$) {BUILD WITH CONFIDENCE};
+  \node[anchor=north west,text=CoverSlateDark,text width=5.55in,align=left,
+        font=\sffamily\fontsize{9.7}{14}\selectfont]
+    at ($(O)+(0.83,5.78)$)
+    {$\bullet$ Compile a useful document from the first lessons\\
+     $\bullet$ Typeset mathematics, units, tables, figures, and citations\\
+     $\bullet$ Organise long, reproducible multi-file projects\\
+     $\bullet$ Build an article, thesis, and technical report\\
+     $\bullet$ Debug errors and prepare a clean submission package};
+
+  \draw[CoverMoss,line width=0.5pt]
+    ($(O)+(0.68,3.77)$) -- ($(O)+(6.45,3.77)$);
+  \node[anchor=north west,text=CoverSlate,font=\sffamily\bfseries\fontsize{10.5}{13}\selectfont]
+    at ($(O)+(0.68,3.48)$) {ABOUT THE AUTHOR};
+  \node[anchor=north west,text=CoverSlateDark,text width=5.66in,align=left,
+        font=\sffamily\fontsize{8.9}{12.1}\selectfont]
+    at ($(O)+(0.68,3.08)$)
+    {Krishnendu Sinha works across molecular evolution, sequence
+     analysis, \mbox{bioinformatics}, and \mbox{reproducible} research. He leads the
+     Sinha Molecular Evolution Group.};
+
+  \node[anchor=west,text=CoverSlate,font=\sffamily\fontsize{7.8}{9.5}\selectfont]
+    at ($(O)+(0.68,0.83)$) {sinhakrishnendu.github.io/Lab\_website/};
+
+  \ifshowguides
+    \draw[magenta,dashed,line width=0.3pt]
+      ($(O)+(0.125,0.125)$) rectangle ($(O)+(14.745,10.125)$);
+    \draw[cyan,dashed,line width=0.3pt]
+      ($(O)+(7.125,0.125)$) -- ($(O)+(7.125,10.125)$)
+      ($(O)+(7.745,0.125)$) -- ($(O)+(7.745,10.125)$);
+  \fi
+\end{tikzpicture}
+\null
+\end{document}

@@ -1,0 +1,21 @@
+\section{Methods}
+\label{sec:methods}
+
+We generated 20 positive reference values and perturbed each value to create a
+paired result from method B. The teaching data are simulated; no people,
+animals, or confidential records are involved.
+
+For pair $i$, the difference and pair mean were
+\begin{align}
+  d_i &= B_i-A_i, \label{eq:difference}\\
+  m_i &= \frac{A_i+B_i}{2}. \label{eq:pair-mean}
+\end{align}
+The mean difference $\bar d$ estimates systematic offset. Illustrative
+\SI{95}{\percent} limits of agreement were computed as
+\begin{equation}
+  \bar d \mathbin{\pm} 1.96s_d,
+  \label{eq:limits}
+\end{equation}
+where $s_d$ is the sample standard deviation of the paired differences. All
+calculations should be reproduced from the supplied analysis script in a real
+submission; values here are fixed for a portable \LaTeX{} demonstration.

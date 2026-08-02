@@ -1,0 +1,181 @@
+\chapter{Three Documents You Can Reuse}
+\label{chap:recipes}
+
+\begin{learningoutcomes}
+  \item Start a scholarly article.
+  \item Start a thesis or dissertation.
+  \item Start a technical report.
+\end{learningoutcomes}
+
+\section{Recipe 1: scholarly article}
+
+\begin{latexcode}{Complete example: compact scholarly article}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{A Clear and Specific Article Title}
+\author{Author Name}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+State the question, method, principal result, and conclusion.
+\end{abstract}
+
+\section{Introduction}
+Define the problem and end with the objective.
+
+\section{Materials and Methods}
+Describe what was done well enough to understand the analysis.
+
+\section{Results}
+Report observations without repeating every table value.
+
+\section{Discussion}
+Interpret the result, limitations, and implications.
+
+\section{Conclusion}
+Answer the stated objective directly.
+
+\section*{Declarations}
+State funding, competing interests, data conditions, and author
+contributions when applicable.
+
+\end{document}
+\end{latexcode}
+
+\section{Recipe 2: thesis}
+
+\begin{latexcode}{Complete example: compact thesis}
+\documentclass[12pt,openany]{book}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Thesis Title}
+\author{Author Name}
+\date{2026}
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\chapter*{Declaration}
+Insert the approved declaration text.
+
+\chapter*{Abstract}
+Summarise the problem, approach, major findings, and conclusion.
+
+\tableofcontents
+
+\mainmatter
+\chapter{Introduction}
+Define the research problem and objectives.
+
+\chapter{Literature Review}
+Organise prior work around the argument.
+
+\chapter{Materials and Methods}
+Describe design, data, analysis, and ethics where applicable.
+
+\chapter{Results}
+Present the findings.
+
+\chapter{Discussion}
+Interpret findings, limitations, and implications.
+
+\chapter{Conclusion}
+Answer the objectives and state the contribution.
+
+\appendix
+\chapter{Supplementary Material}
+Place supporting detail here.
+
+\end{document}
+\end{latexcode}
+
+Replace administrative text with the exact approved wording for the final
+submission. Do not invent certificates, declarations, or signatures.
+
+\section{Recipe 3: technical report}
+
+\begin{latexcode}{Complete example: compact technical report}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\title{Technical Report Title}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Executive Summary}
+State the purpose, strongest finding, and required action.
+
+\section{Context}
+Define the decision, audience, and scope.
+
+\section{Methods}
+State the evidence and method briefly.
+
+\section{Findings}
+Present evidence in the order needed for the decision.
+
+\section{Limitations}
+State uncertainty and boundaries.
+
+\section{Recommendations}
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Priority & Action & Owner \\
+\midrule
+1 & Verify the key measurement under controlled conditions. &
+Project lead \\
+2 & Record the revised procedure. & Quality lead \\
+\bottomrule
+\end{tabularx}
+
+\section{Appendix}
+Place detailed supporting material here.
+
+\end{document}
+\end{latexcode}
+
+\section{Choose the shortest form that does the job}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+Form & Use it when & Central organising idea \\
+\midrule
+Article & Reporting one bounded study & Scholarly argument \\
+Thesis & Sustaining an extended original contribution & Chapters and evidence \\
+Report & Supporting a decision or action & Findings and recommendations \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{codelab}
+Choose the recipe closest to your task. Replace every placeholder heading with
+one sentence of real content, compile, and save the result as your project
+starter.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item The document class matches the document's purpose.
+  \item Placeholder text has been replaced or deliberately retained as a task.
+  \item Administrative claims are accurate.
+  \item The shortest adequate structure was chosen.
+\end{chapterchecklist}

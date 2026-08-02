@@ -1,0 +1,25 @@
+\section{Methods}
+\label{sec:methods}
+
+Both methods report length in millimetres. For pair $i$, the signed difference
+is
+\begin{equation}
+  d_i=B_i-A_i.
+  \label{eq:paired-difference}
+\end{equation}
+The mean difference is
+\begin{equation}
+  \bar d=\frac{1}{n}\sum_{i=1}^{n}d_i.
+  \label{eq:mean-difference-running}
+\end{equation}
+
+The demonstration workflow was:
+\begin{enumerate}
+  \item confirm one stable identifier and two values for each pair;
+  \item calculate the difference in the order defined by
+        \cref{eq:paired-difference}; and
+  \item inspect paired and difference plots before summarising the values.
+\end{enumerate}
+Pairs were included when both simulated values were present and expressed in
+the same unit. The base-R check script reads the CSV and recomputes the three
+reported means.

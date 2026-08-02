@@ -1,0 +1,73 @@
+\geometry{
+  paperwidth=7in,
+  paperheight=10in,
+  inner=0.82in,
+  outer=0.72in,
+  top=0.78in,
+  bottom=0.84in,
+  headheight=15pt,
+  headsep=18pt,
+  footskip=28pt
+}
+
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{black}}
+  {\filleft\Large\chaptername\ \thechapter}
+  {0.5ex}
+  {\titlerule[0.6pt]\vspace{0.8ex}\filright}
+\titlespacing*{\chapter}{0pt}{-10pt}{28pt}
+
+\titleformat{\section}[hang]
+  {\normalfont\Large\bfseries\color{black}}
+  {\thesection}{0.65em}{}
+\titlespacing*{\section}{0pt}{2.4ex plus 0.8ex minus 0.2ex}{0.9ex plus 0.2ex}
+\titleformat{\subsection}[hang]
+  {\normalfont\large\bfseries\color{black}}
+  {\thesubsection}{0.65em}{}
+\titlespacing*{\subsection}{0pt}{2.0ex plus 0.6ex minus 0.2ex}{0.7ex plus 0.2ex}
+
+\captionsetup{
+  font=small,
+  labelfont={bf,color=black},
+  labelsep=period,
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.25em,topsep=0.4em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.25em,topsep=0.4em}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+
+\fancypagestyle{bookstyle}{
+  \fancyhf{}
+  \fancyhead[LE]{\small\thepage\quad\BookTitle}
+  \fancyhead[RO]{\small\nouppercase{\rightmark}\quad\thepage}
+  \renewcommand{\headrulewidth}{0.5pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\hypersetup{
+  pdftitle={\BookTitle: \BookSubtitle},
+  pdfauthor={\BookAuthor},
+  pdfsubject={A beginner-level textbook on scholarly writing with LaTeX},
+  pdfkeywords={LaTeX, scientific writing, scholarly publishing, thesis},
+  pdflang={en-GB},
+  colorlinks=false,
+  pdfborder={0 0 0},
+  bookmarksopen=true,
+  bookmarksnumbered=true
+}
+
+\urlstyle{same}

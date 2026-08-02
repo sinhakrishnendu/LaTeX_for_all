@@ -1,0 +1,458 @@
+\chapter{Three Complete Projects}
+\label{chap:capstones}
+\index{capstone project}\index{template!article}\index{template!thesis}\index{template!technical report}
+
+The capstones turn isolated commands into complete scholarly workflows. Each
+project begins with a task, records planning decisions, uses one of the supplied
+independent source trees, compiles to a PDF, and ends with a release audit. The
+sample evidence is simulated; the projects teach structure rather than claim
+new scientific results.
+
+\begin{learningoutcomes}
+  \item Plan and complete an article, thesis, and technical report.
+  \item Navigate each supplied source tree and explain important commands.
+  \item Compile all three projects independently from clean folders.
+  \item Replace placeholders without inventing institutional or scholarly facts.
+  \item Apply document-specific final checklists and extension tasks.
+  \item Choose a document form from audience, purpose, evidence, and authority.
+\end{learningoutcomes}
+
+\section{How to use the capstones}
+
+Choose the form closest to your immediate work, but inspect all three. They
+share equations, tables, figures, citations, and reproducibility practices while
+serving different readers:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{.18\textwidth}XXX@{}}
+  \toprule
+  Form & Primary audience & Governing constraint & Main outcome \\
+  \midrule
+  Article & Journal readers and reviewers & Current journal workflow & Bounded scholarly claim \\
+  Thesis & Examiners and institution & Degree regulations & Sustained original argument \\
+  Report & Named decision owner & Commission and controls & Traceable recommendation \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+The template folders contain complete source, not excerpts from this chapter.
+Build them before editing. Preserve an untouched copy so that a failed
+experiment can be compared with the known-good baseline.
+
+\begin{goodpractice}
+For each capstone, keep a short decision log: requirement, choice, reason,
+evidence, and date. The log separates an externally mandated rule from a local
+preference and makes later migration easier.
+\end{goodpractice}
+
+\section{Project 1: A publication-ready scholarly article}
+
+\subsection{The task}
+
+Prepare a generic article titled ``Agreement between two simulated measurement
+methods''. It must state that the data are simulated, define the signed paired
+difference, report the result in prose and a professional table, include an
+original figure, cite authentic sources, and provide complete declarations.
+Then create an anonymous review variant and a clean submission rehearsal.
+
+``Publication-ready'' here means structurally and technically ready to adapt.
+It does not mean accepted by every journal or scientifically publishable as
+empirical research. A real target journal and valid study are still required.
+
+\subsection{Planning notes}
+
+Record before editing:
+
+\begin{itemize}
+  \item target article type and intended journal placeholder;
+  \item question, unit, definition of $d_i$, and allowed claims;
+  \item abstract word limit and section pattern to verify later;
+  \item authorship, affiliations, correspondence, and anonymity plan;
+  \item required declarations, data objects, figure files, and bibliography;
+  \item build command and release evidence.
+\end{itemize}
+
+The generic template uses \code{article} because no publisher has been selected.
+This decision is explicit and reversible.
+
+\subsection{Expected folder structure}
+
+\begin{terminalcode}{Complete article source tree}
+templates/scholarly_article/
+|-- main.tex
+|-- sections/
+|   |-- abstract.tex
+|   |-- introduction.tex
+|   |-- methods.tex
+|   |-- results.tex
+|   |-- discussion.tex
+|   |-- declarations.tex
+|   `-- supplementary_methods.tex
+|-- figures/method_comparison.pdf
+|-- references.bib
+`-- README.md
+\end{terminalcode}
+
+\subsection{Complete source and important commands}
+
+The complete editable source is in
+\file{templates/scholarly\_article/}. The root file loads packages, registers
+\file{references.bib}, defines title metadata, and inputs the section files. The
+conditional
+
+\begin{latexcode}{Review identity switch}
+\newif\ifanonymous
+\anonymousfalse
+\end{latexcode}
+
+selects the visible author block. It does not remove identity from all files or
+metadata, so the README requires a wider audit.
+
+Methods defines $d_i=B_i-A_i$ and the results refer to table and figure labels
+with \cmd{cref}. \pkg{siunitx} typesets quantities; \pkg{booktabs} supplies table
+rules; \pkg{biblatex} and Biber produce the reference list. Declarations retain
+placeholders where facts cannot be inferred.
+
+\subsection{Compilation instructions}
+
+\begin{terminalcode}{Compile Project 1}
+cd templates/scholarly_article
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Read the console and \file{main.log}; then inspect \file{main.pdf}. A clean build
+needs \LaTeX{} and Biber passes, which \pkg{latexmk} schedules.
+
+\subsection{Final article checklist}
+
+\begin{chapterchecklist}
+  \item Target journal and current article instructions are recorded.
+  \item Title, abstract, results, and conclusion make the same bounded claim.
+  \item Author identities and contribution statements are approved.
+  \item The anonymous package has been audited beyond the author line.
+  \item Data, code, ethics, funding, interest, and acknowledgement statements are accurate.
+  \item Table, figure, citations, supplement, units, and labels resolve.
+  \item A clean package builds and its portal-style proof has been inspected.
+\end{chapterchecklist}
+
+\subsection{Extension exercises}
+
+\begin{enumerate}
+  \item Add a second panel that shows signed difference against pair mean.
+  \item Generate the summary values from a script rather than fixed source.
+  \item Add a reporting-guideline checklist as a named supplement.
+  \item Migrate a copy into an official journal class and document every change.
+  \item Create separate anonymous and accepted-release manifests.
+\end{enumerate}
+
+\section{Project 2: A complete thesis or dissertation}
+
+\subsection{The task}
+
+Prepare a generic five-chapter thesis that uses simulated method-agreement data
+to demonstrate a sustained structure. Include title and administrative
+placeholders, dedication, acknowledgements, abstract, contents, lists,
+abbreviations, literature context, methods, results, conclusion, appendix, and
+bibliography. Preserve explicit warnings wherever institutional wording must be
+verified.
+
+\subsection{Planning notes}
+
+Build an institutional compliance matrix before changing layout. Identify:
+
+\begin{itemize}
+  \item official class, thesis manual, degree, institution, and deposit route;
+  \item required order and wording of front matter;
+  \item page size, margins, spacing, font, numbering, and accessibility rules;
+  \item integrated or thesis-by-publication structure;
+  \item joint-work, prior-publication, ethics, copyright, and permissions records;
+  \item appendix, data, code, repository, embargo, and file-size requirements.
+\end{itemize}
+
+Do not fill a certificate or signature with invented approval. A visible
+placeholder is the correct state until authorised information exists.
+
+\subsection{Expected folder structure}
+
+\begin{terminalcode}{Complete thesis source tree}
+templates/thesis/
+|-- main.tex
+|-- metadata.tex
+|-- frontmatter/
+|-- chapters/
+|-- appendices/
+|-- figures/
+|-- references.bib
+`-- README.md
+\end{terminalcode}
+
+The full tree contains individual files for all front-matter elements, five
+chapters, and supplementary material. \file{metadata.tex} owns repeated identity
+fields.
+
+\subsection{Complete source and important commands}
+
+The complete source is in \file{templates/thesis/}. The structural sequence is
+
+\begin{latexcode}{Thesis numbering architecture}
+\frontmatter
+% preliminary pages and generated lists
+\mainmatter
+% numbered chapters
+\appendix
+% lettered appendices
+\backmatter
+% reference list
+\end{latexcode}
+
+\cmd{input} inserts small front-matter units; \cmd{include} gives each chapter
+its own auxiliary file and page start. \cmd{listoffigures} and
+\cmd{listoftables} read caption data from earlier passes. \cmd{printbibliography}
+prints the cited sources and adds them to the contents using its documented
+heading option.
+
+The project uses a manual abbreviations table because its list is small. A real
+thesis with hundreds of terms may adopt a glossary tool and document its extra
+build dependency.
+
+\subsection{Compilation instructions}
+
+\begin{terminalcode}{Compile Project 2}
+cd templates/thesis
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Inspect Roman and Arabic page numbering, title and declaration links, contents,
+lists, running heads, appendix letter, citations, and the final reference list.
+Perform one build from a fresh copy without \cmd{includeonly}.
+
+\subsection{Final thesis checklist}
+
+\begin{chapterchecklist}
+  \item The current institutional class, manual, and deposit rules are authoritative.
+  \item Every identity field and required administrative statement is verified.
+  \item Front, main, appendix, and back matter follow the mandated order.
+  \item Chapter arguments connect and the synthesis addresses the thesis question.
+  \item Joint work, prior publication, permissions, and contributions are declared.
+  \item Figures, tables, equations, lists, references, data, and code are reproducible.
+  \item The complete PDF passes compliance, accessibility, and deposit rehearsal.
+\end{chapterchecklist}
+
+\subsection{Extension exercises}
+
+\begin{enumerate}
+  \item Replace the manual abbreviation table with a generated glossary workflow.
+  \item Add a sixth chapter and a cross-chapter synthesis table.
+  \item Implement an institution-supplied title page without duplicating metadata.
+  \item Create a thesis-by-publication contribution statement and permission log.
+  \item Build a public repository package that safely excludes restricted data.
+\end{enumerate}
+
+\section{Project 3: A professional technical report}
+
+\subsection{The task}
+
+Prepare a decision-oriented report on the same simulated measurement comparison.
+The report must contain controlled cover metadata, document history,
+distribution information, an executive summary, scope, methods, findings, a
+table and original figure, limitations, owned recommendations, references, an
+evidence register, and a release checklist.
+
+The report must say that the simulated analysis cannot approve an operational
+method. Its recommendation is a controlled validation with a prespecified
+tolerance.
+
+\subsection{Planning notes}
+
+Identify the commissioning statement, decision owner, primary and technical
+audiences, deadline, scope, exclusions, evidence classes, acceptance criteria,
+reviewers, approvers, distribution, and archival repository. Define version and
+status conventions before preparing the cover.
+
+Separate the analysis finding from a tolerance judgement and the recommendation
+from the authorised decision. This distinction is the organising logic of the
+report.
+
+\subsection{Expected folder structure}
+
+\begin{terminalcode}{Complete report source tree}
+templates/technical_report/
+|-- main.tex
+|-- sections/
+|   |-- document_control.tex
+|   |-- executive_summary.tex
+|   |-- context.tex
+|   |-- methods.tex
+|   |-- findings.tex
+|   |-- recommendations.tex
+|   |-- limitations.tex
+|   `-- appendices.tex
+|-- figures/difference_plot.pdf
+|-- references.bib
+`-- README.md
+\end{terminalcode}
+
+\subsection{Complete source and important commands}
+
+The complete source is in \file{templates/technical\_report/}. Its
+\code{titlepage} creates the controlled cover. Roman numbering covers control
+material and lists;
+
+\begin{latexcode}{Report page-number transition}
+\pagenumbering{roman}
+% control material and contents
+\clearpage
+\pagenumbering{arabic}
+% decision report body
+\end{latexcode}
+
+starts the body at page 1. A restrained \pkg{fancyhdr} style repeats project and
+classification placeholders. \pkg{tabularx} allows findings and action tables to
+use the page width. The action plan connects each recommendation with an owner
+and completion evidence.
+
+\subsection{Compilation instructions}
+
+\begin{terminalcode}{Compile Project 3}
+cd templates/technical_report
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Inspect the cover and header classification together, compare the executive
+summary with the body, verify table wrapping and figure legibility, and ensure
+appendix evidence IDs resolve to preserved objects.
+
+\subsection{Final report checklist}
+
+\begin{chapterchecklist}
+  \item The commissioning statement and authorised decision owner are named.
+  \item Title, ID, version, date, status, and classification agree.
+  \item Executive-summary findings and conditions match the technical body.
+  \item Scope, assumptions, criteria, deviations, uncertainty, and limitations are visible.
+  \item Recommendations have accepted owners and objective completion evidence.
+  \item Technical review, approval, permissions, and distribution are recorded.
+  \item The immutable issued PDF, source, evidence, and manifest are archived.
+\end{chapterchecklist}
+
+\subsection{Extension exercises}
+
+\begin{enumerate}
+  \item Add a risk register with defined likelihood and impact categories.
+  \item Create a landscape appendix for a genuinely wide assurance matrix.
+  \item Add a requirement-to-evidence traceability table.
+  \item Define central commands for report ID, status, version, and issue date.
+  \item Produce public and restricted distribution variants without changing findings.
+\end{enumerate}
+
+\section{Compare the same evidence across forms}
+
+The simulated mean difference appears in all three projects, but its rhetorical
+job changes. The article presents a scholarly result and limitation. The thesis
+places it inside a sustained research argument. The report asks what decision
+can responsibly follow. This is not merely formatting: audience and authority
+change what must be stated.
+
+\begin{scienceinpractice}
+One environmental monitoring programme might produce a methods article, a
+doctoral thesis containing several site studies, and an agency report recommending
+sampling changes. Shared analysis can support all three, yet each document needs
+its own scope, provenance, approvals, and release record.
+\end{scienceinpractice}
+
+\section{Compile every example from one control point}
+
+The book repository supplies scripts that compile all standalone examples and
+all three templates. From the project root:
+
+\begin{terminalcode}{Repository-wide build checks}
+./scripts/compile_all_examples.sh
+./scripts/compile_templates.sh
+./scripts/check_project.sh
+\end{terminalcode}
+
+These checks complement, not replace, reading the PDFs. A passing compiler
+cannot confirm that an author contribution statement is true, a thesis
+declaration is authorised, or a report recommendation has an owner.
+
+\begin{commonerror}
+\textbf{Symptom:} a capstone compiles after editing but its claims still refer to
+the simulated example while the table now contains real project values.
+
+\textbf{Cause:} content was replaced file by file without a results-consistency
+and placeholder audit.
+
+\textbf{Repair:} regenerate evidence from one analysis source, trace each value
+and limitation across the document, search all placeholders and simulation
+labels, then obtain scientific review.
+\end{commonerror}
+
+\section{Code lab: compile all three capstones}
+
+\begin{codelab}
+Treat compilation as a test, not a ceremonial final step. Run each build from
+its own folder, open every PDF, and record the result beside the relevant
+checklist. A capstone is complete only when both source and output survive the
+test.
+\end{codelab}
+
+\begin{terminalcode}{Project 1: scholarly article}
+cd templates/scholarly_article
+latexmk -pdf main.tex
+\end{terminalcode}
+
+\begin{terminalcode}{Project 2: thesis or dissertation}
+cd templates/thesis
+latexmk -pdf main.tex
+\end{terminalcode}
+
+\begin{terminalcode}{Project 3: technical report}
+cd templates/technical_report
+latexmk -pdf main.tex
+\end{terminalcode}
+
+For a genuine submission, replace the generic build command when a publisher
+or institution specifies a different engine or bibliography sequence. The
+project README should state that exception explicitly.
+
+\chapterproject
+
+\begin{miniproject}
+Build all three templates without editing them. Choose one and copy it into a
+new practice folder. Write a one-page project brief, complete its planning
+notes with fictional but explicitly labelled values, make one structural and
+one evidence change, and run the final checklist. Preserve the baseline and a
+diff or change record explaining why every modification was made.
+\end{miniproject}
+
+\chaptersummary
+
+The capstones provide complete, independent source for a scholarly article,
+thesis, and technical report. Each project connects a task and planning record
+to a transparent folder tree, important commands, build procedure, final audit,
+and extensions. The same \LaTeX{} mechanisms serve all three, but audience,
+governing requirements, and decision authority change their scholarly form.
+Successful compilation is the beginning of final verification, not its end.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item All three unmodified template baselines compile independently.
+  \item The chosen form matches audience, purpose, evidence, and authority.
+  \item Planning notes distinguish requirements, conventions, and preferences.
+  \item Complete source, assets, bibliography, README, and build command are present.
+  \item Simulated evidence and unverified placeholders remain clearly labelled.
+  \item Document-specific scientific and release checklists are complete.
+  \item The edited capstone can be reconstructed from its archived project.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Match six scholarly scenarios to article, thesis, or report and justify each.
+  \item Identify the shared and form-specific components of the three projects.
+  \item Explain five important commands from one template's root file.
+  \item Compile every template and compare page architecture and reference handling.
+  \item Replace one placeholder category without creating unverifiable facts.
+  \item Design a clean release manifest for each project.
+  \item Conduct a peer audit using the appropriate final checklist.
+  \item Challenge: derive two document forms from one reproducible analysis while
+        preserving their different claims, audiences, and approvals.
+\end{chapterexercises}

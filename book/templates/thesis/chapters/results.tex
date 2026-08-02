@@ -1,0 +1,31 @@
+\chapter{Results}
+\label{chap:results}
+
+The sample means were close, with method B higher by
+\SI{0.18}{\milli\metre} on average (\cref{tab:summary}).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of simulated paired measurements.}
+  \label{tab:summary}
+  \begin{tabular}{lS[table-format=2.2]S[table-format=1.2]}
+    \toprule
+    Measure & {Mean} & {SD} \\
+    \midrule
+    Method A (\si{\milli\metre}) & 12.44 & 1.31 \\
+    Method B (\si{\milli\metre}) & 12.62 & 1.35 \\
+    Difference (\si{\milli\metre}) & 0.18 & 0.24 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.72\textwidth]{method_comparison.pdf}
+  \caption{Simulated measurements from methods A and B. The diagonal shows
+  equality and is not a fitted model.}
+  \label{fig:comparison}
+\end{figure}
+
+The figure and table are complementary: the figure shows individual pairs,
+whereas the table provides compact numerical summaries.

@@ -1,0 +1,133 @@
+\chapter{Mathematics, Symbols, and Units}
+\label{chap:math}
+
+\begin{learningoutcomes}
+  \item Type inline and displayed mathematics.
+  \item Align multi-line calculations.
+  \item Use consistent scientific units.
+\end{learningoutcomes}
+
+\section{Use math mode for mathematical meaning}
+
+\begin{latexcode}{Complete example: essential mathematics}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\begin{document}
+Inline mathematics fits within a sentence: \(y = mx + c\).
+
+\begin{equation}
+  \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+  \label{eq:mean}
+\end{equation}
+
+The mean in Equation~\ref{eq:mean} uses \(n\) observations.
+
+\begin{equation}
+  E = mc^2
+\end{equation}
+
+The sample mass was \qty{12.5}{\milli\gram}, the temperature
+was \qty{25}{\degreeCelsius}, and the interval was
+\qtyrange{5}{10}{\second}.
+\end{document}
+\end{latexcode}
+
+Use \code{\textbackslash(...\textbackslash)} for inline mathematics and a
+numbered environment when the display will be discussed later.
+
+\section{Common constructions}
+
+\begin{latexcode}{Math construction recipes}
+% Subscript and superscript
+\(x_i^2\)
+
+% Fraction, root, and Greek letters
+\(\frac{a}{b}\), \(\sqrt{x}\), \(\alpha + \beta\)
+
+% Sum, integral, and limit
+\[
+  \sum_{i=1}^{n} x_i
+  \qquad
+  \int_0^1 f(x)\,dx
+  \qquad
+  \lim_{x\to 0} f(x)
+\]
+
+% Text inside mathematics
+\[
+  y =
+  \begin{cases}
+    1, & \text{if } x > 0,\\
+    0, & \text{otherwise.}
+  \end{cases}
+\]
+\end{latexcode}
+
+Braces group multi-character subscripts and powers:
+\code{x\_\{max\}} and \code{e\^{}\{-kt\}}.
+
+\section{Align related lines}
+
+\begin{latexcode}{Aligned equations}
+\begin{align}
+  y &= mx + c, \\
+  y - c &= mx, \\
+  x &= \frac{y-c}{m}.
+\end{align}
+\end{latexcode}
+
+The ampersand marks the alignment point. Use \code{align*} when numbers are not
+needed.
+
+\section{Vectors and matrices}
+
+\begin{latexcode}{Vectors and matrices}
+\[
+  \mathbf{x} =
+  \begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    x_3
+  \end{bmatrix},
+  \qquad
+  A =
+  \begin{pmatrix}
+    1 & 0 \\
+    0 & 1
+  \end{pmatrix}.
+\]
+\end{latexcode}
+
+\section{Units that remain consistent}
+
+\begin{latexcode}{siunitx recipes}
+\num{12345.678}
+\si{\micro\metre}
+\qty{9.81}{\metre\per\second\squared}
+\qty{2.5e-3}{\mole\per\litre}
+\qtyrange{18}{22}{\degreeCelsius}
+\end{latexcode}
+
+Keep descriptive words outside math mode. Let \pkg{siunitx} control spacing and
+unit typography.
+
+\begin{commonerror}
+\textbf{Symptom:} a subscript, caret, or Greek command causes an error in prose.
+
+\textbf{Fix:} place the expression in math mode, for example
+\code{\textbackslash(\textbackslash alpha\_1\textbackslash)}.
+\end{commonerror}
+
+\begin{codelab}
+Compile the essential-mathematics example. Add one aligned calculation, one
+matrix, and three quantities from your subject. Refer to one numbered equation.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item Variables are in math mode; ordinary words are not.
+  \item Related equations align at meaningful symbols.
+  \item Units are typed semantically with \pkg{siunitx}.
+  \item Only equations discussed later are numbered.
+\end{chapterchecklist}

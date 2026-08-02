@@ -1,0 +1,44 @@
+\section{Complete Practical Coding}
+\label{sec:practical-12}
+
+The file creates its own demonstration bibliography database and runs with
+the Bib\LaTeX{}--Biber workflow.
+
+\begin{latexcode}{Complete practical file: bibliography and citations}
+\begin{filecontents*}{practical-references.bib}
+@article{example2026,
+  author       = {Researcher, Ada and Researcher, Ben},
+  title        = {A Demonstration Measurement Study},
+  journaltitle = {Example Journal},
+  year         = {2026},
+  volume       = {1},
+  pages        = {1--10}
+}
+
+@book{writing2025,
+  author    = {Writer, Cara},
+  title     = {A Demonstration Book Record},
+  publisher = {Example Press},
+  year      = {2025}
+}
+\end{filecontents*}
+
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{practical-references.bib}
+
+\begin{document}
+
+\textcite{example2026} demonstrates a narrative citation. A
+parenthetical citation is also possible \parencite{writing2025}.
+
+\printbibliography
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Compile with \code{latexmk -pdf main.tex}. Replace the demonstration records
+with checked records from your own sources, cite both keys, and confirm that
+only cited works appear.
+\end{codelab}

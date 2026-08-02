@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[british]{babel}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs,tabularx}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear,maxcitenames=2]{biblatex}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\addbibresource{references.bib}
+\graphicspath{{figures/}}
+\sisetup{separate-uncertainty=true}
+
+% Toggle anonymous review with \anonymoustrue.
+\newif\ifanonymous
+\anonymousfalse
+
+\newcommand{\manuscripttitle}{Agreement between two simulated measurement methods}
+\newcommand{\shorttitle}{Simulated method agreement}
+
+\title{\manuscripttitle}
+\ifanonymous
+  \author{Anonymous author(s)}
+\else
+  \author{First Author$^{1}$, Second Author$^{2}$\\[0.5em]
+    \small $^{1}$[Department, Institution, City, Country]\\
+    \small $^{2}$[Department, Institution, City, Country]\\
+    \small Correspondence: [name and professional email]}
+\fi
+\date{}
+
+\begin{document}
+\maketitle
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/methods}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/declarations}
+
+\printbibliography
+
+\appendix
+\input{sections/supplementary_methods}
+\end{document}

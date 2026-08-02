@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.tex text diff=tex
+*.bib text
+*.md text
+*.cff text
+*.yml text
+*.yaml text
+*.py text
+*.sh text eol=lf
+Makefile text eol=lf
+
+*.jpeg binary
+*.jpg binary
+*.png binary
+*.pdf binary

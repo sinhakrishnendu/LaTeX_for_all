@@ -1,0 +1,261 @@
+\chapter{Creating Professional Tables}
+\label{chap:tables}
+\index{table}\index{booktabs package}\index{tabularx package}\index{decimal alignment}
+
+A table is not a storage container for every recorded value. It is an argument
+in rows and columns: the reader should understand what is being compared, which
+unit applies, and what each summary means. We begin with the smallest grid and
+add only the structures required for a scholarly table.
+
+\begin{learningoutcomes}
+  \item Build a \code{tabular} with rows, columns, and alignment.
+  \item Place a table, caption, and label in a float.
+  \item Use \pkg{booktabs} rules and avoid unnecessary vertical lines.
+  \item Create flexible and multi-line columns with \pkg{tabularx}.
+  \item Align numerical columns with \pkg{siunitx}.
+  \item Prepare table notes and a multi-page \code{longtable}.
+  \item Explain a safe optional route from CSV data to a checked table.
+\end{learningoutcomes}
+
+\section{The smallest tabular}
+
+The \code{tabular} environment aligns cells. Its required argument describes
+the columns: \code{l}, \code{c}, and \code{r} mean left, centred, and right.
+
+\begin{latexcode}{Complete example: a two-column tabular}
+\documentclass{article}
+\begin{document}
+\begin{tabular}{lr}
+Method & Complete pairs \\
+A & 12 \\
+B & 12
+\end{tabular}
+\end{document}
+\end{latexcode}
+
+Ampersands separate cells; \code{\\} ends a row. Every row needs the same
+column logic. The environment aligns content but supplies neither a caption nor
+a number.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Extra alignment tab has been changed to \cmd{cr}.''
+
+\textbf{Cause:} a row contains too many ampersands for the declared columns.
+
+\textbf{Repair:} for two columns, confirm that each row has one ampersand.
+\end{commonerror}
+
+\section{Rules that organise rather than cage}
+
+Load \pkg{booktabs} and use \cmd{toprule}, \cmd{midrule}, and \cmd{bottomrule}:
+
+\begin{table}[htbp]
+  \centering
+  \caption{Descriptive summary of simulated paired measurements.}
+  \label{tab:descriptive-summary}
+  \begin{tabular}{@{}lSS@{}}
+    \toprule
+    {Method} & {Mean (mm)} & {SD (mm)} \\
+    \midrule
+    A & 5.68 & 2.71 \\
+    B & 5.74 & 2.70 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The \code{@\{\}} at each edge removes extra outer padding. The three rules
+show the table boundary and distinguish the header; they do not draw a box
+around every cell. Vertical rules and a rule after every row usually interrupt
+the horizontal reading path.
+
+\section{The table float, caption, and label}
+
+The \code{table} environment is a \term{float}: an object \LaTeX{} may move to a
+good page position. The optional \optional{htbp} offers here, top, bottom, or a
+float page; it is a preference list, not a command to violate page design.
+
+Place \cmd{caption} before \cmd{label} so the label records the table number.
+Use a descriptive name such as \code{tab:descriptive-summary}. Refer to the
+table from the prose so the reader knows why it matters.
+
+\begin{goodpractice}
+A caption should identify the population or material, variables, units, and
+important qualifications. Do not use ``Results'' as a caption. Keep detailed
+interpretation in the prose rather than hiding it beneath the table.
+\end{goodpractice}
+
+\section{Flexible text columns}
+
+The \pkg{tabularx} environment takes a width and lets \code{X} columns share
+the remaining space:
+
+\begin{latexcode}{Complete example: a descriptive table}
+\documentclass{article}
+\usepackage{booktabs,tabularx}
+\begin{document}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Item & Description \\
+\midrule
+Identifier & Stable code assigned to one simulated pair. \\
+Difference & Method B minus Method A, reported in millimetres. \\
+\bottomrule
+\end{tabularx}
+\end{document}
+\end{latexcode}
+
+For a fixed-width paragraph column, use \code{p\{width\}}. It wraps text and
+top-aligns the cell. Choose the width from the page and content, then inspect
+the result; a table with many paragraph columns may be better redesigned.
+
+\section{A statistical table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Illustrative analysis of simulated differences. Confidence limits
+  are included only to demonstrate structure.}
+  \label{tab:statistical-summary}
+  \begin{tabular}{@{}lS[table-format=1.2]S[table-format=-1.2]S[table-format=1.2]@{}}
+    \toprule
+    {Quantity} & {Estimate} & {Lower limit} & {Upper limit} \\
+    \midrule
+    Mean difference (mm) & 0.06 & -0.18 & 0.30 \\
+    SD of differences (mm) & 0.31 & {} & {} \\
+    \bottomrule
+  \end{tabular}
+
+  \begin{minipage}{0.86\textwidth}
+    \smallskip\footnotesize
+    \textit{Note.} Values are simulated. The interval is not evidence about a
+    real instrument or population.
+  \end{minipage}
+\end{table}
+
+Short table notes can sit in a minipage aligned with the table. A journal class
+may supply a dedicated notes environment; prefer it when available. An empty
+braced cell protects an \code{S} column from non-numeric content.
+
+\section{Tables across pages}
+
+Use \code{longtable} for a table that must break across pages. It is not placed
+inside a \code{table} float.
+
+\begin{latexcode}{Longtable pattern with repeated headings}
+\begin{longtable}{@{}lSS@{}}
+\caption{Complete simulated measurements.}\label{tab:all-pairs}\\
+\toprule
+{Pair} & {Method A (mm)} & {Method B (mm)} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\tablename\ \thetable\ continued}\\
+\toprule
+{Pair} & {Method A (mm)} & {Method B (mm)} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+P01 & 1.20 & 1.40 \\
+P02 & 2.10 & 1.90 \\
+% Continue with verified or explicitly simulated rows.
+\end{longtable}
+\end{latexcode}
+
+The first head appears once; the later head repeats. Foot definitions control
+continuation text and the final rule. Test with enough rows to force a page
+break, and confirm that the caption, number, header, and notes remain clear.
+
+\section{Optional: data from CSV}
+
+Copying a large dataset into source invites transcription errors. Packages can
+read CSV files, or a reproducible analysis script can export a finished
+\file{.tex} table. This is an advanced workflow because imported values still
+need validation, rounding, escaping, captions, and version control.
+
+\begin{advancedtopic}
+Keep raw data separate from presentation. Record the script and software
+version that created the table. Inspect the generated source and PDF. Never
+assume that successful import proves that columns have the intended units or
+that missing values were handled correctly.
+\end{advancedtopic}
+
+\begin{scienceinpractice}
+A geological sample table may need sample code, location, lithology, depth,
+and analytical result. If descriptions dominate, use flexible text columns; if
+measurements dominate, use decimal-aligned columns. If the full record is very
+long, show a concise analytical table in the chapter and place the complete
+record in an appendix or repository.
+\end{scienceinpractice}
+
+\section{Code lab: turn observations into a table}
+
+\begin{codelab}
+Compile the complete file, replace one simulated value, and add a third method.
+Then remove the caption's word ``Simulated'' and explain why that would be
+scientifically misleading even though the source still compiles.
+\end{codelab}
+
+\begin{latexcode}{A compact, publication-style numerical table}
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\begin{document}
+\begin{table}[htbp]
+  \centering
+  \caption{Simulated recovery measurements.}
+  \label{tab:recovery}
+  \begin{tabular}{l S[table-format=2.1] S[table-format=1.2]}
+    \toprule
+    Method & {Mean (\%)} & {SD} \\
+    \midrule
+    A & 91.4 & 2.10 \\
+    B & 94.8 & 1.73 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Replace the temporary numerical check with a numbered table containing the
+simulated Method A mean, Method B mean, and mean difference. Use
+\pkg{booktabs}, \code{S} columns, one shared unit in each heading, and a note
+stating that all values are simulated. Label and mention the table in Results.
+\end{miniproject}
+
+\chaptersummary
+
+\code{tabular} aligns cells; a \code{table} float adds placement, caption, and
+numbering. \pkg{booktabs} uses a small hierarchy of horizontal rules.
+\pkg{tabularx} and paragraph columns manage text; \pkg{siunitx} aligns numbers.
+Notes define qualifications without replacing results prose. \code{longtable}
+supports repeated headings across pages. Imported tables remain subject to
+validation and visual inspection.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Each row has the declared number of columns.
+  \item The caption says what the table contains and which data are simulated.
+  \item The label follows the caption and has a \code{tab:} prefix.
+  \item Units, rounding, missing values, and notes are unambiguous.
+  \item Numerical columns align at the decimal marker.
+  \item I did not use vertical rules merely by habit.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Build a two-column table with three data rows.
+  \item Diagnose a row with one ampersand too many.
+  \item Add \pkg{booktabs} rules and remove vertical rules.
+  \item Convert a long description column to \code{tabularx}.
+  \item Align positive and negative values with an \code{S} column.
+  \item Write a caption and note for explicitly simulated environmental data.
+  \item Explain why \code{longtable} is not placed inside \code{table}.
+  \item Challenge: redesign a real table from your field for one clear reader
+        task and document every omitted column.
+\end{chapterexercises}

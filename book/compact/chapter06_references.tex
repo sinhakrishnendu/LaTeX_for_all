@@ -1,0 +1,130 @@
+\chapter{Automatic References and Bibliographies}
+\label{chap:references}
+
+\begin{learningoutcomes}
+  \item Cross-reference sections, equations, tables, and figures.
+  \item Build a bibliography with Bib\LaTeX{} and Biber.
+  \item Keep reference data separate from prose.
+\end{learningoutcomes}
+
+\section{Label the object; refer to the label}
+
+\begin{latexcode}{Complete example: cross-references}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\begin{document}
+\section{Method}
+\label{sec:method}
+
+The estimate is defined in \cref{eq:estimate}.
+\begin{equation}
+  \hat{\theta} = \frac{1}{n}\sum_{i=1}^{n}x_i
+  \label{eq:estimate}
+\end{equation}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Simulated summary.}
+  \label{tab:summary}
+  \begin{tabular}{lr}
+    \toprule
+    Group & Mean \\
+    \midrule
+    A & 12.4 \\
+    B & 16.7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\Cref{tab:summary} reports the values calculated using the
+method in \cref{sec:method}.
+\end{document}
+\end{latexcode}
+
+Place \cmd{label} after a section command or caption, and inside a numbered
+equation. Use stable names such as \code{sec:method}, \code{eq:estimate},
+\code{tab:summary}, and \code{fig:workflow}.
+
+\section{Create a self-contained bibliography project}
+
+The next example creates its own \file{tutorial-references.bib} so it can be typed and
+compiled as one tutorial:
+
+\begin{latexcode}{Complete example: Bib\LaTeX{} and Biber}
+\begin{filecontents*}{tutorial-references.bib}
+@article{measurement2026,
+  author       = {Researcher, A. and Researcher, B.},
+  title        = {A Reproducible Measurement Study},
+  journaltitle = {Journal Name},
+  year         = {2026},
+  volume       = {1},
+  pages        = {1--10}
+}
+
+@book{writing2025,
+  author    = {Writer, C.},
+  title     = {Clear Technical Writing},
+  publisher = {Publisher Name},
+  year      = {2025}
+}
+\end{filecontents*}
+
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{tutorial-references.bib}
+
+\begin{document}
+\textcite{measurement2026} describes the method.
+Clear structure also helps readers \parencite{writing2025}.
+
+\printbibliography
+\end{document}
+\end{latexcode}
+
+Compile with:
+
+\begin{terminalcode}{Build a bibliography project}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+\pkg{latexmk} runs the required \LaTeX--Biber--\LaTeX{} sequence. In a real
+project, keep the records in a separate \file{references.bib} file.
+
+\section{Useful citation commands}
+
+\begin{latexcode}{Citation recipes}
+\textcite{key}             % Author (year)
+\parencite{key}            % (Author, year)
+\parencite[see][p. 12]{key}
+\citeauthor{key}
+\citeyear{key}
+\nocite{key}               % list without citing in prose
+\printbibliography
+\end{latexcode}
+
+Copy bibliographic details from the source itself. Do not guess authors,
+dates, titles, editions, or identifiers.
+
+\begin{commonerror}
+\textbf{Symptom:} the citation prints as a key or a question mark.
+
+\textbf{Fix:} check that the key matches, the bibliography file is named
+correctly, and Biber ran. Then compile twice more or use \pkg{latexmk}.
+\end{commonerror}
+
+\begin{codelab}
+Compile the cross-reference example and move the table before the equation;
+the references must remain correct. Then compile the bibliography example and
+add one record of your own.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item Numbers are never typed manually in cross-references.
+  \item Labels are unique and use consistent prefixes.
+  \item Every citation key exists in the bibliography file.
+  \item Bibliographic data were checked rather than invented.
+\end{chapterchecklist}

@@ -1,0 +1,221 @@
+\chapter{Labels, References, and Automatic Numbering}
+\label{chap:references}
+\index{cross-reference}\index{label}\index{automatic numbering}\index{hyperref package}\index{cleveref package}
+
+Numbers are consequences of structure. When a new table is inserted, later
+tables should renumber and every mention should follow. Labels give document
+elements stable names so the source can refer to meaning rather than a number
+that may change.
+
+\begin{learningoutcomes}
+  \item Attach labels to sections, equations, tables, and figures.
+  \item Use \cmd{ref}, \cmd{pageref}, and \cmd{eqref}.
+  \item Create readable automatic references with \pkg{cleveref}.
+  \item Add links and PDF metadata with \pkg{hyperref}.
+  \item Diagnose undefined and duplicate labels.
+  \item Replace hard-coded scholarly numbers throughout a project.
+\end{learningoutcomes}
+
+\section{A label is a permanent source name}
+
+Attach a label after the command that establishes the number:
+
+\begin{latexcode}{Labels in common structures}
+\section{Methods}
+\label{sec:methods}
+
+\begin{equation}
+  d_i=B_i-A_i.
+  \label{eq:paired-difference}
+\end{equation}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{plot.pdf}
+  \caption{Simulated paired values.}
+  \label{fig:paired-values}
+\end{figure}
+\end{latexcode}
+
+For figures and tables, the caption steps the counter, so the label follows the
+caption. For a section, place the label immediately after the heading command.
+
+Use consistent prefixes: \code{chap:}, \code{sec:}, \code{fig:},
+\code{tab:}, and \code{eq:}. The rest should describe content, not a temporary
+number. \code{fig:difference-plot} survives renumbering;
+\code{fig:figure-2} becomes misleading.
+
+\section{Basic references}
+
+\cmd{ref} prints a number and \cmd{pageref} prints its page:
+
+\begin{latexcode}{Basic reference forms}
+See Figure~\ref{fig:paired-values} on
+page~\pageref{fig:paired-values}.
+
+Equation~\eqref{eq:paired-difference} defines the difference.
+\end{latexcode}
+
+The non-breaking space keeps the name and number together. \cmd{eqref} from
+\pkg{amsmath} supplies parentheses around an equation number. The word
+``Figure'' is still typed in this basic form.
+
+\section{Readable references with cleveref}
+
+Load \pkg{hyperref} and then \pkg{cleveref}. The latter can infer the element
+type from the label:
+
+\begin{latexcode}{Intelligent reference forms}
+As shown in \cref{fig:paired-values}, the values are paired.
+
+\Cref{tab:descriptive-summary,tab:statistical-summary}
+summarise the simulated data.
+\end{latexcode}
+
+\cmd{cref} is suitable inside a sentence; \cmd{Cref} capitalises the generated
+name at the beginning. Multiple labels can produce a compact range or list
+according to the reference type and language settings.
+
+\begin{goodpractice}
+Write prose that remains grammatical if the number changes. Avoid beginning
+every sentence ``Figure X shows''. Explain the scientific point, then direct
+the reader to the evidence.
+\end{goodpractice}
+
+\section{Links and metadata}
+
+\pkg{hyperref} turns cross-references, citations, contents entries, and URLs
+into links. Load it late in the preamble, then set metadata explicitly:
+
+\begin{latexcode}{PDF metadata pattern}
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle={A Reproducible Comparison of Two Measurement Methods},
+  pdfauthor={Author Name},
+  pdfsubject={Simulated teaching article},
+  pdfkeywords={measurement, reproducibility, simulated data}
+}
+\end{latexcode}
+
+Metadata is not a substitute for visible title information. Remove draft
+authors, old titles, and software defaults before submission. A journal may
+rebuild the PDF and replace metadata.
+
+Link colour choices must remain readable in print and grayscale. Hidden links
+can be appropriate for formal submission, while coloured links help an
+electronic teaching document. Treat that as a design choice governed by the
+class or venue.
+
+\section{Why references need repeated compilation}
+
+On one pass, \LaTeX{} writes the label and its number to an auxiliary file. On a
+later pass, it reads that number into the reference. A new reference may first
+appear as question marks. \pkg{latexmk} repeats the build until the files
+stabilise.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Reference ... undefined'' and \code{??} in the PDF.
+
+\textbf{Checks:} compare label spelling and capitalisation; confirm the label
+exists; compile again; inspect whether an earlier fatal error prevented the
+auxiliary file from being written.
+
+\textbf{Do not} replace \code{??} with a typed number. That hides the broken
+connection.
+\end{commonerror}
+
+Two elements must not share one label. A duplicate label can silently send a
+reference to the wrong element while producing a multiply-defined warning.
+Search the project for the exact label and rename one meaningfully.
+
+\begin{pausepredict}
+Insert a new figure before \cref{fig:method-comparison}. Predict what happens
+to the visible figure number and to every \cmd{cref} pointing to its label.
+What would happen to text that literally said ``Figure 1''?
+\end{pausepredict}
+
+\section{A cross-reference audit}
+
+Search the source for typed constructions such as ``Figure 2'', ``Table 1'',
+or ``Section 3.2''. Some may be quotations or fixed external identifiers, but
+internal references should usually use labels. Then check:
+
+\begin{itemize}
+  \item every numbered element has at most one unique label;
+  \item every label is referenced or intentionally reserved;
+  \item labels follow the project's naming convention;
+  \item no reference points to an obsolete element;
+  \item link text makes sense to a reader and not only to the author.
+\end{itemize}
+
+\begin{scienceinpractice}
+An engineering report may cite a requirement called ``Clause 7.3'' in an
+external standard. That external identifier is text, not a \LaTeX{} label. By
+contrast, ``Section 7.3 of this report'' should be automatic. Distinguish fixed
+external names from internal numbers.
+\end{scienceinpractice}
+
+\section{Code lab: rename without renumbering}
+
+\begin{codelab}
+Compile this file twice. Insert a new equation before the labelled one and
+compile twice again. The prose should follow the new equation number without
+you touching it. Next, rename the label in only one place to create an
+undefined reference; repair both occurrences together.
+\end{codelab}
+
+\begin{latexcode}{A reference that survives revision}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[nameinlink]{cleveref}
+
+\begin{document}
+\section{Calibration}\label{sec:calibration}
+The conversion used in \cref{sec:calibration} is
+\begin{equation}\label{eq:conversion}
+  y=1.08x+0.12.
+\end{equation}
+We apply \cref{eq:conversion} to every simulated observation.
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Give every section, equation, table, figure, and appendix in the running article
+a descriptive unique label. Load \pkg{hyperref} followed by \pkg{cleveref}.
+Replace typed internal numbers with \cmd{cref} or \cmd{eqref}. Add accurate PDF
+metadata with an author placeholder. Compile until no undefined-reference
+warning remains.
+\end{miniproject}
+
+\chaptersummary
+
+Labels are stable source names attached after numbering commands. \cmd{ref}
+and \cmd{pageref} print numbers and pages; \cmd{eqref} formats equation
+numbers. \pkg{cleveref} supplies element names and handles multiple labels.
+\pkg{hyperref} adds links and metadata. Repeat compilation resolves auxiliary
+information. Undefined or duplicate warnings must be repaired, not hidden with
+typed numbers.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Labels use descriptive prefixes and unique names.
+  \item Figure and table labels follow their captions.
+  \item Internal numbers are generated, not typed.
+  \item Hyperlinks and metadata are accurate and restrained.
+  \item The final log has no undefined or multiply defined references.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Label a section, equation, table, and figure.
+  \item Refer to an equation with \cmd{eqref} and its page with \cmd{pageref}.
+  \item Convert two references to a single plural \cmd{cref}.
+  \item Repair a figure label placed before its caption.
+  \item Diagnose a reference whose label differs by one capital letter.
+  \item Explain why a duplicate label is dangerous even if a PDF is produced.
+  \item Audit PDF title and author metadata for stale draft information.
+  \item Challenge: remove every hard-coded internal number from a short report.
+\end{chapterexercises}

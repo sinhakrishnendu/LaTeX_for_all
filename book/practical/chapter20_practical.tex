@@ -1,0 +1,48 @@
+\section{Complete Practical Coding}
+\label{sec:practical-20}
+
+The release file below includes PDF metadata and prints its own final checklist.
+
+\begin{latexcode}{Complete practical file: submission-ready PDF shell}
+\documentclass{article}
+\usepackage[
+  pdftitle={Demonstration Submission},
+  pdfauthor={Your Name},
+  pdfsubject={Technical demonstration},
+  pdfkeywords={typesetting, reproducibility},
+  hidelinks
+]{hyperref}
+
+\title{Demonstration Submission}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Final content}
+Replace this text with the checked document content.
+
+\section*{Release checklist}
+\begin{itemize}
+  \item All placeholders and draft notes are resolved.
+  \item Every figure, table, equation, and citation is checked.
+  \item Page size, margins, and page numbering are correct.
+  \item Fonts are embedded and the PDF was inspected page by page.
+  \item The archived source reproduces this exact PDF.
+\end{itemize}
+
+\end{document}
+\end{latexcode}
+
+\begin{terminalcode}{Practical PDF checks}
+latexmk -C main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+pdfinfo main.pdf
+pdffonts main.pdf
+\end{terminalcode}
+
+\begin{codelab}
+Run the clean build and both PDF checks. Compare the result with the verified
+submission specification, then archive the exact source and generated PDF.
+\end{codelab}

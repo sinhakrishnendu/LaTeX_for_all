@@ -1,0 +1,251 @@
+\chapter{Document Classes, Packages, and Page Design}
+\label{chap:design}
+\index{document class}\index{package}\index{page design}\index{geometry package}\index{header}
+
+Once content is structured, design can support it consistently. The class
+should make the largest decisions; packages should solve defined problems; and
+local formatting should be the last, smallest layer. Reversing that order
+produces a preamble full of repairs whose interactions are difficult to trace.
+
+\begin{learningoutcomes}
+  \item Choose among the standard \code{article}, \code{report}, and
+        \code{book} classes.
+  \item Apply class options and load packages for stated purposes.
+  \item Locate and read current package documentation.
+  \item Set page size, margins, spacing, headers, footers, and numbering.
+  \item Prepare title, landscape, and multi-column pages when justified.
+  \item Explain how \pkg{microtype} improves typography without manual repair.
+\end{learningoutcomes}
+
+\section{Choose the broad architecture}
+
+The standard classes share many commands but differ in assumptions:
+
+\begin{description}[style=nextline,leftmargin=1.6em]
+  \item[article] Short scholarly works. Sections are the highest normal
+  division; there is no \cmd{chapter}.
+  \item[report] Longer works with chapters, a title page, and report-like
+  front matter.
+  \item[book] Books and long theses that need front, main, and back matter,
+  two-sided conventions, and parts or chapters.
+\end{description}
+
+Choose from structure, not title. A document called ``Annual Report'' may be a
+six-page article-class file; a doctoral thesis may use \code{book} or an
+institutional class.
+
+\begin{pausepredict}
+What happens if source containing \cmd{chapter} is compiled with
+\code{article}? Predict whether the class knows that command. Then decide
+whether changing the class or changing the structure better matches the task.
+\end{pausepredict}
+
+\section{Class options}
+
+Options in square brackets modify supported broad choices:
+
+\begin{latexcode}{Class options}
+\documentclass[11pt,a4paper,twoside,openright]{book}
+\end{latexcode}
+
+The example requests an 11-point base size, A4 paper, two-sided layout, and
+chapters beginning on right-hand pages. Options are class-specific. An unknown
+option may generate a warning or be passed to another component. Read the class
+documentation rather than assuming an option exists.
+
+For a publisher class, preserve its class line and options unless the current
+instructions say otherwise. A generic draft and a publisher submission are
+different design contexts.
+
+\section{Packages solve named problems}
+
+Load a package in the preamble with \cmd{usepackage}. Several packages can be
+listed together only when they need no separate options and grouping remains
+readable:
+
+\begin{latexcode}{Purposeful package loading}
+\usepackage{amsmath}  % Structured mathematics
+\usepackage{graphicx} % External graphics
+\usepackage{booktabs} % Professional table rules
+\end{latexcode}
+
+Comments record purpose. Package order sometimes matters: \pkg{hyperref} is
+usually loaded late and \pkg{cleveref} after it. A class may already load a
+package or provide an alternative interface.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Option clash for package ...''.
+
+\textbf{Cause:} the same package was loaded more than once with incompatible
+options, perhaps once by the class.
+
+\textbf{Repair:} search the preamble and log, load the package once with the
+needed options, or pass class-compatible options before it is loaded. Test a
+minimal example before changing a publisher template.
+\end{commonerror}
+
+\section{Read documentation at the point of need}
+
+On a local TeX installation, the terminal command
+
+\begin{terminalcode}{Open a package manual}
+texdoc geometry
+\end{terminalcode}
+
+asks the TeX distribution for the \pkg{geometry} documentation. CTAN package
+pages link to manuals and stable package information. Check the manual version
+against the installed package when behaviour matters.
+
+Read the introduction, examples, option reference, and compatibility notes.
+Copying an isolated answer from the web may omit its class, package version, or
+required loading order.
+
+\section{Page size and margins}
+
+The class establishes defaults. When a generic report has explicit page
+requirements, \pkg{geometry} states them clearly:
+
+\begin{latexcode}{Explicit generic report geometry}
+\usepackage[
+  a4paper,
+  inner=30mm,
+  outer=25mm,
+  top=25mm,
+  bottom=25mm,
+  headheight=15pt
+]{geometry}
+\end{latexcode}
+
+Inner and outer margins adapt to odd and even pages in a two-sided document.
+Binding requirements can justify an asymmetric layout. Do not use geometry to
+override a journal class that owns the submission dimensions.
+
+Page design is a system: paper, margins, type size, line length, header, footer,
+figures, and tables interact. Narrow margins may create long, tiring lines and
+leave no safe binding area.
+
+\section{Line spacing and paragraphs}
+
+Some review or institutional workflows require double spacing. The
+\pkg{setspace} package offers declared environments and commands:
+
+\begin{latexcode}{Optional double-spaced draft}
+\usepackage{setspace}
+
+\begin{document}
+\doublespacing
+% Draft manuscript content
+\end{document}
+\end{latexcode}
+
+Use this only when required. Increasing \cmd{baselinestretch} by guess can
+affect footnotes and floats unexpectedly. Paragraph indentation and paragraph
+spacing are also design choices; avoid combining a large indent with a large
+blank gap unless a verified style calls for both.
+
+\section{Headers, footers, and page numbering}
+
+The \pkg{fancyhdr} package can define restrained running heads:
+
+\begin{latexcode}{Two-sided running head pattern}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\thepage\quad Short Book Title}
+\fancyhead[RO]{\nouppercase{\rightmark}\quad\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\end{latexcode}
+
+\cmd{fancyhf}\required{} clears existing fields. \code{LE} means left on even
+pages; \code{RO} means right on odd pages. \cmd{rightmark} contains heading
+information. Title and chapter-opening pages commonly use a separate
+\code{plain} style.
+
+\cmd{pagenumbering}\required{roman} and
+\cmd{pagenumbering}\required{arabic} change numbering and reset the page
+counter. Long documents should use structural commands such as \cmd{frontmatter}
+and \cmd{mainmatter} when the class provides them.
+
+\section{Title pages and special orientations}
+
+The \code{titlepage} environment creates a page whose contents you control.
+Use it for a report cover or institutionally defined thesis title page after
+verifying required wording. Keep identity fields as commands or placeholders
+so they are edited once.
+
+The \pkg{pdflscape} package can rotate a genuinely wide page. The
+\pkg{multicol} package can create balanced columns for a glossary or compact
+reference, but multi-column prose complicates wide equations, figures, and
+accessibility. A two-column journal class should control its own layout.
+
+\begin{scienceinpractice}
+An environmental assessment may use portrait pages for narrative, one
+landscape page for a wide comparison matrix, and an appendix for detailed site
+records. Orientation expresses a content need; it should not vary for visual
+novelty.
+\end{scienceinpractice}
+
+\section{Microtypography}
+
+The \pkg{microtype} package applies subtle character protrusion and font
+expansion where supported. These adjustments can improve justification and
+reduce distracting spacing without changing the argument or asking the author
+to insert manual spaces.
+
+\begin{latexcode}{A restrained typographic improvement}
+\usepackage{microtype}
+\end{latexcode}
+
+It is intentionally uneventful. Good microtypography is often noticed as
+comfortable reading rather than as an effect. Inspect the build log and output;
+do not add discretionary hyphens throughout source merely to silence one draft
+line.
+
+\begin{goodpractice}
+Start from the class defaults. Add one package when a named requirement appears.
+Record the purpose, compile, inspect, and remove settings that no longer solve
+a problem. A shorter preamble is easier to test and transfer.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Create two build variants of the running article by changing only documented
+settings: a readable generic article and a review draft with line spacing or
+margins required by a hypothetical instruction. Keep the content, labels, and
+bibliography identical. Record the variant purpose in the README and do not
+present the hypothetical format as a universal submission rule.
+\end{miniproject}
+
+\chaptersummary
+
+Classes provide broad architecture; options modify supported choices; packages
+add named capabilities. Current manuals are part of the workflow. Geometry,
+spacing, headers, footers, numbering, title pages, orientation, and columns form
+an interacting page system. \pkg{microtype} can improve fine typography.
+Publisher and institutional classes should retain control over prescribed
+design.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item The class matches the document's structural scale.
+  \item Every package has a stated purpose and compatible loading order.
+  \item Page settings follow verified requirements or documented preferences.
+  \item Headers and page numbers work on odd, even, and opening pages.
+  \item Special orientations and columns solve real content problems.
+  \item The preamble contains no unexplained copied block.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Choose a standard class for a short paper, a laboratory report with
+        chapters, and a textbook.
+  \item Explain four options in the sample \code{book} declaration.
+  \item Use \code{texdoc} to locate one installed package manual.
+  \item Set asymmetric inner and outer margins for a two-sided generic report.
+  \item Create a running header and a separate plain opening-page style.
+  \item Diagnose a package option clash in a minimal example.
+  \item Explain why a publisher class should not be restyled casually.
+  \item Challenge: remove unnecessary packages from a copied preamble and
+        document the evidence for each removal.
+\end{chapterexercises}

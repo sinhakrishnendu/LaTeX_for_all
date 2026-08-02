@@ -1,0 +1,368 @@
+\chapter{Your First \LaTeX{} Document}
+\label{chap:first-document}
+\index{first document}\index{TeX distribution}\index{Overleaf}\index{compilation}
+
+The best first document is not a template with forty lines of unexplained
+settings. It is a page that you understand completely. We shall create that
+page now. Choose the online path if you want to begin without installing
+software, or the local path if a TeX system is already available. Both paths
+lead to the same \file{main.tex} source and the same essential PDF.
+
+\begin{learningoutcomes}
+  \item Create a new \LaTeX{} project online or on a local computer.
+  \item Identify the project's main source file.
+  \item Write the smallest useful document with the \code{article} class.
+  \item Compile the source and inspect the PDF preview.
+  \item Explain each line of the minimal document.
+  \item Locate the log when compilation fails.
+  \item Save or download both source and PDF output.
+\end{learningoutcomes}
+
+\section{Choose a workspace}
+
+A \term{\LaTeX{} project} is the group of files needed to build a document. Our
+first project needs only one source file. Later projects will also contain
+figures, bibliography data, and separate section files.
+
+\subsection{The online path: Overleaf}
+
+Overleaf runs the \LaTeX{} tools on a remote service and displays an editor and
+PDF preview in a web browser. It is convenient for the first lesson because
+there is no local installation to diagnose. The names and positions of
+interface controls may change, so treat the steps below as tasks rather than a
+permanent map of the screen. The current official documentation explains
+project creation, recompilation, main documents, and downloads
+\parencite{overleafFirstProject,overleafRecompile,overleafMainDocument,
+overleafDownload}.
+
+\begin{enumerate}
+  \item Sign in to Overleaf and create a new blank project.
+  \item Give it a useful name, such as \file{first-latex-document}.
+  \item In the file list, select \file{main.tex}. Delete any sample content so
+        that the file is empty.
+  \item Type the source shown in \cref{sec:minimal-document} exactly.
+  \item Run the project's Recompile action.
+  \item Inspect the PDF preview and, if necessary, open the log or error panel.
+\end{enumerate}
+
+Overleaf treats one \file{.tex} file as the \term{main document}: the file sent
+to the compiler first. In a one-file project, \file{main.tex} is the natural
+choice. In a multi-file project, a chapter file is not normally the main
+document because it may depend on settings stored elsewhere.
+
+\begin{classroomnote}
+Overleaf normally saves edits automatically, but a remotely saved project is
+not a substitute for an independent backup. Download the source as a ZIP file
+at sensible milestones and download the PDF separately. Current Overleaf
+documentation notes that the ordinary source download and PDF download are
+separate actions \parencite{overleafDownload}.
+\end{classroomnote}
+
+\subsection{The local-computer path}
+
+Local work requires a \term{TeX distribution}: a maintained collection of the
+compiler, standard classes, packages, fonts, and utilities. Common choices are
+TeX Live on macOS and Linux, and either MiKTeX or TeX Live on Windows. macOS
+users often install MacTeX, which is a TeX Live distribution packaged for the
+platform. Installation details change, so use the current official installer
+for your operating system rather than an old third-party tutorial.
+
+You also need a plain-text editor. TeXstudio is a focused \LaTeX{} editor. Visual
+Studio Code can become a \LaTeX{} editor through the \LaTeX{} Workshop extension.
+Neither editor changes the language in \file{main.tex}; it changes how you
+edit, compile, and view it.
+
+After installing a distribution and editor:
+
+\begin{enumerate}
+  \item Create a folder named \file{first-latex-document}.
+  \item In that folder, create a plain-text file named \file{main.tex}.
+  \item Type the minimal source in \cref{sec:minimal-document}.
+  \item Save the file before compiling.
+  \item Use the editor's build action, or run \pkg{latexmk} as described in
+        \cref{sec:latexmk-first}.
+\end{enumerate}
+
+Do not write the source in an application that silently saves a word-processing
+format. The file must be plain text and its name must end in \file{.tex}, not
+\file{.tex.txt}.
+
+\begin{goodpractice}
+Use a short folder name made from letters, numbers, hyphens, or underscores.
+For example, \file{first-latex-document} travels more reliably than a name
+containing punctuation and several spaces. Later we will develop a complete
+file-naming policy for collaborative projects.
+\end{goodpractice}
+
+\section{The smallest useful document}
+\label{sec:minimal-document}
+
+Type these four lines. Do not add a title, packages, page settings, or copied
+preamble material yet.
+
+\begin{latexcode}{Complete example: main.tex}
+\documentclass{article}
+\begin{document}
+Hello, \LaTeX{}!
+\end{document}
+\end{latexcode}
+
+Save the source and compile it. A successful build produces a PDF. If your
+editor shows a green tick or a message such as ``process exited normally'',
+that status is helpful, but the PDF itself still deserves inspection.
+
+\expectedoutput
+
+You should see one page containing ``Hello, \LaTeX{}!'' as an ordinary line of
+text. The type, margins, page size, and page number come from class defaults.
+Your result may differ slightly across current TeX installations, but the
+sentence should be present and readable.
+
+\sourceanatomy
+
+\paragraph{Line 1: \cmd{documentclass}\required{article}.}
+The backslash begins a command. The command name is
+\code{documentclass}. The braces contain a required piece of information: the
+class name \code{article}. A class acts like an architectural plan. It defines
+the broad structures and default appearance available to the document.
+
+\paragraph{Line 2: \cmd{begin}\required{document}.}
+This line opens the \code{document} \term{environment}. An environment is a
+region with a defined beginning and end. Here it marks the beginning of
+material that can appear in the output.
+
+\paragraph{Line 3: ordinary text.}
+This line contains no command. \LaTeX{} treats it as text to typeset. We used a
+comma and exclamation mark in the ordinary way.
+
+\paragraph{Line 4: \cmd{end}\required{document}.}
+This line closes the environment opened on line 2. \LaTeX{} ignores source after
+this line during an ordinary document build, so the document should genuinely
+end here.
+
+The portion before \cmd{begin}\required{document} is called the
+\term{preamble}. The portion between the opening and closing lines is the
+\term{document body}. Our preamble currently contains only the class
+declaration.
+
+\begin{tryit}
+Replace the sentence with your own plain sentence, save the file, and compile
+again. Confirm that the sentence changes but the page's broad design does not.
+Then add a second sentence on the next source line and compile once more. What
+does \LaTeX{} do with the line break?
+\end{tryit}
+
+The second source line normally continues the same paragraph. A source line is
+not automatically a printed line. This behaviour lets us wrap source for
+readability without commanding a visual break after every line. Blank lines
+and paragraphs receive a full explanation in \cref{chap:source-anatomy}.
+
+\section{What compilation does}
+
+When you compile, the engine reads the class declaration first. It then reads
+the body in order, interprets commands, and constructs pages. It writes a PDF
+and several temporary \term{auxiliary files}. An auxiliary file stores
+information needed by the build, such as a table-of-contents entry or a label
+number.
+
+This explains why a longer document sometimes needs more than one compiler
+pass. On the first pass, \LaTeX{} records information. On a later pass, it reads
+that information and places it in the PDF. You do not need to manage those
+passes by hand when a tool such as \pkg{latexmk} can detect them.
+
+\subsection{A first local build with latexmk}
+\label{sec:latexmk-first}
+
+A \term{terminal} is a text-based window in which you give the computer a
+command. Open a terminal in the folder containing \file{main.tex}, then enter:
+
+\begin{terminalcode}{Terminal command}
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Here \code{latexmk} is the build tool, \code{-pdf} requests PDF output, and
+\file{main.tex} is the main source. \pkg{latexmk} runs the required programs
+again when it detects unfinished references or bibliography work. Its official
+manual describes this automated build role \parencite{latexmkCTAN}.
+
+To remove generated auxiliary files after an experiment, use:
+
+\begin{terminalcode}{Clean generated files}
+latexmk -C main.tex
+\end{terminalcode}
+
+The capital \code{-C} removes generated products recognised by
+\pkg{latexmk}. Check that you are in the intended project folder before using
+any clean command. Your \file{main.tex} source should remain.
+
+\begin{advancedtopic}
+An editor's build button usually runs one or more command-line programs behind
+the interface. Learning the \pkg{latexmk} command is useful because it gives a
+project a reproducible instruction that does not depend on one editor. You may
+continue using the build button while you are learning.
+\end{advancedtopic}
+
+\section{Compile, inspect, revise}
+
+Compilation succeeding is necessary, but it is not the same as the document
+being correct. Develop a four-part routine:
+
+\begin{enumerate}
+  \item \textbf{Compile} after a small, coherent edit.
+  \item \textbf{Inspect} the area that should have changed.
+  \item \textbf{Read} any error and the most relevant warnings.
+  \item \textbf{Revise} the source, not the generated PDF.
+\end{enumerate}
+
+Frequent builds keep cause and effect close together. If you write 200 lines
+before compiling, an error could be anywhere in those lines. If you write five
+lines, the search area is much smaller.
+
+\begin{pausepredict}
+Change \code{article} to \code{book}, but do not compile yet. Will the words
+``Hello, \LaTeX{}!'' remain? Might some broad page choices change? Make a
+prediction, compile, and compare.
+
+Then restore \code{article}. We will compare classes properly after learning
+the structures they provide.
+\end{pausepredict}
+
+\section{Your first controlled error}
+
+Keep a working copy of the successful source. In the practice copy, remove
+the backslash from the second line:
+
+\begin{latexcode}{Broken example: do not use as a working document}
+\documentclass{article}
+begin{document}
+Hello, \LaTeX{}!
+\end{document}
+\end{latexcode}
+
+Compile. The wording varies with the engine and editor, but the log should
+report a problem involving a missing \cmd{begin}\required{document} or text in
+the wrong place. \LaTeX{} saw the characters \code{begin\{document\}} as text,
+not as the command required to open the body.
+
+Repair the line:
+
+\begin{latexcode}{Corrected line}
+\begin{document}
+\end{latexcode}
+
+Compile again and confirm that the successful PDF returns.
+
+\begin{commonerror}
+\textbf{Symptom:} the editor reports ``Missing \cmd{begin}\required{document}''.
+
+\textbf{Likely causes:} the opening command is missing, misspelt, or lacks its
+backslash; or visible text has accidentally been placed in the preamble.
+
+\textbf{Repair:} compare the top of the file with the four-line working
+example. Correct the first structural difference, save, and compile again.
+Do not respond by adding several unexplained commands at once.
+\end{commonerror}
+
+\section{Saving and keeping both forms}
+
+The editable scholarly record is not just the PDF. Keep \file{main.tex} and,
+when the project grows, all figures, data used to generate figures, bibliography
+files, local class/style files permitted for sharing, and build instructions.
+The PDF records what a particular build produced; the source makes revision
+and reproduction possible.
+
+On Overleaf, use the current project menu to download source and the PDF-view
+control to download the typeset PDF. The source download is normally a ZIP
+archive. Extract it and verify that \file{main.tex} is present. On a local
+computer, make a backup outside the project folder or in a properly managed
+versioned location.
+
+\begin{scienceinpractice}
+Suppose an environmental monitoring report is revised after one unit label is
+corrected. Keeping only the old PDF preserves the error. Keeping source plus
+the data, figure, and build instruction makes the correction traceable and the
+revised report reproducible.
+\end{scienceinpractice}
+
+\section{The first complete working pattern}
+
+We can now state our first eight-step pattern explicitly:
+
+\begin{enumerate}
+  \item \textbf{Identify the problem:} create one typeset page.
+  \item \textbf{Describe the output:} one sentence in a readable PDF.
+  \item \textbf{Select the structure:} the standard \code{article} class and
+        document environment.
+  \item \textbf{Write the smallest source:} four lines.
+  \item \textbf{Compile and inspect:} confirm the sentence appears.
+  \item \textbf{Correct errors:} compare the first structural difference.
+  \item \textbf{Improve carefully:} change one sentence, then rebuild.
+  \item \textbf{Check fitness:} retain both source and PDF. This is a practice
+        page, not yet a submission-ready article.
+\end{enumerate}
+
+That last sentence matters. A file can compile successfully without meeting a
+scholarly purpose. Technical validity and publication readiness are related,
+but they are not identical.
+
+\chapterproject
+
+\begin{miniproject}
+Inside \file{measurement-methods-article}, create \file{main.tex} with this
+source:
+
+\begin{latexcode}{Running project: first compilable version}
+\documentclass{article}
+\begin{document}
+This project compares Method A and Method B.
+
+All values are simulated demonstration data.
+\end{document}
+\end{latexcode}
+
+Compile it. The blank source line begins a new paragraph. Inspect the PDF and
+keep both source and output. Add a plain-text \file{README.md} stating that the
+project is educational and the data are simulated. Do not add titles,
+sections, equations, or packages yet; we shall earn each layer.
+\end{miniproject}
+
+\chaptersummary
+
+A first project can be created online or locally. Its main source file is the
+file the compiler reads first. The minimal document selects the
+\code{article} class, opens the document body, contains ordinary text, and
+closes the body. Compilation produces a PDF and auxiliary files. Frequent
+small builds make errors easier to locate, and \pkg{latexmk} automates repeated
+passes. A responsible archive keeps editable source as well as output.
+
+\chaptercheck
+
+\begin{chapterchecklist}
+  \item I have compiled the four-line document successfully.
+  \item I can point to the preamble and document body.
+  \item I can explain every line without calling it ``just required code''.
+  \item I know where my editor or online project shows the build log.
+  \item I deliberately created and repaired the missing-backslash error.
+  \item I saved or downloaded both source and PDF.
+  \item My running project clearly labels its content as simulated.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+
+\begin{chapterexercises}
+  \item Write the four-line minimal document from memory, then compare it with
+        the printed source before compiling.
+  \item What is the difference between the \code{article} class and the
+        \code{document} environment in this example?
+  \item Predict what happens when two ordinary source lines have no blank line
+        between them. Test your prediction.
+  \item Change ``Hello, \LaTeX{}!'' to a sentence from your field. Compile and
+        identify which source line changed the output.
+  \item Repair this broken opening without adding new commands:
+        \code{begin\{document\}}.
+  \item Explain why a successful compiler exit does not prove that a report is
+        scientifically or typographically correct.
+  \item Challenge: compile the same source online and locally, if both paths
+        are available. Record any visible difference and avoid assuming that a
+        difference is an error.
+\end{chapterexercises}

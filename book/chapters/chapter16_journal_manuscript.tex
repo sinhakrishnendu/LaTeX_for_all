@@ -1,0 +1,343 @@
+\chapter{Preparing a Journal Manuscript}
+\label{chap:journal}
+\index{journal manuscript}\index{anonymous review}\index{declaration}\index{supplementary material}
+
+A journal submission is a scientific argument inside a changing operational
+workflow. The journal decides the current class, file set, anonymous-review
+rules, declarations, reference style, and upload process. Authors must preserve
+meaning while adapting to those verified constraints.
+
+\begin{learningoutcomes}
+  \item Translate current author instructions into a manuscript plan.
+  \item Build title, author, affiliation, abstract, keywords, and IMRaD sections.
+  \item Prepare anonymous and identified variants without hidden identity leaks.
+  \item Write contribution, funding, interest, ethics, data, and code statements.
+  \item Decide when a publisher class should replace a generic draft class.
+  \item Package clean source, figures, bibliography, and supplementary files.
+\end{learningoutcomes}
+
+\section{Start with the target journal}
+
+Before formatting, locate the journal's current author instructions, manuscript
+type, template, reference guidance, data policy, ethics requirements, and file
+limits. Record the access date. A copied template from an old submission or a
+colleague may encode retired requirements.
+
+Build a small compliance table with columns for instruction, source URL or
+document, manuscript location, and verification status. Separate mandatory
+rules from recommendations. If the journal requires its own class, compile the
+publisher's unchanged sample before moving content into it.
+
+\begin{submissioncheck}
+Confirm whether the first upload expects publisher formatting, a readable
+generic manuscript, or a format-free submission. These are different workflows.
+Do not redesign a publisher class to imitate a personal house style.
+\end{submissioncheck}
+
+\section{Tour the independent article}
+
+The project under \file{templates/scholarly\_article/} is deliberately generic.
+It contains one driver, section files, a bibliography database, and an original
+simulated figure:
+
+\begin{terminalcode}{Build the scholarly article}
+cd templates/scholarly_article
+latexmk -pdf main.tex
+\end{terminalcode}
+
+The template makes no claim to match a particular journal. Its README tells the
+author to replace placeholders and consult current instructions. This is an
+important form of honesty: a reusable starting point should not pretend to be
+an authorised publisher template.
+
+\section{Title and short title}
+
+A useful title identifies the subject, relationship or design, and sometimes
+the population. Avoid claims stronger than the evidence and abbreviations that
+database readers cannot decode. Many submission systems ask for both a full
+title and a running title with a strict character limit.
+
+Store these strings semantically:
+
+\begin{latexcode}{Title metadata}
+\newcommand{\manuscripttitle}{Agreement between two
+simulated measurement methods}
+\newcommand{\shorttitle}{Simulated method agreement}
+\title{\manuscripttitle}
+\end{latexcode}
+
+Check capitalisation rules and ensure the title entered in the submission form
+matches the PDF. Metadata discrepancies create avoidable production queries.
+
+\section{Authors, affiliations, and correspondence}
+
+Establish authorship and order through the project's accepted process before
+submission. Record each author's preferred publishing name, affiliation during
+the work, current address if required, persistent identifier, and contribution.
+The corresponding author field usually needs a durable professional address.
+
+Do not guess superscript syntax. Publisher classes commonly define their own
+author and affiliation commands. In a generic draft, a compact manual layout is
+acceptable, but it must be replaced using documented publisher syntax later.
+
+\begin{commonerror}
+\textbf{Symptom:} the anonymous PDF contains no author block, yet identity is
+revealed by acknowledgements, self-citations, PDF properties, file names, tracked
+changes, repository links, or embedded figure metadata.
+
+\textbf{Repair:} perform an anonymity audit across the entire submission
+package and the submission form. Follow the journal's rule for referring to
+prior work; do not automatically distort citations.
+\end{commonerror}
+
+\section{A safe anonymity toggle}
+
+For a generic draft, a conditional can switch the visible author block:
+
+\begin{latexcode}{Anonymous display variant}
+\newif\ifanonymous
+\anonymoustrue % change to \anonymousfalse after review
+
+\ifanonymous
+  \author{Anonymous author(s)}
+\else
+  \author{[Authors and affiliations]}
+\fi
+\end{latexcode}
+
+This is only one layer. An anonymous build may also need a separate declarations
+file or placeholders for repository identifiers. Keep the identified data in
+version control with appropriate access; avoid deleting it and reconstructing
+it from memory after review.
+
+\section{Write a structured abstract}
+
+An abstract commonly contains four moves:
+
+\begin{enumerate}
+  \item the problem or objective;
+  \item essential design, sample, and analysis;
+  \item principal results with interpretable scale;
+  \item a conclusion bounded by the study.
+\end{enumerate}
+
+Some journals require labelled headings; others prohibit them. Check the word
+limit and abbreviation policy. An abstract should not rely on a figure, table,
+equation number, or unexplained citation. Values in the abstract must match the
+main text and submission form.
+
+Choose keywords for discovery and indexing, not as a list of words already in
+the title. Use controlled vocabulary when the field or journal requires it.
+
+\section{IMRaD as a claim structure}
+
+Introduction, Methods, Results, and Discussion remain a useful empirical
+pattern:
+
+\begin{description}[style=nextline,leftmargin=1.6em]
+  \item[Introduction] Establish the knowledge gap and end with the objective,
+  question, or hypothesis.
+  \item[Methods] Provide enough design, measurement, analysis, and governance
+  information to evaluate and reproduce the work.
+  \item[Results] Report observations and analyses without turning the section
+  into a second Methods or Discussion.
+  \item[Discussion] Interpret the results, compare them with prior work, state
+  limitations, and give a proportionate conclusion.
+\end{description}
+
+IMRaD is not compulsory for theory, methods, qualitative research, reviews, or
+data papers. Use the article type's reporting guideline and the journal's
+headings. The logical test is whether a reader can find the question, evidence,
+and reasoning.
+
+\section{Results that agree across forms}
+
+One result may appear in the abstract, prose, a table, a figure, and a response
+to reviewers. Make a results consistency sheet containing the analysis variable,
+value, unit, rounding rule, source output, and every manuscript location.
+
+Tables should report exact values efficiently; figures should reveal patterns.
+Do not duplicate every table cell in prose. Lead with the scientific finding,
+then direct the reader to the display:
+
+\begin{latexcode}{Evidence linked to a stable reference}
+Method B was higher by \SI{0.18}{\milli\metre} on
+average (\cref{tab:summary}).
+\end{latexcode}
+
+If analysis changes, regenerate the display and re-audit the abstract and
+discussion. Changing the PDF figure alone is not a complete correction.
+
+\section{Declarations are part of the scholarship}
+
+The exact headings differ, but modern submissions commonly ask about:
+
+\begin{itemize}
+  \item author contributions;
+  \item funding and the funder's role;
+  \item competing or relevant interests;
+  \item ethics review, consent, and registration where applicable;
+  \item data, code, materials, and protocol availability;
+  \item acknowledgements and non-author assistance.
+\end{itemize}
+
+Use the journal's current wording and taxonomy. ``Not applicable'' is a claim
+that should be assessed, not a default escape. Data availability statements
+must reflect real access conditions. A persistent repository identifier is more
+useful than ``available on request'' when lawful and ethical sharing is possible.
+
+\begin{scienceinpractice}
+A field ecology article may archive de-identified observation data and analysis
+code openly while restricting precise coordinates for an endangered species.
+Its availability statement should name both the public objects and the reasoned
+restriction, rather than calling all data either open or unavailable.
+\end{scienceinpractice}
+
+\section{Publisher classes and package restraint}
+
+When moving to an official class:
+
+\begin{enumerate}
+  \item preserve a working generic copy or branch;
+  \item build the unmodified publisher sample;
+  \item transfer metadata and plain structure in small increments;
+  \item use the class's title, abstract, theorem, and bibliography interfaces;
+  \item add packages only for capabilities the class does not provide;
+  \item inspect warnings after every meaningful change.
+\end{enumerate}
+
+Publisher classes may redefine floats, captions, headings, citations, and
+two-column behaviour. Packages that worked with \code{article} can conflict.
+Visual differences from the generic draft are not automatically defects.
+
+\begin{advancedtopic}
+Some workflows accept a \file{.bib} database; others require a generated
+\file{.bbl}; still others rebuild references from submission metadata. Submit
+only the required representation, but retain the authoritative database and
+build record in the research archive.
+\end{advancedtopic}
+
+\section{Line numbers and review spacing}
+
+Reviewers may require line numbers or double spacing. Treat these as build
+variants, not handwritten edits. The \pkg{lineno} and \pkg{setspace} packages
+are useful with compatible generic classes, but publisher templates may provide
+their own options.
+
+Inspect line numbering around equations, floats, and multi-column layouts.
+Confirm whether continuous or page-wise numbering is required. Remove review
+marks from the accepted production source unless instructed otherwise.
+
+\section{Supplementary files}
+
+Every supplement needs a stable name, title, citation from the manuscript, and
+appropriate legend or README. Verify whether figure and table numbering restarts
+with an ``S'' prefix, and whether references are shared or separate.
+
+Code and data supplements should contain machine-readable files, not only
+screenshots. Include a data dictionary, licence, environment or dependency
+record, random seed where relevant, and exact execution order. Never upload
+restricted or identifiable data simply because the interface offers a slot.
+
+\section{A clean submission package}
+
+Create the upload package from versioned, required sources rather than sending
+the entire working directory. Exclude auxiliary files, private notes, obsolete
+figures, local caches, credentials, and unrelated data. Include every custom
+style or permitted font dependency required by the venue.
+
+Run a clean build in a new directory, then verify:
+
+\begin{itemize}
+  \item the designated main file is obvious;
+  \item every figure opens and uses the accepted format and resolution;
+  \item citations resolve and bibliography data are complete;
+  \item supplementary references and file names match;
+  \item PDF fonts, page size, links, and metadata meet instructions;
+  \item no comments or annotations reveal confidential review history.
+\end{itemize}
+
+\begin{goodpractice}
+Save the submitted PDF, source package, supplementary files, submission-form
+metadata, cover letter, and a timestamped manifest together. This release is the
+baseline for responses to reviewers.
+\end{goodpractice}
+
+\section{Code lab: switch between review and identified copies}
+
+\begin{codelab}
+Compile with \verb|\anonymousfalse|, inspect the author line, then change it to
+\verb|\anonymoustrue| and compile again. One switch should control every
+identity-bearing field; searching and deleting names by hand is unreliable.
+\end{codelab}
+
+\begin{latexcode}{A review-mode switch in a complete article}
+\documentclass[12pt]{article}
+\usepackage{setspace}
+\usepackage{lineno}
+
+\newif\ifanonymous
+\anonymousfalse % Change to \anonymoustrue for anonymous review.
+
+\title{A Reproducible Comparison of Two Measurement Methods}
+\ifanonymous
+  \author{Anonymous authors}
+\else
+  \author{Author Name\\Institution}
+\fi
+
+\begin{document}
+\doublespacing
+\linenumbers
+\maketitle
+\begin{abstract}
+This demonstration uses simulated data to compare two methods.
+\end{abstract}
+\section{Introduction}
+State the question and the contribution.
+\section{Methods}
+Describe data, analysis, and software sufficiently for reproduction.
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Build \file{templates/scholarly\_article/main.tex}. Produce identified and
+anonymous variants using the documented toggle. Audit the anonymous PDF and
+source archive for six identity channels. Then replace one simulated result and
+list every manuscript location that would require regeneration or verification.
+\end{miniproject}
+
+\chaptersummary
+
+A journal manuscript begins with current author instructions and a bounded
+claim, not with decorative formatting. Titles, author metadata, abstracts,
+IMRaD sections, results displays, declarations, and supplements each serve a
+scholarly function. Anonymous review requires a package-wide audit. Official
+classes should be adopted through their documented interfaces, and a clean,
+minimal, versioned submission release preserves what the journal actually saw.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item The manuscript type and current journal instructions are recorded.
+  \item Title, author order, affiliations, and correspondence are confirmed.
+  \item Abstract numbers and claims match the main article.
+  \item Methods and declarations satisfy the applicable reporting requirements.
+  \item Anonymous and identified variants do not leak or lose information.
+  \item Figures, tables, citations, supplements, and repository links resolve.
+  \item The clean package contains required files and no private working debris.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Convert five journal instructions into testable compliance rows.
+  \item Revise an overclaiming title so it describes the actual design.
+  \item Write a four-move abstract for the simulated article.
+  \item Identify eight possible anonymity leaks beyond the author line.
+  \item Draft accurate funding, interest, and data statements for a fictional study.
+  \item Explain when a figure and a table are complementary rather than duplicate.
+  \item Produce a manifest for a clean source submission.
+  \item Challenge: migrate the template into a supplied publisher class and log
+        every class-specific change.
+\end{chapterexercises}

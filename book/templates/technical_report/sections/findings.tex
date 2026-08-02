@@ -1,0 +1,38 @@
+\chapter{Findings}
+\label{chap:findings}
+
+\section{Numerical summary}
+Method B was higher by \SI{0.18}{\milli\metre} on average in the simulated
+sample (\cref{tab:findings}).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Decision-relevant summary of simulated results.}
+  \label{tab:findings}
+  \begin{tabularx}{\linewidth}{@{}
+    >{\raggedright\arraybackslash}X
+    S[table-format=2.2]
+    S[table-format=1.2]
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    Quantity & {Estimate (\si{\milli\metre})}
+      & {SD (\si{\milli\metre})} & Interpretation \\
+    \midrule
+    Method A & 12.44 & 1.31 & Reference values \\
+    Method B & 12.62 & 1.35 & Candidate values \\
+    Difference & 0.18 & 0.24 & Positive offset \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Visual assessment}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.8\textwidth]{difference_plot.pdf}
+  \caption{Simulated paired differences across the observed range. The labelled
+  reference lines are descriptive, not acceptance thresholds.}
+  \label{fig:differences}
+\end{figure}
+
+The display does not by itself show whether the variability is tolerable. That
+judgement belongs to a documented decision rule.

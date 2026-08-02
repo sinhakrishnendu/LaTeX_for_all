@@ -1,0 +1,249 @@
+\chapter{Advanced Mathematical Writing}
+\label{chap:advanced-math}
+\index{mathematics!advanced}\index{matrix}\index{calculus}\index{theorem}
+
+This optional chapter is for documents that need derivations, piecewise
+definitions, matrices, calculus, or theorem-like statements. Readers whose
+work uses only short equations may continue to quantities and units and return
+here when a project requires these structures.
+
+\begin{learningoutcomes}
+  \item Break a long derivation into aligned, readable lines.
+  \item Typeset cases, matrices, and vectors.
+  \item Write derivatives, integrals, sums, and limits.
+  \item Define theorem-like environments with \pkg{amsthm}.
+  \item Produce a definition, theorem, and proof with consistent numbering.
+\end{learningoutcomes}
+
+\section{Break mathematics at relationships}
+
+A long equation should not be squeezed by reducing its type size. Break it at a
+meaningful relation and use \code{aligned} inside one numbered equation when
+the lines form one logical statement:
+
+\begin{latexcode}{One numbered multi-line derivation}
+\begin{equation}
+\begin{aligned}
+  \sum_{i=1}^{n}(d_i-\bar d)^2
+    &= \sum_{i=1}^{n}(d_i^2-2d_i\bar d+\bar d^2) \\
+    &= \sum_{i=1}^{n}d_i^2-n\bar d^2.
+\end{aligned}
+\end{equation}
+\end{latexcode}
+
+The outer environment supplies one number; \code{aligned} supplies alignment
+without separate numbers. Use \code{align} instead when individual lines need
+separate labels or stand as distinct equations.
+
+\begin{pausepredict}
+If the outer \code{equation} is replaced by \code{\textbackslash[ ...
+\textbackslash]}, will the derivation keep a visible number? Predict, then test.
+\end{pausepredict}
+
+\section{Cases and matrices}
+
+The \code{cases} environment creates a left brace and two aligned columns:
+
+\begin{equation}
+  I_i =
+  \begin{cases}
+    1, & \text{if both simulated values are present},\\
+    0, & \text{otherwise}.
+  \end{cases}
+  \label{eq:complete-pair-indicator}
+\end{equation}
+
+Matrix environments differ mainly in delimiters:
+
+\begin{latexcode}{Matrices and a vector}
+\[
+  \mathbf{X} =
+  \begin{bmatrix}
+    1 & A_1 \\
+    1 & A_2 \\
+    \vdots & \vdots \\
+    1 & A_n
+  \end{bmatrix},
+  \qquad
+  \boldsymbol{\beta} =
+  \begin{pmatrix}
+    \beta_0 \\
+    \beta_1
+  \end{pmatrix}.
+\]
+\end{latexcode}
+
+\code{matrix} has no delimiters; \code{pmatrix} uses parentheses;
+\code{bmatrix} uses square brackets. Ampersands separate columns and
+\code{\\} separates rows. Every row should have a consistent number of
+columns.
+
+\cmd{mathbf} makes Latin letters upright bold. \cmd{boldsymbol}, supplied by
+\pkg{amsmath}, also handles many Greek symbols. Vector typography varies by
+discipline; define and apply one convention consistently.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Extra alignment tab has been changed to \cmd{cr}.''
+
+\textbf{Cause:} one matrix row has too many ampersands, so it declares more
+columns than the structure expects.
+
+\textbf{Repair:} count entries and ampersands in each row. A two-column row has
+one ampersand.
+\end{commonerror}
+
+\section{Calculus and large operators}
+
+\LaTeX{} source mirrors the hierarchy of standard notation:
+
+\begin{align*}
+  \frac{\mathrm{d}y}{\mathrm{d}x} &= 2x, \\
+  \frac{\partial f}{\partial x} &= 2x+y, \\
+  \int_{0}^{T} v(t)\,\mathrm{d}t &= s(T)-s(0), \\
+  \sum_{i=1}^{n}x_i &\longrightarrow n\mu, \\
+  \lim_{n\to\infty}\bar{x}_n &= \mu.
+\end{align*}
+
+This book uses an upright differential \(\mathrm{d}\), with a thin space
+\code{\textbackslash,} before it in an integral. That is a documented style
+choice, not a universal \LaTeX{} requirement. The commands \cmd{partial},
+\cmd{int}, \cmd{sum}, \cmd{lim}, \cmd{infty}, and \cmd{to} express the
+symbols and operators directly.
+
+\section{Definitions, theorems, and proofs}
+
+Load \pkg{amsthm} and define theorem structures in the preamble, not in the
+middle of the argument:
+
+\begin{latexcode}{Preamble theorem definitions}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\end{latexcode}
+
+The optional \code{[section]} resets definition numbers in each section.
+Sharing \code{[definition]} gives definitions and theorems one common sequence.
+In the body:
+
+\begin{definition}[Paired difference]
+For paired values \(A_i\) and \(B_i\), the signed paired difference is
+\(d_i=B_i-A_i\).
+\end{definition}
+
+\begin{theorem}
+If \(A_i=B_i\) for every complete pair, then the mean signed difference is
+zero.
+\end{theorem}
+
+\begin{proof}
+For every complete pair, \(d_i=B_i-A_i=0\). Therefore the sum of all
+differences is zero, and division by the positive number of complete pairs
+gives \(\bar d=0\).
+\end{proof}
+
+The proof environment supplies its heading and end mark. A mathematical result
+can be typeset elegantly and still be trivial, false, or irrelevant; proof and
+peer review remain intellectual tasks.
+
+\begin{scienceinpractice}
+In computer science, a lemma may establish one property used by an algorithm's
+correctness theorem. In statistics, assumptions may be stated as definitions
+or conditions rather than theorems. Use theorem structures only when they
+match the discipline's reasoning, not to make ordinary observations look more
+authoritative.
+\end{scienceinpractice}
+
+\section{Numbering by section}
+
+Numbering that resets by section helps readers locate results in long
+mathematical documents. In a short article, a single sequence may be simpler.
+The optional argument to \cmd{newtheorem} defines the relationship; do not
+manually type ``Theorem 2.3''.
+
+Labels work with theorem-like environments. Place a label immediately after
+the environment begins and refer to it through the same reference system used
+for equations and figures.
+
+\begin{goodpractice}
+Before choosing an elaborate notation, write down what each object means, its
+dimensions, its allowed values, and the convention for bold, italic, and
+upright symbols. Consistent simple notation is easier to review than ornate
+notation introduced without need.
+\end{goodpractice}
+
+\section{Code lab: one mathematical page}
+
+\begin{codelab}
+Compile this page before changing it. Then replace the matrix entries, add a
+third case, and change the theorem's section number by inserting a new section
+above it. Notice which numbers update without manual editing.
+\end{codelab}
+
+\begin{latexcode}{Equations, a matrix, and a theorem in one file}
+\documentclass{article}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}[section]
+
+\begin{document}
+\section{A compact model}
+\begin{equation}
+  A=\begin{pmatrix}1&2\\3&4\end{pmatrix},
+  \qquad
+  f(x)=\begin{cases}
+    x^2, & x\geq 0,\\
+    -x,  & x<0.
+  \end{cases}
+\end{equation}
+
+\begin{theorem}
+If $n$ is even, then $n^2$ is even.
+\end{theorem}
+\begin{proof}
+Write $n=2k$. Then $n^2=2(2k^2)$.
+\end{proof}
+\end{document}
+\end{latexcode}
+
+\chapterproject
+
+\begin{miniproject}
+Optional extension: add \cref{eq:complete-pair-indicator} in your own source as
+an indicator for complete pairs, then state in prose how incomplete pairs are
+handled. If repeated measurements form a matrix, give its dimensions. Do not
+add theorem structures to the running article unless it actually proves a
+general statement.
+\end{miniproject}
+
+\chaptersummary
+
+\code{aligned} can break one numbered derivation; \code{align} can number
+separate related lines. \code{cases} expresses piecewise definitions. Matrix
+environments use ampersands for columns and row breaks for rows. Structured
+commands typeset calculus and large operators. \pkg{amsthm} provides semantic
+definition, theorem, lemma, and proof structures whose numbering is declared
+once in the preamble.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Long derivations break at meaningful mathematical relationships.
+  \item Matrix rows have consistent column counts.
+  \item Vector and differential typography follows a stated convention.
+  \item Every theorem-like structure has a scholarly purpose.
+  \item Numbering comes from environment definitions, not typed labels.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Put a two-line derivation under one equation number.
+  \item Create a piecewise function with two cases and explanatory text.
+  \item Typeset a two-by-two matrix in parentheses and in square brackets.
+  \item Repair a matrix row containing too many ampersands.
+  \item Write an integral with limits and an upright differential.
+  \item Define lemmas and theorems in one numbering sequence.
+  \item Explain when numbering by section helps and when it adds clutter.
+  \item Challenge: typeset a short proof or derivation from your field and ask
+        whether every step is both mathematically and typographically clear.
+\end{chapterexercises}

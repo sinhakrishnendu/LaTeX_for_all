@@ -1,0 +1,35 @@
+\section{Complete Practical Coding}
+\label{sec:practical-02}
+
+The next file demonstrates commands, arguments, environments, comments, and
+reserved characters in one place.
+
+\begin{latexcode}{Complete practical file: source anatomy}
+\documentclass[11pt]{article} % class and optional argument
+\usepackage[T1]{fontenc}      % package command
+
+\newcommand{\sample}[1]{\texttt{#1}}
+
+\begin{document}
+
+\section{Commands and arguments}
+\textbf{Bold text} uses a required argument.
+The reusable command prints \sample{sample-01}.
+
+\section{Environment}
+\begin{quote}
+An environment has matching begin and end commands.
+\end{quote}
+
+\section{Reserved characters}
+The recorded values were 95\%, A \& B, sample\_01, and \$25.
+
+% This comment is visible in the source but not in the PDF.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Remove one closing brace, compile, and read the first error. Restore the brace,
+then change the definition of \cmd{sample} in one place.
+\end{codelab}

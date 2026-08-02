@@ -1,0 +1,397 @@
+\chapter{From Source Files to Submission}
+\label{chap:submission}
+\index{submission}\index{metadata}\index{font embedding}\index{accessibility}\index{manifest}
+
+Finishing is a controlled transition from an editable research project to an
+exact release. The final PDF, source archive, supplementary files, and portal
+metadata must describe the same work. No universal checklist replaces the
+current instructions of a journal, institution, funder, repository, or client.
+
+\begin{learningoutcomes}
+  \item Freeze a candidate release and apply a venue-specific compliance matrix.
+  \item Proofread source, PDF, references, citations, equations, tables, and figures.
+  \item Inspect metadata, fonts, page properties, links, and accessibility needs.
+  \item Prepare clean source, supplementary files, a manifest, and a final PDF.
+  \item Archive an editable reproducible project and the exact submitted release.
+  \item Conduct a final submission rehearsal and record evidence.
+\end{learningoutcomes}
+
+\section{Define the release candidate}
+
+Choose a version that has completed scientific review, author approval, and the
+required ethics or organisational checks. Tag it or record an immutable commit
+identifier. During final quality control, accept only deliberate corrections;
+unbounded rewriting restarts review.
+
+Create a release register with:
+
+\begin{itemize}
+  \item document title, version, date, and main-file path;
+  \item venue and manuscript or deposit type;
+  \item source-version identifier;
+  \item responsible author and approver;
+  \item required files and submission deadline;
+  \item status of scientific, editorial, technical, and permission checks.
+\end{itemize}
+
+\begin{submissioncheck}
+Download or open the current official instructions at the start of the finishing
+stage. Record their version or access date. Recheck them immediately before
+upload because file, declaration, and metadata requirements can change.
+\end{submissioncheck}
+
+\section{Build a compliance matrix}
+
+Turn every instruction into a check with evidence:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{.21\textwidth}Xp{.22\textwidth}@{}}
+  \toprule
+  Requirement & Implementation & Verification evidence \\
+  \midrule
+  Anonymous main file & Anonymous build variant & Identity audit \\
+  Figure formats & Separate accepted files & File inspection \\
+  Reference style & Venue class or style & Sample comparison \\
+  Data statement & Declarations section and form & Author approval \\
+  Page limit & Final generated PDF & PDF page count \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+Write ``not applicable'' only with a reason. An unresolved instruction should
+be escalated to the appropriate editorial office, graduate office, repository,
+or client rather than settled by appearance.
+
+\section{Proofread at three levels}
+
+\subsection{Scientific and logical review}
+
+Check the question, methods, analyses, results, limitations, and conclusions as
+a chain. Confirm sample sizes, denominators, exclusions, equation definitions,
+units, uncertainty, statistical directions, and the difference between
+association and causation. Trace each headline claim to evidence.
+
+\subsection{Source review}
+
+Search the source for draft markers, manual numbering, broken labels, duplicate
+metadata, obsolete files, comments not intended for release, and private notes.
+Inspect changes since the last approved version. Source review can find a hidden
+conditional or unused old section that the PDF alone cannot reveal.
+
+\subsection{Rendered-PDF review}
+
+Read the PDF in page order, ideally on screen and in a print-like view. Check
+page breaks, widows and orphans where severe, clipped content, running heads,
+blank pages, table continuation, float order, caption proximity, footnotes,
+bookmarks, and link destinations. Compare the table of contents and lists with
+the body.
+
+\begin{pausepredict}
+Why can source spell-checking not detect a figure label clipped outside the
+page? Why can PDF reading not reveal an author name hidden in an unused source
+file included in the submission archive? Assign each issue to the appropriate
+review layer.
+\end{pausepredict}
+
+\section{Cross-references and citations}
+
+Search the final log for undefined references and citations. Click a sample of
+internal and external links, including entries near page boundaries. Confirm
+that each ``above'', ``below'', table number, figure number, equation number,
+chapter, and appendix still points correctly after pagination changed.
+
+For citations:
+
+\begin{itemize}
+  \item verify that each source supports the attached claim;
+  \item compare author, title, year, venue, pages, DOI, and edition with an
+        authoritative record;
+  \item distinguish preprints, accepted manuscripts, versions of record, data,
+        software, standards, and personal communications;
+  \item remove uncited entries if the venue expects only cited works;
+  \item check that retracted, corrected, or superseded sources are handled
+        appropriately.
+\end{itemize}
+
+Never fabricate a DOI, page range, or access date to make a record look complete.
+Use a visible placeholder until the fact is verified.
+
+\section{Equations and scientific notation}
+
+Read equations independently from the prose. Check:
+
+\begin{itemize}
+  \item every symbol is defined before or immediately after use;
+  \item vectors, matrices, variables, operators, and units use consistent style;
+  \item signs, indices, parentheses, limits, and equation directions match the
+        analysis;
+  \item displayed equations fit at final column width;
+  \item numbering and punctuation support the surrounding sentence;
+  \item significant figures and rounding are consistent with the evidence.
+\end{itemize}
+
+Have a domain expert verify equations whose visual plausibility can conceal a
+scientific error. \LaTeX{} cannot know that a denominator is wrong.
+
+\section{Tables}
+
+Audit every table against its generating output or source record. Check row and
+column order, headings, units, denominators, missing-value notation, rounding,
+footnotes, statistical definitions, and totals. Confirm that the caption and
+notes make the table intelligible without searching the prose.
+
+Inspect tables at the final page and column width. Rules should not cross text;
+decimal alignment should not hide signs; symbols must be defined; repeated
+header rows should appear on multi-page tables. A screenshot of a spreadsheet
+is not an editable, accessible substitute for a real table.
+
+\section{Figures and image preflight}
+
+For each figure, verify content and file properties:
+
+\begin{enumerate}
+  \item compare plotted values with the final analysis;
+  \item confirm axes, units, legends, uncertainty, sample size, and panel labels;
+  \item state whether data are simulated, illustrative, or empirical;
+  \item inspect colour contrast and grayscale legibility;
+  \item check text at intended physical size, not only when zoomed;
+  \item preserve vector graphics for lines and text where accepted;
+  \item verify raster pixel dimensions and the venue's effective-resolution rule;
+  \item record creator, source, licence, permission, and required credit.
+\end{enumerate}
+
+Effective resolution depends on placed size. A 1200-pixel image placed at
+\SI{4}{\inch} provides 300 pixels per inch; enlarging it to
+\SI{8}{\inch} provides only 150. Do not claim universal resolution thresholds;
+follow the venue's current specifications for each image type.
+
+\begin{scienceinpractice}
+A microscopy plate may require an unaltered original archive, a documented
+processing history, scale bars derived from calibration, panel-level labels,
+and separate high-resolution files. A visually sharp PDF cannot prove those
+scientific conditions were met.
+\end{scienceinpractice}
+
+\section{Metadata}
+
+PDF properties, portal fields, source commands, title pages, repository records,
+and supplementary covers should agree on title, author names and order,
+affiliations, abstract, keywords, identifiers, funders, and version.
+
+An anonymous review PDF should not expose authors in document properties. An
+identified archival PDF should use verified names. Avoid including unnecessary
+personal contact details in public metadata. Inspect rather than assume what the
+engine or publisher class writes.
+
+\section{Fonts, page properties, and PDF features}
+
+If the venue requires embedded fonts, use a PDF inspection tool to confirm that
+each font is embedded or subset as allowed. Do not rely on the fact that the PDF
+looks correct on the author's system. Check page size, orientation, crop boxes,
+security restrictions, file size, and PDF version when specified.
+
+Font embedding does not grant redistribution rights. A font can be technically
+embedded yet contractually unsuitable. Prefer fonts distributed for the chosen
+TeX workflow or otherwise licensed for the intended use.
+
+\section{Accessibility}
+
+Current accessibility obligations vary by venue and jurisdiction. Logical
+headings, real text, meaningful link text, readable contrast, table headers, and
+textual explanations of figures improve the source, but a conventional
+pdf\LaTeX{} document is not automatically a fully tagged accessible PDF.
+
+Determine the required standard and validation process. If remediation is
+needed, preserve the structured source and record manual changes so an updated
+document can be regenerated. Provide alt text or long descriptions through the
+venue's accepted mechanism; a caption and alternative text serve related but
+different purposes.
+
+\section{Remove draft apparatus}
+
+Search for:
+
+\begin{terminalcode}{Typical release searches}
+rg -n 'TODO|FIXME|PLACEHOLDER|DRAFT|\?\?' .
+rg -n 'showkeys|linenumbers|draftwatermark' --glob '*.tex' .
+\end{terminalcode}
+
+Interpret results: a teaching document may intentionally print the word
+``placeholder'', while a submission should not contain unresolved fields.
+Remove line numbers, watermarks, visible changes, margin notes, draft figures,
+and review comments unless the recipient explicitly requires them.
+
+\section{Supplementary files}
+
+For every supplement, verify title, numbering, citation from the main document,
+file name, format, size, legend, and access condition. Data and code should have
+a README, licence, dictionary, environment record, and execution order where
+appropriate. Scan archives for hidden files, credentials, personal paths, and
+restricted content.
+
+Open the files after packaging. A valid ZIP archive can still contain the wrong
+version. Ensure that supplementary equation, figure, table, and reference
+numbers match the final manuscript and upload descriptions.
+
+\section{Create a clean submission folder}
+
+Build the folder from a release manifest. Include only required source,
+bibliography, class or style files that may be redistributed, figures, and
+supplements. Exclude auxiliary files, caches, old drafts, private correspondence,
+credentials, raw restricted data, and unlicensed assets.
+
+\begin{terminalcode}{Illustrative release tree}
+submission_v1/
+|-- main.tex
+|-- sections/
+|-- figures/
+|-- references.bib
+|-- supplementary/
+|-- README.md
+`-- MANIFEST.txt
+\end{terminalcode}
+
+Do not blindly flatten paths if the project uses its folder structure. Build
+from the clean folder using the documented command.
+
+\section{Inspect the final PDF}
+
+The final PDF is the recipient's reading object even when source is supplied.
+Perform automated and visual checks:
+
+\begin{itemize}
+  \item build log has no fatal, undefined-reference, or missing-file messages;
+  \item page count and dimensions match expectations;
+  \item fonts and images meet specified requirements;
+  \item text extraction is plausible where required;
+  \item every page is rendered to images and scanned for clipping or blank output;
+  \item representative dense pages are inspected at full resolution;
+  \item title, last page, references, appendices, and special orientations are checked.
+\end{itemize}
+
+Automation can identify candidates; a human must judge scientific and visual
+meaning.
+
+\section{Upload rehearsal}
+
+If the submission system allows drafts, rehearse early. Portal conversion can
+reorder files, replace fonts, move figures, or generate a combined PDF. Download
+and inspect the system-generated proof. Compare entered metadata with the source
+and secure approval from all authors when required.
+
+Do not click the irreversible final-submission control until the responsible
+author has verified the proof and declarations. Retain the confirmation and
+identifier.
+
+\begin{commonerror}
+\textbf{Symptom:} the local PDF is correct, but the submission proof lacks
+figures or references.
+
+\textbf{Cause:} the portal rebuilt an incomplete source archive or interpreted
+the wrong main file.
+
+\textbf{Repair:} inspect the portal log and required file designation, correct
+the clean package, rebuild locally from that exact package, and regenerate the
+proof. Do not assume the portal will discover undeclared dependencies.
+\end{commonerror}
+
+\section{Archive both release and working project}
+
+Preserve:
+
+\begin{itemize}
+  \item exact submitted PDF and source archive;
+  \item supplementary files and manifest with checksums where appropriate;
+  \item source-version identifier and environment record;
+  \item author approvals, permission records, and submission confirmation;
+  \item portal metadata or exported record;
+  \item editable working project with its reproducible analysis.
+\end{itemize}
+
+The submitted release should be immutable. Continue revisions in a new version
+or branch. A response to reviewers begins from what was actually submitted, not
+from whichever draft happens to be open later.
+
+\begin{goodpractice}
+Use a two-person release check for high-stakes documents: one person operates the
+build and upload, while another reads the checklist and verifies the evidence.
+Both confirm the final proof and archive location.
+\end{goodpractice}
+
+\section{Code lab: make a clean release candidate}
+
+\begin{codelab}
+Run these commands from a copy of your project, not from your only working
+copy. The result should be a rebuilt PDF, a human-readable file list, and a
+checksum that identifies the exact submitted PDF.
+\end{codelab}
+
+\begin{terminalcode}{Rebuild and inspect the release candidate}
+latexmk -C
+latexmk -pdf main.tex
+latexmk -pdf main.tex
+pdffonts main.pdf
+\end{terminalcode}
+
+\begin{terminalcode}{List the files that belong in the archive}
+find . -type f \
+  \( -name '*.tex' -o -name '*.bib' -o -name '*.cls' \
+     -o -name '*.sty' -o -name '*.bst' -o -name '*.bbx' \
+     -o -name '*.cbx' -o -name '*.pdf' -o -name '*.png' \
+     -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.csv' \
+     -o -name '*.R' -o -name 'README.md' -o -name 'latexmkrc' \) \
+  | sort > MANIFEST.txt
+\end{terminalcode}
+
+\begin{terminalcode}{Record the identity of the final PDF}
+shasum -a 256 main.pdf > CHECKSUMS.txt
+\end{terminalcode}
+
+Open \path{MANIFEST.txt}. Remove auxiliary products from the archive, but keep
+the source, bibliography, figures, instructions, final PDF, manifest, and
+checksum. On Linux, \verb|sha256sum| is the usual equivalent of the last
+command.
+
+\chapterproject
+
+\begin{miniproject}
+Use the running article to create a practice release folder and manifest. Run
+its numerical check, compile from that folder, search for unresolved markers,
+inspect citations and links, verify PDF properties and fonts, and complete the
+included submission checklist. Record every result as pass, fail, or not
+applicable with a reason; do not submit the simulated article to a journal.
+\end{miniproject}
+
+\chaptersummary
+
+Submission is a controlled release, not merely the last compilation. A current
+compliance matrix guides scientific, source, and PDF proofreading. Citations,
+equations, tables, figures, metadata, fonts, accessibility, supplements, and
+draft apparatus need distinct checks. The clean source package must rebuild,
+the final PDF must be inspected, and the submission-system proof must be treated
+as a new output. Archive the exact release and retain the editable reproducible
+project for later correction or review.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item A reviewed source version is frozen as the release candidate.
+  \item Current venue instructions are mapped to evidence-backed checks.
+  \item Scientific claims and repeated numerical results are consistent.
+  \item References, equations, tables, figures, and permissions are verified.
+  \item Metadata, fonts, PDF properties, links, and accessibility needs are checked.
+  \item The clean folder rebuilds and contains no private or obsolete material.
+  \item The portal proof and exact submitted release are inspected and archived.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Create a compliance matrix from ten supplied venue instructions.
+  \item Design a results consistency sheet for an abstract, table, and discussion.
+  \item Calculate effective resolution for three raster images at placed size.
+  \item Audit a bibliography record against an authoritative source.
+  \item List source-only, PDF-only, and portal-only failure modes.
+  \item Build a release tree and justify each included or excluded file.
+  \item Write an archive record for a fictional thesis deposit.
+  \item Challenge: conduct a two-person-style submission rehearsal and document
+        evidence for every checklist decision.
+\end{chapterexercises}

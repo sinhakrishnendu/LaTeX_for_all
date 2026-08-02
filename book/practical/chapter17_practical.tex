@@ -1,0 +1,56 @@
+\section{Complete Practical Coding}
+\label{sec:practical-17}
+
+This complete report moves from evidence to an explicit recommendation.
+
+\begin{latexcode}{Complete practical file: technical report}
+\documentclass{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{booktabs}
+
+\title{Technical Assessment Report}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Executive summary}
+State the decision, strongest evidence, and required action.
+
+\section{Objective}
+Assess whether all validation checks were completed.
+
+\section{Method}
+Review the checklist and record unresolved actions.
+
+\section{Findings}
+\begin{table}[htbp]
+  \centering
+  \caption{Demonstration validation status.}
+  \begin{tabular}{lr}
+    \toprule
+    Measure & Value \\
+    \midrule
+    Completed checks & 12 \\
+    Open actions & 2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Recommendations}
+\begin{enumerate}
+  \item Resolve both open actions.
+  \item Repeat the validation check after revision.
+\end{enumerate}
+
+\section{Limitations}
+This demonstration does not contain operational data.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Replace the objective, table, and recommendations with one real reporting
+scenario. Check that every recommendation follows from a stated finding.
+\end{codelab}

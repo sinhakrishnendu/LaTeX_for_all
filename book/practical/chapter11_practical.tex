@@ -1,0 +1,47 @@
+\section{Complete Practical Coding}
+\label{sec:practical-11}
+
+Labels make numbering resilient when objects move.
+
+\begin{latexcode}{Complete practical file: automatic cross-references}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\begin{document}
+
+\section{Method}
+\label{sec:method}
+The mean is defined in \cref{eq:mean}.
+
+\begin{equation}
+  \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
+  \label{eq:mean}
+\end{equation}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Demonstration result.}
+  \label{tab:result}
+  \begin{tabular}{lr}
+    \toprule
+    Group & Mean \\
+    \midrule
+    A & 12.4 \\
+    B & 16.7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\Cref{tab:result} reports values calculated using the method in
+\cref{sec:method} and the definition in \cref{eq:mean}.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Move the table before the equation and compile twice. Insert another equation
+without editing any number in the prose.
+\end{codelab}

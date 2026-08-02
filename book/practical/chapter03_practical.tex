@@ -1,0 +1,36 @@
+\section{Complete Practical Coding}
+\label{sec:practical-03}
+
+Use semantic commands for meaning and keep manual styling restrained.
+
+\begin{latexcode}{Complete practical file: readable scientific prose}
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[british]{babel}
+
+\newcommand{\species}[1]{\textit{#1}}
+
+\begin{document}
+
+\section{Observation}
+We observed \species{Example species} in 12 plots. The first
+measurement was made in the morning; the second was made two
+hours later. The difference was small---not zero---and should be
+reported without unnecessary emphasis.
+
+The sample identifier was \texttt{plot\_07}. A short footnote can
+hold a useful qualification without interrupting the sentence.\footnote{The
+demonstration values are not research data.}
+
+\section{Interpretation}
+Use \emph{emphasis} for meaning. Use \textbf{bold text} mainly for
+short labels, not whole paragraphs.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Replace both paragraphs with your own prose, add one species name, and confirm
+that every identifier and reserved character prints correctly.
+\end{codelab}

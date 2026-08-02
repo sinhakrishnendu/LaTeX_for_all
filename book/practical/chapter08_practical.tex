@@ -1,0 +1,40 @@
+\section{Complete Practical Coding}
+\label{sec:practical-08}
+
+Use \pkg{siunitx} so numbers and units remain separate in the source.
+
+\begin{latexcode}{Complete practical file: quantities and units}
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\sisetup{separate-uncertainty=true}
+
+\begin{document}
+
+The sample mass was \qty{12.5}{\milli\gram}, the temperature was
+\qty{22}{\degreeCelsius}, and the interval was
+\qtyrange{18}{24}{\hour}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Demonstration measurements.}
+  \begin{tabular}{lS[table-format=2.1]S[table-format=1.1]}
+    \toprule
+    Group & {Mean (mg)} & {SD (mg)} \\
+    \midrule
+    A & 12.4 & 1.8 \\
+    B & 16.7 & 2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+An uncertainty can be written as \qty{12.4(18)}{\milli\gram}.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Replace the quantities with values from your field, check significant figures,
+and align a column containing at least one two-digit value.
+\end{codelab}

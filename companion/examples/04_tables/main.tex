@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\begin{document}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of two demonstration groups.}
+  \label{tab:summary}
+  \begin{tabular}{lrr}
+    \toprule
+    Group & Mean & SD \\
+    \midrule
+    A & 12.4 & 1.8 \\
+    B & 16.7 & 2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{A table with a wrapping text column.}
+  \begin{tabularx}{\linewidth}{@{}lXr@{}}
+    \toprule
+    Code & Observation & Count \\
+    \midrule
+    A & The response remained stable throughout the observation period. & 12 \\
+    B & The response increased after treatment. & 15 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\end{document}

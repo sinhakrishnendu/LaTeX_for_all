@@ -1,0 +1,220 @@
+\chapter{Writing Clear Scientific Prose}
+\label{chap:text}
+\index{typography}\index{emphasis}\index{quotation marks}\index{footnotes}\index{special characters}
+
+A document can compile perfectly and still be hard to read. Scientific prose
+needs visible paragraphs, purposeful emphasis, accurate symbols, and source
+that another author can revise without decoding improvised formatting. In this
+chapter we give ordinary text the care that mathematical notation will receive
+later.
+
+\begin{learningoutcomes}
+  \item Create paragraphs and distinguish them from line breaks.
+  \item Apply emphasis, bold, and italic text for stated purposes.
+  \item Type quotation marks, dashes, ellipses, and reserved characters.
+  \item Insert non-breaking spaces, footnotes, and web addresses.
+  \item Format a biological species name conventionally.
+  \item Explain a safe beginner approach to Unicode source.
+\end{learningoutcomes}
+
+\section{Paragraphs carry ideas}
+
+A paragraph is a unit of thought, not merely a block that fits a page. In
+source, leave one blank line when the argument moves to a new paragraph.
+\LaTeX{} decides the printed line endings.
+
+\begin{latexcode}{Complete example: two paragraphs}
+\documentclass{article}
+\begin{document}
+Method A records one value for each specimen. Method B records
+the same property independently.
+
+We compare paired values because both methods examine the same
+specimens.
+\end{document}
+\end{latexcode}
+
+The PDF contains two paragraphs. The single source line ending inside each
+paragraph becomes an ordinary space. This separation lets source lines remain
+short enough to review.
+
+The command \code{\\} requests a line break without starting a new paragraph.
+It is useful in structures such as an address or a short title block, but it is
+usually wrong between prose paragraphs. A blank line expresses the meaning
+more accurately.
+
+\begin{commonerror}
+\textbf{Symptom:} prose has a ragged sequence of short printed lines.
+
+\textbf{Cause:} every source line ends with \code{\\}.
+
+\textbf{Correction:} remove the forced breaks and let \LaTeX{} compose the
+paragraph. Keep a blank source line only where a new paragraph begins.
+\end{commonerror}
+
+\section{Emphasis and type styles}
+
+Use \cmd{emph}\required{text} when the meaning is emphasis. In ordinary text,
+\LaTeX{} generally renders it in italics; inside existing emphasis it can switch
+back, which preserves the distinction.
+
+\begin{latexcode}{Complete example: emphasis and styles}
+\documentclass{article}
+\begin{document}
+The values are \emph{simulated}, not observations.
+
+\textbf{Warning:} do not interpret them as clinical evidence.
+
+The species name \textit{Drosophila melanogaster} is italic.
+\end{document}
+\end{latexcode}
+
+\cmd{textbf} requests bold text; use it for a genuine visual role such as a
+short warning label, not for every important sentence. \cmd{textit} requests
+italic shape without claiming emphasis, which suits terms conventionally set
+in italics. Semantic structure remains preferable: a section title should be
+made with \cmd{section}, not with a large bold line.
+
+\begin{scienceinpractice}
+Biological genus and species names are conventionally italic, while the
+authority is not: \textit{Panthera leo} (Linnaeus, 1758). After the first full
+mention, a field may permit an unambiguous abbreviation such as
+\textit{P.~leo}. Follow the relevant disciplinary style and avoid automatic
+abbreviation when two genera could share the initial.
+\end{scienceinpractice}
+
+\section{Quotation marks, hyphens, and dashes}
+
+In pdf\LaTeX{} source, type an opening double quotation as two grave accents and a
+closing one as two apostrophes. Single quotations use one of each:
+
+\begin{latexcode}{Complete example: quotations and dashes}
+\documentclass{article}
+\begin{document}
+The manual calls this a ``minimal working example''.
+The term `minimal' does not mean incomplete.
+
+A high-resolution image uses a hyphen. Pages 12--18 use an
+en dash. A sudden interruption---used sparingly---uses an em dash.
+\end{document}
+\end{latexcode}
+
+One hyphen joins a compound; two hyphens in source produce an en dash for a
+range or relationship; three produce an em dash for a break in thought.
+British editorial styles differ over spaces around an em dash. This book uses
+none and applies the choice consistently.
+
+Use \cmd{ldots} for a deliberate ellipsis in text: \ldots. Three full stops
+may have uneven spacing. An ellipsis signals omitted or trailing material; it
+should not become a decorative ending for uncertain prose.
+
+\begin{pausepredict}
+Predict the output of \code{10-12}, \code{10--12}, and \code{10---12} before
+compiling them. Which source represents a numerical range?
+\end{pausepredict}
+
+\section{Spaces that should stay together}
+
+A tilde in prose creates a \term{non-breaking space}. It prevents a line break
+between related items while printing an ordinary-looking space:
+
+\begin{latexcode}{Useful non-breaking spaces}
+Figure~3
+Dr~Rao
+Section~2.1
+\end{latexcode}
+
+These fragments are not a complete document, but each shows a relationship
+that should not split across lines. Later, automatic cross-references will
+replace typed numbers such as \code{Figure~3}. Do not insert tildes between
+every pair of words; excessive restrictions can produce poor spacing.
+
+\section{Footnotes and web addresses}
+
+A footnote command contains the note where its marker belongs:
+
+\begin{latexcode}{Complete example: a footnote and URL}
+\documentclass{article}
+\usepackage{hyperref}
+\begin{document}
+The data are simulated.\footnote{The file is supplied only for
+typesetting practice.}
+
+Documentation is available at
+\url{https://www.latex-project.org/help/documentation/}.
+\end{document}
+\end{latexcode}
+
+\cmd{footnote} prints a marker and places the note at the bottom of the page.
+Use footnotes for short supplementary remarks, not for essential methods or a
+hidden chain of citations. The \pkg{hyperref} package provides \cmd{url},
+which allows a web address to break more safely and makes it a link in the PDF.
+
+Long or unstable URLs are rarely good citation substitutes. A bibliography
+record can carry the author, title, date, access date, and persistent
+identifier. Chapter~\ref{chap:citations} develops that workflow.
+
+\section{Unicode without mystery}
+
+Modern \LaTeX{} source is normally saved as UTF-8, an encoding capable of
+representing many writing systems. A current engine can read common accented
+Latin characters directly, but font and engine support still matter. A file
+copied from a website may also contain invisible spaces or typographic quotes
+that look similar to ASCII source syntax.
+
+For beginner examples we keep command syntax and quotation marks in ASCII. An
+accent command such as \code{Jos\textbackslash\'e} is portable in a small
+pdf\LaTeX{} example. Later, a project requiring extensive multilingual text may
+choose Lua\LaTeX{} or Xe\LaTeX{} with suitable fonts after checking the publisher's
+workflow.
+
+\begin{goodpractice}
+Do not repair a mysterious character by repeatedly changing the compiler.
+Identify the character, confirm that the file is UTF-8, and test a minimal
+example. A journal template may require a specific engine.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Improve the prose in the running article. Add two background paragraphs,
+keeping the existing simulated-data statement. Use \cmd{emph} once to stress
+that the values are simulated, type \code{Method A\textbackslash\&B} only if an
+ampersand is genuinely part of a name, and add a short footnote explaining
+that Method A and Method B are neutral teaching labels. Compile and check that
+no forced line breaks interrupt the prose.
+\end{miniproject}
+
+\chaptersummary
+
+Blank source lines make paragraphs; ordinary source line endings do not force
+printed breaks. \cmd{emph} expresses emphasis, while \cmd{textbf} and
+\cmd{textit} request particular shapes. ASCII quotation conventions, source
+hyphens, \cmd{ldots}, non-breaking spaces, escaped characters, footnotes, and
+\cmd{url} give prose precise typography. UTF-8 is the normal source encoding,
+but unusual characters still need compatible fonts and engines.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item I use blank lines, not repeated \code{\\}, for prose paragraphs.
+  \item I can explain why a word is emphasised, bold, or italic.
+  \item I can type opening and closing quotation marks in ASCII source.
+  \item I choose the right source form for a hyphen, range, or em dash.
+  \item I can add a footnote and a safe URL.
+  \item I have checked the running article's paragraph structure.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Explain the difference between a source line ending and a blank line.
+  \item Correct a paragraph that ends every source line with \code{\\}.
+  \item Write source for the quotation: The result was ``unexpected''.
+  \item Choose a hyphen or dash for each: pages 4 to 9; evidence based; an
+        interruption in a sentence.
+  \item Give one suitable and one unsuitable use of a footnote.
+  \item Format \textit{Escherichia coli} and its later abbreviation.
+  \item Debug source in which \code{50\%} accidentally comments out the rest
+        of the line.
+  \item Challenge: edit a paragraph from your field using only semantic
+        emphasis and explain every typographic choice.
+\end{chapterexercises}

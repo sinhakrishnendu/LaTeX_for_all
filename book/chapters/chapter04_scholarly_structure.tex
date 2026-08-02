@@ -1,0 +1,256 @@
+\chapter{Building Scholarly Structure}
+\label{chap:structure}
+\index{document structure}\index{abstract}\index{title metadata}\index{appendix}
+
+Readers do not experience a scientific document as one uninterrupted stream.
+They use a title to identify it, an abstract to judge relevance, headings to
+navigate the argument, and appendices to find supporting detail. \LaTeX{} works
+best when the source names these roles instead of imitating their appearance.
+
+\begin{learningoutcomes}
+  \item Create title metadata and print it with \cmd{maketitle}.
+  \item Insert an abstract and keywords in a generic article.
+  \item Organise content with sections and subsections.
+  \item Generate a table of contents and explain repeat compilation.
+  \item Add an appendix without typing its letter by hand.
+  \item Distinguish logical structure from manual visual formatting.
+\end{learningoutcomes}
+
+\section{Metadata before appearance}
+
+A title, author, and date describe the document. In the standard article class
+we store them in the preamble and ask the class to typeset them:
+
+\begin{latexcode}{Complete example: article title}
+\documentclass{article}
+
+\title{A Reproducible Comparison of Two Measurement Methods}
+\author{Student Author}
+\date{2026}
+
+\begin{document}
+\maketitle
+This is a teaching document with simulated data.
+\end{document}
+\end{latexcode}
+
+\sourceanatomy
+
+\cmd{title}, \cmd{author}, and \cmd{date} store required arguments. They do not
+print the title by themselves. \cmd{maketitle} in the body asks the class to
+construct the title block from the stored information. An empty
+\cmd{date}\required{} suppresses the date; \cmd{today} uses the compilation
+date. For a versioned scholarly file, an explicit date is often easier to
+audit.
+
+\expectedoutput
+
+The PDF begins with a centred title block using the article class's design,
+followed by the teaching statement. The source does not specify font sizes or
+vertical distances for each line.
+
+\begin{tryit}
+Change only the class from \code{article} to \code{report}. Compile and compare
+the title treatment. Restore \code{article}. This demonstrates that metadata
+can remain stable while the class changes broad design.
+\end{tryit}
+
+\section{The abstract}
+
+An abstract is a compact account of purpose, approach, principal result, and
+meaning. The standard \code{article} class provides an environment:
+
+\begin{latexcode}{Abstract and keywords}
+\begin{abstract}
+We demonstrate a reproducible workflow for comparing two
+measurement methods using simulated paired values. The example
+is pedagogical and makes no empirical claim.
+\end{abstract}
+
+\noindent\textbf{Keywords:} agreement; measurement; reproducibility;
+simulated data
+\end{latexcode}
+
+This fragment belongs after \cmd{maketitle} and before the first section. The
+keyword line is an explicitly formatted convention for a generic article; the
+standard class has no universal \cmd{keywords} command. Publisher classes often
+provide their own command or environment. Use theirs when instructed.
+
+\begin{goodpractice}
+Do not put citations, undefined abbreviations, or conclusions unsupported by
+the body into an abstract unless the target venue explicitly permits them.
+Typesetting cannot repair an abstract that does not represent the study.
+\end{goodpractice}
+
+\section{Sections describe the argument}
+
+Use the heading level that represents the relationship between ideas:
+
+\begin{latexcode}{Complete example: section hierarchy}
+\documentclass{article}
+\begin{document}
+\section{Introduction}
+The study asks whether two methods agree.
+
+\section{Methods}
+\subsection{Study design}
+Paired simulated values are used.
+
+\subsection{Analysis}
+Differences are calculated for each pair.
+
+\section{Results}
+Results will be added after the method is defined.
+\end{document}
+\end{latexcode}
+
+\cmd{section} creates a major division; \cmd{subsection} creates a division
+inside the current section; \cmd{subsubsection} is available when a third level
+is genuinely needed. Do not skip from a section to a subsubsection simply to
+obtain a smaller heading.
+
+The starred form, such as \cmd{section*}, usually suppresses numbering and a
+table-of-contents entry. It suits occasional unnumbered matter, not every
+heading in a manuscript that requires navigation.
+
+\begin{commonerror}
+\textbf{Mistake:} making a heading with \cmd{textbf} and blank lines.
+
+\textbf{Consequence:} it looks like a heading but has no structural level,
+number, contents entry, or reliable target for a reference.
+
+\textbf{Correction:} replace it with the appropriate section command and let
+the class format it.
+\end{commonerror}
+
+\section{A table of contents}
+
+The command \cmd{tableofcontents} prints headings recorded during compilation.
+Place it where the contents should appear, commonly after front matter in a
+long report or thesis.
+
+On the first pass, \LaTeX{} writes heading information to a \file{.toc} auxiliary
+file. On the next pass it can read that file. This is why a new section may not
+appear in the contents until compilation repeats. \pkg{latexmk} notices the
+change and runs the needed pass.
+
+Short journal articles rarely include a table of contents. The command is
+useful for reports, theses, books, and long internal documents. Structure and
+reader need should decide, not the mere availability of a command.
+
+\section{Appendices}
+
+The command \cmd{appendix} changes the numbering of later top-level divisions.
+In an article, later sections normally become Appendix A, Appendix B, and so
+on.
+
+\begin{latexcode}{Appendix pattern}
+\appendix
+\section{Additional checks}
+This appendix records sensitivity checks for the simulated example.
+\end{latexcode}
+
+Do not type ``Appendix A'' inside the section title. \LaTeX{} supplies the letter
+and updates it if another appendix is inserted earlier.
+
+\begin{scienceinpractice}
+An earth-science paper might place a detailed geological sample description in
+an appendix while keeping the sampling rationale in Methods. The appendix is
+still part of the scholarly record and should be cited from the main text,
+labelled clearly, and reviewed with the same care.
+\end{scienceinpractice}
+
+\section{A complete structural skeleton}
+
+The source below contains a document's architecture but very little prose. It
+is useful as a planning skeleton because every heading represents a purpose.
+
+\begin{latexcode}{Complete example: generic scholarly skeleton}
+\documentclass[11pt]{article}
+
+\title{A Reproducible Comparison of Two Measurement Methods}
+\author{Student Author}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This educational example uses simulated paired values.
+\end{abstract}
+
+\noindent\textbf{Keywords:} agreement; reproducibility;
+simulated data
+
+\section{Introduction}
+State the problem and objective.
+
+\section{Methods}
+Describe data generation and analysis.
+
+\section{Results}
+Report the findings without interpretation.
+
+\section{Discussion}
+Interpret the demonstration and its limitations.
+
+\section{Conclusion}
+Answer the objective briefly.
+
+\appendix
+\section{Simulated data record}
+Document how the teaching values were created.
+\end{document}
+\end{latexcode}
+
+The imperative sentences are planning notes, not final manuscript prose. A
+useful skeleton exposes missing logical components early; it should not tempt
+us to fill headings with generic text that says nothing.
+
+\begin{pausepredict}
+Insert a new section before Results. Predict what happens to all later section
+numbers after compilation. Now imagine those numbers had been typed into the
+headings by hand.
+\end{pausepredict}
+
+\chapterproject
+
+\begin{miniproject}
+Turn the running article into the structural skeleton above. Replace
+\code{Student Author} with \placeholder{Author name}; keep it visibly a
+placeholder rather than inventing an identity. Retain the explicit simulated-
+data statement. Compile twice or use \pkg{latexmk}. Confirm that the abstract,
+keywords, five main sections, and appendix appear in the expected order.
+\end{miniproject}
+
+\chaptersummary
+
+Title commands store metadata and \cmd{maketitle} prints it according to the
+class. The abstract environment marks a scholarly role; generic keywords need
+a documented local convention. Section commands express hierarchy and enable
+automatic numbering and contents entries. \cmd{tableofcontents} may require a
+repeat pass, and \cmd{appendix} changes later numbering without hard-coded
+letters. Logical structure should lead visual formatting.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item My title information is stored in the preamble.
+  \item My abstract states what the demonstration does and does not claim.
+  \item Every heading command represents a real level of the argument.
+  \item I have not typed section or appendix numbers by hand.
+  \item I understand why the contents may need another compiler pass.
+  \item The running article now has a complete scholarly skeleton.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Explain the different jobs of \cmd{title} and \cmd{maketitle}.
+  \item Add an explicit date to a minimal titled article.
+  \item Convert a bold manual heading into semantic source.
+  \item Predict the numbering after inserting a section before Methods.
+  \item Explain why the generic article's keyword line is not universal.
+  \item Add two automatically lettered appendices.
+  \item Debug an abstract placed before \cmd{begin}\required{document}.
+  \item Challenge: plan the heading hierarchy for a report in your field and
+        justify every level.
+\end{chapterexercises}

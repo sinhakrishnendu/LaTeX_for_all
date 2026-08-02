@@ -1,0 +1,88 @@
+\chapter{Finish a Print-Ready Document}
+\label{chap:finish}
+
+\begin{learningoutcomes}
+  \item Add useful PDF metadata.
+  \item Perform a clean final build.
+  \item Package the source without temporary files.
+\end{learningoutcomes}
+
+\section{Add metadata in the preamble}
+
+\begin{latexcode}{PDF metadata recipe}
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle={Document Title},
+  pdfauthor={Author Name},
+  pdfsubject={Short description},
+  pdfkeywords={keyword one, keyword two},
+  colorlinks=false,
+  pdfborder={0 0 0}
+}
+\end{latexcode}
+
+The visible title page and PDF properties should agree.
+
+\section{Run the final build from clean source}
+
+\begin{terminalcode}{Clean production build}
+latexmk -C main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+\end{terminalcode}
+
+Then search the log:
+
+\begin{terminalcode}{Check serious build warnings}
+rg "Overfull|undefined citations|undefined references|multiply defined" main.log
+\end{terminalcode}
+
+\section{Inspect the PDF as a reader}
+
+Check every page in order:
+
+\begin{itemize}
+  \item title, author, date, and document identity;
+  \item contents entries and page numbers;
+  \item headings at page boundaries;
+  \item equations, tables, figures, captions, and references;
+  \item black-and-white contrast and minimum readable type;
+  \item blank pages and the final page;
+  \item PDF page size and font embedding.
+\end{itemize}
+
+\begin{terminalcode}{Basic PDF checks}
+pdfinfo main.pdf
+pdffonts main.pdf
+\end{terminalcode}
+
+\section{Prepare the source package}
+
+Keep:
+
+\begin{itemize}
+  \item all \file{.tex} files;
+  \item bibliography and data files used by the document;
+  \item figures and their editable sources;
+  \item a short build note; and
+  \item any required licence or permission notices.
+\end{itemize}
+
+Exclude reproducible temporary files such as \file{.aux}, \file{.log},
+\file{.toc}, \file{.out}, and \file{.fls}, unless a recipient specifically
+requires them.
+
+\section{Final release checklist}
+
+\begin{chapterchecklist}
+  \item A clean build succeeds without unresolved references.
+  \item The PDF has the required dimensions and embedded fonts.
+  \item Every figure and table is readable at final size.
+  \item Metadata and visible text agree.
+  \item The source package rebuilds using its stated root file.
+  \item Draft notes, placeholders, and private comments are absent.
+\end{chapterchecklist}
+
+\begin{submissioncheck}
+Freeze the exact PDF and source package that were checked. If either changes,
+repeat the clean build and page inspection.
+\end{submissioncheck}

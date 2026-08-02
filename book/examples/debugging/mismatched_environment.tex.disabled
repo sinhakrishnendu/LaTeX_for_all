@@ -1,0 +1,5 @@
+% BROKEN EXAMPLE: this file is intentionally not compiled by the test script.
+\documentclass{article}
+\begin{document}
+The names do not match.
+\end{article}

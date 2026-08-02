@@ -1,0 +1,223 @@
+\chapter{Quantities, Units, and Scientific Conventions}
+\label{chap:units}
+\index{quantities}\index{units}\index{siunitx package}\index{uncertainty}
+
+A value without a clear unit can make a result unusable. A value with an
+inconsistent decimal mark or ambiguous uncertainty can make a table difficult
+to audit. The \pkg{siunitx} package separates a number from its unit, applies a
+consistent convention, and aligns numerical columns.
+
+\begin{learningoutcomes}
+  \item Format numbers and scientific notation with \pkg{siunitx}.
+  \item Typeset quantities, ranges, uncertainties, angles, and percentages.
+  \item Align numerical values at the decimal marker.
+  \item Distinguish measurement precision from displayed decimal places.
+  \item Apply concise conventions for chemistry, taxonomy, constants, vectors,
+        and matrices.
+\end{learningoutcomes}
+
+\section{Load siunitx and separate roles}
+
+Load the package in the preamble. Use \cmd{num} for a number and \cmd{qty} for
+a number with a unit:
+
+\begin{latexcode}{Complete example: numbers and quantities}
+\documentclass{article}
+\usepackage{siunitx}
+\begin{document}
+The count was \num{12500}. The distance was
+\qty{12.4}{\milli\metre}, and the rate was
+\qty{3.2e-4}{\metre\per\second}.
+\end{document}
+\end{latexcode}
+
+\cmd{num}\required{12500} groups digits according to the package settings.
+\cmd{qty} receives a numerical argument and a unit argument. The unit is built
+from semantic commands: \cmd{milli}\cmd{metre}; division is expressed by
+\cmd{per}. Input \code{3.2e-4} is formatted as scientific notation.
+
+Do not type an italic \code{m} in math mode to imitate metre. A unit is upright
+and its spacing from the number follows a convention.
+
+\section{Ranges and lists}
+
+Use dedicated commands rather than inserting a hyphen between two complete
+quantities:
+
+\begin{latexcode}{Ranges and lists}
+The interval was \qtyrange{4.2}{7.8}{\milli\metre}.
+
+The counts were \numlist{12;15;19}.
+
+Temperatures ranged from
+\qty{-5}{\degreeCelsius} to \qty{18}{\degreeCelsius}.
+\end{latexcode}
+
+The semicolon separates items in \cmd{numlist} input. The output punctuation
+can adapt to the document language and package configuration.
+
+\begin{pausepredict}
+Compare typed text \code{5-10 mg} with
+\code{\textbackslash qtyrange\{5\}\{10\}\{\textbackslash milli\textbackslash
+gram\}}. Which version gives \LaTeX{} explicit knowledge of both the range and
+the unit?
+\end{pausepredict}
+
+\section{Uncertainty and significant figures}
+
+Parenthetical uncertainty input places the uncertainty in the final digits:
+
+\begin{latexcode}{Quantities with uncertainty}
+The estimated length was \qty{12.4(3)}{\milli\metre}.
+
+The mean difference was
+\qty[separate-uncertainty=true]{0.42(15)}{\milli\metre}.
+\end{latexcode}
+
+The first value represents \(12.4\pm0.3\) millimetres. The option in the
+second command requests an explicit plus-minus form. Confirm the uncertainty
+notation used by your field and journal; do not infer measurement quality from
+the number of digits alone.
+
+Rounding is an analytical and reporting decision. \pkg{siunitx} can round
+consistently, but it cannot decide how many significant figures the evidence
+supports. Preserve unrounded values in the analysis and apply a documented
+display rule.
+
+\section{Percentages, angles, and degrees}
+
+\begin{latexcode}{Percent and angle examples}
+Coverage was \qty{95}{\percent}.
+
+The angle was \ang{23.5}.
+
+The temperature was \qty{20.0}{\degreeCelsius}.
+\end{latexcode}
+
+\cmd{ang} accepts an angular value; \cmd{degreeCelsius} is a complete unit.
+Do not attach a degree sign manually to a Celsius value when a semantic unit is
+available.
+
+\section{Decimal alignment in tables}
+
+An \code{S} column parses numbers and aligns them at the decimal marker:
+
+\begin{table}[htbp]
+  \centering
+  \caption{Simulated paired differences, shown only to demonstrate decimal
+  alignment.}
+  \label{tab:siunitx-alignment}
+  \begin{tabular}{@{}lS[table-format=-2.2]@{}}
+    \toprule
+    Pair & {Difference (mm)} \\
+    \midrule
+    P01 & 0.42 \\
+    P02 & -1.30 \\
+    P03 & 12.05 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Braces around the column heading protect it from numerical parsing. The
+\code{table-format=2.2} reservation allows up to two integer and two decimal
+digits; a minus sign is accommodated when present. Inspect the real range
+before choosing a format.
+
+\begin{commonerror}
+\textbf{Symptom:} a text entry in an \code{S} column produces a parsing error
+or poor alignment.
+
+\textbf{Cause:} the column expects numerical input.
+
+\textbf{Correction:} protect a short heading with braces, or give textual rows
+a suitable non-numeric column. Do not disguise missing data as an unexplained
+number.
+\end{commonerror}
+
+\section{Optional discipline-specific conventions}
+
+\subsection{Chemical formulae and reactions}
+
+The \pkg{mhchem} package provides \cmd{ce} for chemical notation:
+
+\begin{latexcode}{Optional chemistry source}
+\usepackage[version=4]{mhchem}
+
+Water is \ce{H2O}, and a reaction may be written as
+\ce{2H2 + O2 -> 2H2O}.
+\end{latexcode}
+
+This fragment shows preamble and body lines, not a complete document. Check the
+current \pkg{mhchem} manual for supported reaction arrows, charges, isotopes,
+and the required version option.
+
+\subsection{Species names and sequences}
+
+Use italics for a genus-species binomial as the disciplinary convention
+requires: \textit{Arabidopsis thaliana}. A DNA sequence such as
+\code{ACGTTGCA} is data-like text; a monospaced font can distinguish its fixed
+symbols, but long sequences need line breaking, numbering, and often a
+specialised package or supplementary file.
+
+\subsection{Physical constants, vectors, and matrices}
+
+State whether a value is exact by definition or measured, give its unit, and
+cite the authoritative source when appropriate. Use one declared vector
+convention, such as \(\mathbf{v}\), and a matrix convention such as
+\(\mathbf{A}\). Do not alternate bold, arrowed, and plain vectors without
+meaning.
+
+\begin{scienceinpractice}
+An engineering tolerance \qty{25.0(5)}{\milli\metre}, an environmental
+concentration \qty{8.2}{\micro\gram\per\litre}, and a physical speed
+\qty{3.0e8}{\metre\per\second} share one source grammar while retaining their
+disciplinary meanings.
+\end{scienceinpractice}
+
+\begin{goodpractice}
+Define units in column headings when every value shares the unit. Do not repeat
+the unit in every table cell. Explain missing values, uncertainty, rounding,
+and transformations in the caption or a table note.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Load \pkg{siunitx} in the running article. Declare that both methods report
+millimetres. Format the example range, mean difference, and uncertainty with
+\cmd{qty}. Add a three-row simulated decimal-aligned table as a temporary
+methods check; Chapter~\ref{chap:tables} will turn it into a complete
+publication table.
+\end{miniproject}
+
+\chaptersummary
+
+\pkg{siunitx} formats numbers separately from units and supplies commands for
+quantities, ranges, lists, uncertainties, percentages, angles, and scientific
+notation. Its \code{S} column aligns parsed numbers. Formatting consistency is
+not a substitute for justified significant figures. Optional tools such as
+\pkg{mhchem} express discipline-specific notation; taxonomy, sequences,
+constants, vectors, and matrices also require declared conventions.
+
+\chaptercheck
+\begin{chapterchecklist}
+  \item Every reported measurement has an unambiguous unit.
+  \item Ranges and uncertainties use semantic commands.
+  \item Display rounding follows a stated analytical rule.
+  \item Numerical table columns align at the decimal marker.
+  \item Discipline-specific notation follows a verified convention.
+  \item Simulated quantities remain labelled as demonstrations.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+\begin{chapterexercises}
+  \item Typeset \num{1250000} and \qty{2.5e-6}{\metre}.
+  \item Create a range from 4 to 9 milligrams.
+  \item Express \(7.2\pm0.4\) centimetres using uncertainty input.
+  \item Make an \code{S} column for values from \(-12.30\) to \(8.05\).
+  \item Explain why decimal places do not by themselves establish precision.
+  \item Typeset a Celsius temperature and a percentage.
+  \item Identify the role of \cmd{ce} and the package that supplies it.
+  \item Challenge: audit a table from your field for units, rounding,
+        uncertainty, and missing-value definitions.
+\end{chapterexercises}

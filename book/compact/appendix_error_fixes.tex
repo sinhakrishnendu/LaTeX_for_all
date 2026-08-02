@@ -1,0 +1,124 @@
+\chapter{Fast Error Fixes}
+\label{app:errors}
+
+\section{Undefined control sequence}
+
+\begin{latexcode}{Check spelling and package}
+% Wrong spelling:
+\texbf{Important}
+
+% Correct:
+\textbf{Important}
+\end{latexcode}
+
+If spelling is correct, confirm that the package defining the command is
+loaded in the preamble.
+
+\section{Missing brace}
+
+\begin{latexcode}{Broken and corrected: balance command arguments}
+% Broken:
+\section{Results
+
+% Correct:
+\section{Results}
+\end{latexcode}
+
+Inspect the error line and the line immediately before it.
+
+\section{Environment mismatch}
+
+\begin{latexcode}{Broken and corrected: match environment names}
+% Broken:
+\begin{itemize}
+  \item One
+\end{enumerate}
+
+% Correct:
+\begin{itemize}
+  \item One
+\end{itemize}
+\end{latexcode}
+
+\section{Literal reserved character}
+
+\begin{latexcode}{Escape text symbols}
+95\%
+research \& teaching
+sample\_01
+\$25
+\end{latexcode}
+
+\section{File not found}
+
+\begin{latexcode}{Use a project-relative path}
+\includegraphics{figures/result.pdf}
+\input{chapters/methods}
+\addbibresource{references.bib}
+\end{latexcode}
+
+Check spelling and capitalisation. Avoid machine-specific absolute paths.
+
+\section{Extra alignment tab}
+
+\begin{latexcode}{Match columns and ampersands}
+\begin{tabular}{lr}
+Name & Value \\
+A    & 12.4  \\
+\end{tabular}
+\end{latexcode}
+
+Two columns need one ampersand in each row.
+
+\section{Undefined reference}
+
+\begin{latexcode}{Match label and reference}
+\section{Methods}
+\label{sec:methods}
+
+See \cref{sec:methods}.
+\end{latexcode}
+
+Compile again after labels change.
+
+\section{Undefined citation}
+
+\begin{latexcode}{Match the bibliography key}
+% In references.bib:
+@article{study2026,
+  author = {Researcher, A.},
+  title  = {Study Title},
+  year   = {2026}
+}
+
+% In main.tex:
+\parencite{study2026}
+\end{latexcode}
+
+Run the complete build sequence with \pkg{latexmk}.
+
+\section{Overfull line}
+
+Find the long unbreakable item: often a URL, code expression, equation, table,
+or path. Rewrite or redesign it instead of shrinking the whole document.
+
+\section{Stale output}
+
+\begin{terminalcode}{Clean and rebuild the root file}
+latexmk -C main.tex
+latexmk -pdf main.tex
+\end{terminalcode}
+
+Confirm that the PDF you opened is the PDF just produced.
+
+\section{Last resort: isolate the problem}
+
+\begin{latexcode}{Minimal diagnostic file}
+\documentclass{article}
+\begin{document}
+Add only enough source to reproduce the error.
+\end{document}
+\end{latexcode}
+
+The smallest failing example usually reveals whether the cause is content,
+package order, path, or build sequence.

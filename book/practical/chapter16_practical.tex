@@ -1,0 +1,56 @@
+\section{Complete Practical Coding}
+\label{sec:practical-16}
+
+Keep the scientific structure stable and isolate temporary review formatting
+behind one switch.
+
+\begin{latexcode}{Complete practical file: journal-ready generic article}
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{setspace}
+
+\newif\ifreviewcopy
+\reviewcopytrue % change to \reviewcopyfalse for a compact draft
+\ifreviewcopy
+  \doublespacing
+\fi
+
+\title{Concise, Informative Article Title}
+\author{First Author \and Second Author}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+State the question, method, main result, and conclusion.
+\end{abstract}
+
+\section{Introduction}
+End with the objective or hypothesis.
+
+\section{Materials and Methods}
+Describe the design, measurements, and analysis.
+
+\section{Results}
+Report findings in the same order as the methods.
+
+\section{Discussion}
+Interpret the result, limitation, and implication.
+
+\section{Conclusion}
+Give the main answer without repeating the abstract.
+
+\section*{Declarations}
+\textbf{Competing interests:} The authors declare none.\par
+\textbf{Data availability:} Replace with the accurate statement.\par
+\textbf{Author contributions:} Replace with verified contributions.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Compile both review-switch states. When converting to a verified journal class,
+move the scientific sections unchanged and replace only class-specific metadata
+and declarations.
+\end{codelab}

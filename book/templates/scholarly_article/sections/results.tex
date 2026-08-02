@@ -1,0 +1,31 @@
+\section{Results}
+\label{sec:results}
+
+The simulated methods produced similar central values
+(\cref{tab:summary}). Method B was higher on average by
+\SI{0.18}{\milli\metre}. The display in \cref{fig:comparison} makes both paired
+proximity and the simulated status visible.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of the simulated paired measurements. Values are mean
+  (standard deviation).}
+  \label{tab:summary}
+  \begin{tabular}{lS[table-format=2.2]S[table-format=1.2]}
+    \toprule
+    Quantity & {Estimate} & {SD} \\
+    \midrule
+    Method A (\si{\milli\metre}) & 12.44 & 1.31 \\
+    Method B (\si{\milli\metre}) & 12.62 & 1.35 \\
+    Paired difference (\si{\milli\metre}) & 0.18 & 0.24 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.78\linewidth]{method_comparison.pdf}
+  \caption{Comparison of two simulated measurement methods. The diagonal is
+  the line of equality; it is a visual guide rather than a fitted model.}
+  \label{fig:comparison}
+\end{figure}

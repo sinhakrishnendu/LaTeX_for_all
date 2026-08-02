@@ -1,0 +1,53 @@
+\section{Results}
+\label{sec:results}
+
+All nine simulated pairs were complete. The method A and method B means were
+\qty{5.12}{\milli\metre} and \qty{5.19}{\milli\metre}; the mean signed
+difference was \qty{0.07}{\milli\metre} (\cref{tab:summary}).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of the simulated paired values.}
+  \label{tab:summary}
+  \begin{tabular}{@{}lS[table-format=1.2]@{}}
+    \toprule
+    {Quantity} & {Value (\si{\milli\metre})} \\
+    \midrule
+    Method A mean & 5.12 \\
+    Method B mean & 5.19 \\
+    Mean difference & 0.07 \\
+    \bottomrule
+  \end{tabular}
+
+  \smallskip\footnotesize\textit{Note.} Values are simulated and rounded for
+  this typesetting demonstration.
+\end{table}
+
+\Cref{fig:paired-values} shows the paired values. The diagnostic panels in
+\cref{fig:diagnostics} provide complementary views.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/method_comparison.pdf}
+  \caption{Relationship between method A and method B for simulated paired
+  values. The dashed line marks equality.}
+  \label{fig:paired-values}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/method_comparison.pdf}
+    \caption{Values on the original scale.}
+    \label{fig:diagnostic-values}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/difference_plot.pdf}
+    \caption{Signed difference against pair mean.}
+    \label{fig:diagnostic-differences}
+  \end{subfigure}
+  \caption{Two diagnostic views of the same simulated data.}
+  \label{fig:diagnostics}
+\end{figure}

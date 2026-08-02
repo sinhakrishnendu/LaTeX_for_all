@@ -1,0 +1,5 @@
+% BROKEN EXAMPLE: this file is intentionally not compiled by the test script.
+\documentclass{article}
+begin{document}
+Hello, LaTeX!
+\end{document}

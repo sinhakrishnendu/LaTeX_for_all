@@ -1,0 +1,45 @@
+\section{Complete Practical Coding}
+\label{sec:practical-10}
+
+The panels below are generated with ordinary rules, so the file is complete
+without an external image. Replace each framed panel with \cmd{includegraphics}
+when using real artwork.
+
+\begin{latexcode}{Complete practical file: aligned figure panels}
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\newcommand{\demopanel}[1]{%
+  \fbox{\parbox[c][35mm][c]{.88\linewidth}{\centering #1}}}
+
+\begin{document}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{.47\linewidth}
+    \centering
+    \demopanel{Condition A}
+    \caption{Baseline condition.}
+    \label{fig:condition-a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{.47\linewidth}
+    \centering
+    \demopanel{Condition B}
+    \caption{Treatment condition.}
+    \label{fig:condition-b}
+  \end{subfigure}
+  \caption{Two aligned demonstration panels with one shared caption.}
+  \label{fig:conditions}
+\end{figure}
+
+Figure~\ref{fig:conditions} contains two top-aligned panels.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Change one subcaption to two lines and verify that the panels stay aligned.
+Then substitute two project-relative image paths and inspect the result at the
+book's intended print size.
+\end{codelab}

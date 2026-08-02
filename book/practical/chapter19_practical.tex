@@ -1,0 +1,36 @@
+\section{Complete Practical Coding}
+\label{sec:practical-19}
+
+Start from a file that certainly works, then add only enough source to
+reproduce the first error.
+
+\begin{latexcode}{Complete practical file: minimal diagnostic shell}
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Smallest failing unit}
+Add the suspected source below this sentence one logical unit at a time.
+
+\begin{equation}
+  \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
+\end{equation}
+
+Reserved characters in text are escaped: 95\%, research \& teaching,
+sample\_01, and \$25.
+
+\end{document}
+\end{latexcode}
+
+\begin{terminalcode}{Practical diagnostic commands}
+latexmk -C main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+rg -n "^!|undefined|Overfull" main.log
+\end{terminalcode}
+
+\begin{codelab}
+Introduce one mismatched brace, compile, and repair the first error. Then paste
+one failing unit from another project into this shell and reduce it until the
+cause is obvious.
+\end{codelab}

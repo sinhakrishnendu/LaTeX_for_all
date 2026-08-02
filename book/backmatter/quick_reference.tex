@@ -1,0 +1,224 @@
+\chapter*{Command quick-reference guide}
+\addcontentsline{toc}{chapter}{Command quick-reference guide}
+
+This guide recalls patterns taught in the book. It is not a substitute for the
+current class or package manual. Items shown as \placeholder{file} or
+\placeholder{text} must be replaced; square brackets normally mark optional
+arguments and braces required arguments.
+
+\section*{Document skeleton and build}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Source or command & Purpose \\
+\midrule
+\endhead
+\cmd{documentclass}\newline\optional{11pt}\required{article} & Select broad structure and supported options. \\
+\cmd{usepackage}\newline\optional{options}\required{package} & Load one documented extension in the preamble. \\
+\cmd{begin}\required{document} \ldots{} \cmd{end}\required{document} & Delimit visible document content. \\
+\code{latexmk -pdf main.tex} & Build pdf\LaTeX{} dependencies and repeat passes automatically. \\
+\code{latexmk -C} & Remove generated build files in the current project; use deliberately. \\
+\code{texdoc geometry} & Open locally installed documentation for a named package. \\
+\bottomrule
+\end{longtable}
+
+\section*{Text and structure}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{part}\required{Title} & Major book-level division. \\
+\cmd{chapter}\required{Title} & Chapter in classes that support it. \\
+\cmd{section}\required{Title} & Numbered section; use lower levels only when needed. \\
+\cmd{section*}\required{Title} & Unnumbered section; not necessarily in the contents. \\
+Blank source line & Start a new paragraph. \\
+\cmd{emph}\required{text} & Semantic emphasis that adapts to context. \\
+\cmd{textbf}\required{text} & Bold text for a specific visual or structural reason. \\
+\cmd{texttt}\required{text} & Monospaced inline text such as short filenames or code. \\
+\code{``quoted text''} & English typographic quotation marks. \\
+\cmd{footnote}\required{text} & Insert a numbered footnote at the point of reference. \\
+\code{\% \& \# \_ \{ \}} & Print common reserved characters literally. \\
+\cmd{url}\newline\required{https://example.org} & Typeset a breakable literal URL. \\
+\cmd{href}\required{URL}\required{meaningful text} & Create a descriptive external link with \pkg{hyperref}. \\
+\bottomrule
+\end{longtable}
+
+\section*{Lists, quotations, and verbatim material}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Environment or command & Purpose \\
+\midrule
+\endhead
+\code{itemize} with \cmd{item} & Unordered list. \\
+\code{enumerate} with \cmd{item} & Ordered sequence. \\
+\code{description} with \cmd{item}\optional{Term} & Labelled definitions or categories. \\
+\code{quote} & Short displayed quotation. \\
+\code{quotation} & Multi-paragraph displayed quotation. \\
+\cmd{verb}|literal text| & Short inline literal text; delimiter cannot appear inside. \\
+\code{verbatim} & Literal block for plain source examples. \\
+\bottomrule
+\end{longtable}
+
+\section*{Mathematics}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\code{\$x\textasciicircum2\$} or \cmd{(}\code{x\textasciicircum2}\cmd{)} & Inline mathematics. \\
+\cmd{[}\code{x\textasciicircum2}\cmd{]} & Unnumbered display. \\
+\code{equation} & One numbered display. \\
+\code{align} and \code{align*} & Aligned multi-line mathematics, numbered or unnumbered. \\
+\code{x\textasciicircum\{2\}} and \code{x\_\{i\}} & Superscript and subscript; braces group multiple tokens. \\
+\cmd{frac}\required{a}\required{b} & Fraction. \\
+\cmd{sqrt}\optional{n}\required{x} & Square or $n$th root. \\
+\cmd{sum}\code{\_\{i=1\}\^n} & Summation with limits. \\
+\cmd{int}\code{\_a\textasciicircum b f(x)\textbackslash,\textbackslash mathrm\{d\}x} & Definite integral with an upright differential. \\
+\cmd{sin}, \cmd{log}, \cmd{exp} & Upright named mathematical operators. \\
+\cmd{operatorname}\required{Var} & Declare an occasional operator in place. \\
+\cmd{DeclareMathOperator}\newline\required{\textbackslash Var}\required{Var} & Declare a repeated operator in the preamble. \\
+\cmd{left}\code{(}\ldots\cmd{right}\code{)} & Automatically sized delimiters; use when needed. \\
+\code{cases} & Piecewise definitions inside mathematics. \\
+\code{pmatrix}, \code{bmatrix} & Matrices with round or square delimiters. \\
+\cmd{text}\required{words} & Short prose inside mathematics with \pkg{amsmath}. \\
+\bottomrule
+\end{longtable}
+
+\section*{Quantities and units with siunitx}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{num}\required{12345.6} & Format a number consistently. \\
+\cmd{qty}\required{value}\newline\required{unit expression} & Typeset a number and unit. \\
+\cmd{unit}\required{\textbackslash micro\textbackslash mole} & Typeset a unit without a value. \\
+\cmd{qtyrange}\required{2}\required{5}\required{\textbackslash gram} & Typeset a range with consistent unit handling. \\
+\cmd{qtylist}\required{1;2;3}\required{\textbackslash metre} & Typeset a list of quantities. \\
+\cmd{DeclareSIUnit}\newline\required{\textbackslash sampleunit}\required{symbol} & Define a documented specialist unit once. \\
+\code{S[table-format=3.2]} & Align numeric table entries by value and decimal marker. \\
+\bottomrule
+\end{longtable}
+
+\section*{Tables}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\code{table} & Floating wrapper for caption, label, and a tabular object. \\
+\cmd{centering} & Centre content locally inside a float. \\
+\code{tabular}\required{lcr} & Table grid with left, centred, and right columns. \\
+\code{tabularx}\newline\required{\textbackslash textwidth}\required{lX} & Table with a paragraph column that consumes available width. \\
+\code{longtable} & Table that may continue across pages. \\
+\code{\&} and \cmd{\textbackslash} & Separate cells and finish a row. \\
+\cmd{toprule}, \cmd{midrule}, \cmd{bottomrule} & Professional horizontal rules from \pkg{booktabs}. \\
+\cmd{multicolumn}\newline\required{n}\required{format}\required{text} & Span cells across columns. \\
+\cmd{caption}\required{text} then \cmd{label}\required{tab:key} & Name and label a table; place the label after the caption. \\
+\bottomrule
+\end{longtable}
+
+\section*{Figures}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{includegraphics}\newline\optional{width=.8\textbackslash linewidth}\newline\required{figures/result.pdf} & Insert a project-relative image with \pkg{graphicx}. \\
+\code{figure} & Floating wrapper for an image, caption, and label. \\
+\cmd{caption}\optional{Short entry}\required{Full explanatory caption} & Provide a short list entry and full caption. \\
+\code{subfigure}\newline\optional{t}\required{.48\textbackslash textwidth} & Create a labelled panel with \pkg{subcaption}. \\
+\cmd{graphicspath}\newline\required{\{figures/\}} & Declare a searched graphics directory; explicit paths can be clearer. \\
+\cmd{rotatebox}, \cmd{resizebox} & Transform content with \pkg{graphicx}; use sparingly. \\
+\bottomrule
+\end{longtable}
+
+\section*{Labels and cross-references}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{label}\required{fig:growth} & Store the current numbered target under a unique semantic key. \\
+\cmd{ref}\required{fig:growth} & Print only the target number. \\
+\cmd{pageref}\required{fig:growth} & Print its page number. \\
+\cmd{cref}\required{fig:growth} & Print type and number with \pkg{cleveref}. \\
+\cmd{Cref}\required{fig:growth} & Capitalised form at the beginning of a sentence. \\
+\cmd{eqref}\required{eq:model} & Parenthesised equation number with \pkg{amsmath}. \\
+\cmd{autoref}\required{sec:methods} & Hyperlinked type and number with \pkg{hyperref}. \\
+\bottomrule
+\end{longtable}
+
+Use consistent prefixes such as \code{chap:}, \code{sec:}, \code{fig:},
+\code{tab:}, \code{eq:}, and \code{app:}. They aid navigation; \LaTeX{} does not
+require those exact strings.
+
+\section*{Citations and bibliography with biblatex}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{usepackage}\optional{options}\newline\required{biblatex} & Select the bibliography system and style. \\
+\cmd{addbibresource}\newline\required{references.bib} & Register a database in the preamble. \\
+\cmd{parencite}\required{key} & Parenthetical citation in an author--year style. \\
+\cmd{textcite}\required{key} & Author integrated into the sentence. \\
+\cmd{citeauthor}\required{key}; \cmd{citeyear}\required{key} & Print selected citation components when justified. \\
+\cmd{printbibliography} & Print cited works at the chosen location. \\
+\code{@article\{key, ...\}} & A Bib\LaTeX{}/BibTeX database entry; verify every field. \\
+\bottomrule
+\end{longtable}
+
+\section*{Long documents and page control}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{input}\required{file} & Insert a small source unit exactly at this point. \\
+\cmd{include}\required{chapters/file} & Insert a large page-starting unit with separate auxiliary data. \\
+\cmd{includeonly}\newline\required{chapters/methods} & Draft selected included files; remove for the final full build. \\
+\cmd{frontmatter}, \cmd{mainmatter}, \cmd{backmatter} & Apply book-class matter conventions. \\
+\cmd{appendix} & Change later chapter or section numbering to appendix form. \\
+\cmd{tableofcontents} & Generate contents from headings. \\
+\cmd{listoffigures}, \cmd{listoftables} & Generate lists from captions. \\
+\cmd{pagenumbering}\required{roman} & Select a numbering representation and reset the page counter. \\
+\cmd{newcommand}\newline\required{\textbackslash Name}\optional{n}\newline\required{definition} & Define a shared semantic command. \\
+\cmd{makeindex}, \cmd{index}\required{term}, \cmd{printindex} & Collect and print an index with a configured index tool. \\
+\bottomrule
+\end{longtable}
+
+\section*{Spacing, pages, and drafts}
+
+\begin{longtable}{@{}p{.34\textwidth}p{.60\textwidth}@{}}
+\toprule
+Pattern & Purpose \\
+\midrule
+\endhead
+\cmd{usepackage}\newline\optional{margin=25mm}\newline\required{geometry} & State page geometry for a generic document. \\
+\cmd{pagestyle}\required{fancy}; \cmd{fancyhf}\required{} & Select and clear a \pkg{fancyhdr} page style. \\
+\cmd{thispagestyle}\required{empty} & Change the style of the current page. \\
+\code{titlepage} & Create a separately composed title or cover page. \\
+\cmd{onehalfspacing}, \cmd{doublespacing} & Apply documented draft spacing with \pkg{setspace}. \\
+\code{landscape} & Rotate a page using \pkg{pdflscape} when a wide object justifies it. \\
+\cmd{hypersetup}\newline\required{pdftitle=\{...\}} & Configure link and PDF metadata options supported by \pkg{hyperref}. \\
+\bottomrule
+\end{longtable}
+
+\section*{Release reminders}
+
+Build from the documented main file; read the first meaningful error; search
+for unresolved labels, citations, and placeholders; compile examples and
+templates; inspect the log; render and inspect every final PDF page; verify
+metadata and fonts where required; and archive the exact source, PDF,
+supplements, manifest, permissions, and environment record.

@@ -1,0 +1,483 @@
+\chapter{Understanding the Source}
+\label{chap:source-anatomy}
+\index{command}\index{environment}\index{preamble}\index{argument!optional}\index{argument!required}
+
+You can now compile a document. The next step is to read its source as a set of
+small, recognisable structures. This skill is more valuable than memorising a
+large preamble. When you can identify a command, its information, and the
+region in which it acts, you can usually ask a precise question and test a
+small repair.
+
+We shall examine punctuation that \LaTeX{} treats specially. Nothing here
+requires programming experience. The symbols are simply part of the written
+grammar used to communicate with the compiler.
+
+\begin{learningoutcomes}
+  \item Distinguish commands, required arguments, and optional arguments.
+  \item Match the beginning and end of an environment.
+  \item Use comments to annotate source safely.
+  \item Predict how spaces, line endings, and blank lines affect prose.
+  \item Type common reserved characters in ordinary text.
+  \item Separate the preamble from the document body.
+  \item Construct a minimal working example and repair two common syntax
+        errors.
+\end{learningoutcomes}
+
+\section{Commands: instructions beginning with a backslash}
+
+In our first source, \cmd{documentclass}, \cmd{begin}, and \cmd{end} are
+\term{commands}. A command tells \LaTeX{} to perform an operation or insert
+something that ordinary text alone cannot express. Most command names made
+from letters are case-sensitive. \cmd{begin} and \code{\textbackslash Begin}
+are not the same instruction.
+
+A command name made from letters ends when \LaTeX{} reaches a non-letter. In this
+example, the opening brace ends the name \code{documentclass}:
+
+\begin{latexcode}{A command and its information}
+\documentclass{article}
+\end{latexcode}
+
+The backslash is not decoration. Without it, \LaTeX{} sees ordinary characters.
+This is why removing the backslash in \cref{chap:first-document} changed the
+meaning of the line.
+
+\begin{classroomnote}
+Not every backslash is followed by a long word. Some commands use a single
+non-letter symbol. We will meet them when a task requires them. For now, read
+``backslash plus a name'' as the usual command pattern.
+\end{classroomnote}
+
+\section{Required arguments use braces}
+
+An \term{argument} supplies information to a command. A \term{required
+argument} is normally enclosed in curly braces:
+
+\begin{latexcode}{Required argument pattern}
+\commandname{required information}
+\end{latexcode}
+
+The pattern line is explanatory rather than a standalone document. Our actual
+class declaration has the same parts: \cmd{documentclass} is the command and
+\code{article} is its required argument. Braces tell \LaTeX{} exactly which
+characters belong to that argument.
+
+Commands can have more than one argument, and an argument can contain other
+commands. We will introduce those cases one at a time. The immediate habit is
+to find each opening brace and its matching closing brace.
+
+\begin{pausepredict}
+Compare these two lines. Which one has a complete required argument?
+
+\begin{latexcode}{One complete and one incomplete line}
+\documentclass{article}
+\documentclass{article
+\end{latexcode}
+
+The first has a matching pair of braces. The second leaves the argument open,
+so \LaTeX{} may continue reading later lines while searching for the missing
+closing brace.
+\end{pausepredict}
+
+\section{Optional arguments use brackets}
+
+Some commands accept additional choices in square brackets. These are
+\term{optional arguments}. The class command can accept options before its
+required class name:
+
+\begin{latexcode}{Complete example: an optional class argument}
+\documentclass[11pt]{article}
+\begin{document}
+This document requests 11-point base text.
+\end{document}
+\end{latexcode}
+
+Here \optional{11pt} is optional and \required{article} is required. If we
+omit \optional{11pt}, the class uses its default base size. The square
+brackets must appear in the position defined by the command. They are not a
+general substitute for braces.
+
+\expectedoutput
+
+The PDF contains one sentence. Compared with the default minimal article, the
+base type should be slightly larger. The class still controls the margins,
+paragraph treatment, and page number.
+
+\begin{tryit}
+Compile the example with \optional{10pt}, \optional{11pt}, and
+\optional{12pt}, one at a time. Keep all other source unchanged. Compare the
+same sentence and the space it occupies. Which change is easiest to see?
+\end{tryit}
+
+\section{Environments have a beginning and an end}
+
+An \term{environment} applies a structure or behaviour to a region. Its
+general shape is:
+
+\begin{latexcode}{Environment pattern}
+\begin{environment-name}
+Content inside the environment
+\end{environment-name}
+\end{latexcode}
+
+The name after \cmd{begin} must match the name after \cmd{end}. Our document
+body is the region inside the \code{document} environment. Later, other
+environments will create lists, quotations, equations, tables, figures, and
+proofs.
+
+Environments can be nested, like boxes placed inside larger boxes. The inner
+environment must end before the outer environment ends. Indentation is not a
+\LaTeX{} requirement, but it helps human readers see that nesting.
+
+\begin{commonerror}
+\textbf{Broken example: mismatched names}
+
+\begin{latexcode}{Broken example: do not compile as working source}
+\documentclass{article}
+\begin{document}
+The names do not match.
+\end{article}
+\end{latexcode}
+
+\textbf{Cause:} the source opens \code{document} but tries to close
+\code{article}. A class name is not an environment name.
+
+\textbf{Correction:} replace the final line with
+\cmd{end}\required{document}. When the names match, compile again.
+\end{commonerror}
+
+\section{Comments explain source to people}
+
+The percent sign begins a \term{comment}. \LaTeX{} ignores the percent sign and
+the remainder of that source line:
+
+\begin{latexcode}{Complete example: comments}
+\documentclass{article} % Select the standard article class.
+\begin{document}
+This sentence appears in the PDF.
+% This reminder does not appear in the PDF.
+\end{document}
+\end{latexcode}
+
+Comments can explain a decision, mark a task, or temporarily remove a line
+from a test. They should help a future reader understand \emph{why} the source
+is organised as it is. A comment that merely repeats the command adds little.
+
+Because the percent sign starts a comment, a literal percentage in prose needs
+a backslash: \code{25\textbackslash\%} produces 25\%. We will return to
+scientific percentages and quantities in the chapter on units.
+
+\begin{goodpractice}
+Write comments that survive beyond the current minute. ``Use the wide figure
+because labels become unreadable at column width'' records a reason. ``Make
+figure wide'' records only an instruction whose purpose may be forgotten.
+Remove stale comments before submission.
+\end{goodpractice}
+
+\section{Whitespace: spaces, lines, and paragraphs}
+
+In ordinary prose, \LaTeX{} usually treats one or several spaces as a single
+interword space. A single source line ending also behaves like a space. A
+blank line ends the current paragraph and begins another.
+
+\begin{latexcode}{Complete example: source spacing}
+\documentclass{article}
+\begin{document}
+Method A and     Method B
+appear in one paragraph even though
+the source changes line.
+
+This sentence begins a new paragraph.
+\end{document}
+\end{latexcode}
+
+\expectedoutput
+
+The first three source lines form one typeset paragraph with ordinary word
+spacing. The blank line creates a paragraph break before the final sentence.
+\LaTeX{} does not print the row of extra source spaces.
+
+This behaviour lets us wrap source at readable widths. Pressing Return is not
+a request for a printed line break. In normal prose, use a blank line when you
+mean a new paragraph. Commands for deliberate line breaks exist, but they
+should solve a real structural need rather than imitate a typewriter.
+
+\begin{pausepredict}
+Remove the blank line before the final sentence and compile. Will there be one
+paragraph or two? Now restore the blank line and add three more empty source
+lines. Will the printed gap become three times larger? Test both predictions.
+\end{pausepredict}
+
+Ordinarily, several blank source lines still mean one paragraph break. If a
+document needs more vertical space, its structure or design should specify the
+reason. Repeated empty lines are not a reliable page-layout method.
+
+\section{Characters with special jobs}
+
+Several ASCII characters are \term{reserved characters}: \LaTeX{} uses them as
+part of its instruction language. To print many of them literally, place a
+backslash before the character.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Common reserved characters and a source form that prints them in
+  ordinary text. The last three use named commands.}
+  \label{tab:reserved-characters}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Character & Common role in source & Source used to print it \\
+    \midrule
+    \# & numbered parameter in definitions & \code{\textbackslash\#} \\
+    \$ & mathematics delimiter & \code{\textbackslash\$} \\
+    \% & comment marker & \code{\textbackslash\%} \\
+    \& & table alignment marker & \code{\textbackslash\&} \\
+    \_ & subscript in mathematics & \code{\textbackslash\_} \\
+    \{ and \} & argument grouping &
+      \code{\textbackslash\{} and \code{\textbackslash\}} \\
+    \textbackslash & command marker & \cmd{textbackslash} \\
+    \textasciicircum & superscript marker & \cmd{textasciicircum} \\
+    \textasciitilde & unbreakable space / active symbol &
+      \cmd{textasciitilde} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The special role can depend on context. For example, an ampersand will later
+separate columns in a table or alignment. Outside such a structure, an
+unescaped ampersand usually produces an error.
+
+\begin{latexcode}{Complete example: literal reserved characters}
+\documentclass{article}
+\begin{document}
+Recovery was 75\%, and A\&B shared sample\_01.
+
+The budget was \$500 for item \#3.
+\end{document}
+\end{latexcode}
+
+\expectedoutput
+
+The PDF prints the percentage sign, ampersand, underscore, dollar sign, and
+hash symbol. The backslashes used to escape them are not printed.
+
+\begin{scienceinpractice}
+Scientific source often contains reserved characters: \code{95\%} for a
+percentage, \code{sample\_A1} for a file-like identifier, and \code{R\&D} in
+an institutional phrase. Learning to recognise the character's source role
+prevents apparently ordinary data labels from becoming syntax errors.
+\end{scienceinpractice}
+
+\section{The preamble and the body}
+
+The \term{preamble} begins at the first source line and ends immediately before
+\cmd{begin}\required{document}. It declares the class and later will load
+packages, define reusable commands, and set document-wide behaviour. The
+\term{document body} contains the material that forms the document's content.
+
+\begin{latexcode}{Preamble and body}
+\documentclass[11pt]{article} % Preamble
+
+\begin{document}              % Body begins
+This sentence is document content.
+\end{document}                % Body ends
+\end{latexcode}
+
+The blank line in the tiny preamble is for human readability; it is not a
+paragraph because typeset body content has not begun. Ordinary visible prose
+does not belong in the preamble.
+
+\begin{commonerror}
+\textbf{Symptom:} ``Missing \cmd{begin}\required{document}'' appears even
+though an opening line exists farther down.
+
+\textbf{Possible cause:} ordinary text was accidentally placed before the
+opening line. \LaTeX{} encountered content where it expected setup instructions.
+
+\textbf{Repair:} move the prose into the body, then compile. If the message
+remains, compare the spelling and braces of the opening line with the minimal
+working document.
+\end{commonerror}
+
+\section{A minimal working example}
+
+A \term{minimal working example}, often shortened to \term{MWE}, is the
+smallest complete source that still demonstrates a behaviour or problem.
+``Working'' means complete enough to compile until the target issue occurs;
+it does not promise error-free output when the issue itself is an error.
+
+An MWE helps in three ways:
+
+\begin{itemize}
+  \item it separates the problem from unrelated chapters and packages;
+  \item it lets another person reproduce exactly what you observed; and
+  \item it often reveals the cause while you are removing irrelevant source.
+\end{itemize}
+
+Suppose an ampersand causes an error in a 150-page report. A useful MWE might
+be only this:
+
+\begin{latexcode}{Broken MWE: unescaped ampersand}
+\documentclass{article}
+\begin{document}
+Method A & Method B
+\end{document}
+\end{latexcode}
+
+The example is complete, and the unescaped ampersand preserves the problem.
+The repair is precise:
+
+\begin{latexcode}{Corrected MWE}
+\documentclass{article}
+\begin{document}
+Method A \& Method B
+\end{document}
+\end{latexcode}
+
+Do not send an entire confidential thesis when five non-confidential lines can
+demonstrate a technical fault. Replace sensitive content with a neutral example
+and confirm that the fault remains.
+
+\section{The first-aid debugging routine}
+
+Let us apply a calm routine to a missing brace.
+
+\begin{latexcode}{Broken example: missing closing brace}
+\documentclass{article}
+\begin{document}
+This source has an unfinished group.
+\end{document
+\end{latexcode}
+
+The compiler reaches the end while still looking for the closing brace of the
+argument to \cmd{end}. It may report a runaway argument, an emergency stop, or
+an unexpected end of file. The reported line can be at or after the true
+cause, because \LaTeX{} noticed the problem only when it could no longer continue.
+
+Use this sequence:
+
+\begin{enumerate}
+  \item Read the first meaningful error, not only the last line of the log.
+  \item Note the reported line and inspect it plus a few preceding lines.
+  \item Match braces and environment names.
+  \item Make one small correction: add the closing brace.
+  \item Save and compile again.
+  \item Inspect the PDF; do not stop at a successful status message.
+\end{enumerate}
+
+\begin{latexcode}{Corrected closing line}
+\end{document}
+\end{latexcode}
+
+If the small correction works, it provides evidence for the cause. If it does
+not, return to the first new meaningful error. Avoid changing several unrelated
+lines, because then you cannot tell which change mattered.
+
+\begin{tryit}
+Make a safe copy of your first document. Delete the closing brace from
+\cmd{documentclass}\required{article}, compile, and record the first useful
+message. Restore the brace and compile again. Compare this log with the
+missing-brace example above: the wording may differ because the unfinished
+argument begins in a different place.
+\end{tryit}
+
+\section{Reading source from left to right}
+
+When a line looks unfamiliar, ask four questions:
+
+\begin{enumerate}
+  \item Where does the command name begin and end?
+  \item Which braces contain required information?
+  \item Are there square brackets containing an optional choice?
+  \item Does the line open or close an environment that must be matched?
+\end{enumerate}
+
+Apply the questions to:
+
+\begin{latexcode}{Source-reading practice}
+\documentclass[12pt]{article}
+\end{latexcode}
+
+The command is \cmd{documentclass}. The optional argument is
+\optional{12pt}. The required argument is \required{article}. The line does
+not open an environment. This mechanical reading is simple, but it scales to
+longer commands introduced later.
+
+\begin{goodpractice}
+Keep the source readable for a colleague: indent nested regions consistently,
+place logical units on separate lines, and avoid dense sequences of commands
+when a clearer arrangement is available. \LaTeX{} may ignore some whitespace;
+human readers do not.
+\end{goodpractice}
+
+\chapterproject
+
+\begin{miniproject}
+Replace the running project's \file{main.tex} with the annotated version below.
+The document still uses only structures already introduced.
+
+\begin{latexcode}{Running project: readable source anatomy}
+\documentclass[11pt]{article}
+
+% Educational example: the values are simulated.
+\begin{document}
+This project compares Method A and Method B.
+The eventual aim is a reproducible scholarly article.
+
+All values are simulated demonstration data.
+They do not describe a real experiment or clinical study.
+
+Planned completeness is 100\%, and the project folder is
+measurement\_methods.
+\end{document}
+\end{latexcode}
+
+Before compiling, predict the number of paragraphs and identify every escaped
+reserved character. Compile, inspect, and then write one helpful comment of
+your own. Update the README only if your new comment records information that
+belongs at project level rather than beside one source decision.
+\end{miniproject}
+
+\chaptersummary
+
+Commands usually begin with a backslash. Braces group required arguments;
+square brackets commonly contain optional arguments. Environments have
+matching beginning and ending names. A percent sign starts a source comment,
+while reserved characters need special treatment when printed literally.
+Ordinary spaces and line endings collapse in prose, but a blank line starts a
+new paragraph. The preamble configures the document; the body contains its
+content. A minimal working example and the first-meaningful-error routine turn
+a large mystery into a small test.
+
+\chaptercheck
+
+\begin{chapterchecklist}
+  \item I can identify a command name and its arguments.
+  \item I match every opening environment with the same closing name.
+  \item I can add a comment and explain why it does not print.
+  \item I can predict whether source lines form one paragraph or two.
+  \item I can print common reserved characters safely.
+  \item I can point to the preamble and body of a complete source file.
+  \item I can reduce a simple error to a minimal working example.
+\end{chapterchecklist}
+
+\chapterexercisestitle
+
+\begin{chapterexercises}
+  \item Identify the command, optional argument, and required argument in
+        \code{\textbackslash documentclass[12pt]\{book\}}.
+  \item Explain why braces and brackets are not interchangeable in the class
+        declaration.
+  \item Predict the PDF paragraph count when five source lines contain no
+        blank line. Test your answer.
+  \item Write source that prints: \code{Accuracy was 95\% for sample\_7.}
+  \item Find and repair the mismatch:
+        \code{\textbackslash begin\{document\}} followed by
+        \code{\textbackslash end\{article\}}.
+  \item Create a five-line MWE that demonstrates an unescaped ampersand error,
+        then create the corrected version.
+  \item Read this error strategy: ``Change five nearby lines and compile once.''
+        Explain why it produces weak evidence about the cause.
+  \item Challenge: take a harmless problem from your practice source and
+        reduce it until removing any remaining line would stop the example
+        from demonstrating the same problem.
+\end{chapterexercises}

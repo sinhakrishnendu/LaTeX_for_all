@@ -1,0 +1,81 @@
+% Black-only interior profile for absorbent uncoated and groundwood paper.
+% Use the gray model so the press PDF contains no process-colour separations.
+% The 12 percent title tint is deliberately above fragile highlight-screen
+% values; all meaning also remains present in rules, labels, and type styles.
+\definecolor{BookAccent}{gray}{0}
+\definecolor{BookAccentDark}{gray}{0}
+\definecolor{BookTint}{gray}{0.88}
+\definecolor{CodeBackground}{gray}{1}
+\definecolor{CodeComment}{gray}{0}
+\definecolor{CodeKeyword}{gray}{0}
+
+% Semantic names used in the prose.
+\newcommand{\pkg}[1]{\textsf{#1}}
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\cmd}[1]{\texttt{\textbackslash#1}}
+\newcommand{\required}[1]{\texttt{\{#1\}}}
+\newcommand{\optional}[1]{\texttt{[#1]}}
+\newcommand{\placeholder}[1]{\textnormal{\textlangle#1\textrangle}}
+\newcommand{\term}[1]{\emph{#1}\index{#1}}
+\newcommand{\menu}[1]{\textsf{#1}}
+\DeclareSIUnit{\inch}{in}
+
+% Consistent semantic labels used throughout the book.
+\crefname{chapter}{Chapter}{Chapters}
+\Crefname{chapter}{Chapter}{Chapters}
+\crefname{section}{Section}{Sections}
+\Crefname{section}{Section}{Sections}
+\crefname{figure}{Figure}{Figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+\crefname{equation}{Equation}{Equations}
+\Crefname{equation}{Equation}{Equations}
+
+% Lists used in every chapter.
+\newenvironment{learningoutcomes}
+  {\begin{tcolorbox}[
+      breakable,
+      colback=white,
+      colframe=black,
+      colbacktitle=BookTint,
+      coltitle=black,
+      boxrule=0.85pt,
+      titlerule=0.55pt,
+      arc=0pt,
+      title={Learning outcomes},
+      fonttitle=\bfseries,
+      before skip=0.8\baselineskip,
+      after skip=0.9\baselineskip]
+   \begin{itemize}[leftmargin=1.5em,itemsep=0.25em,topsep=0.2em]}
+  {\end{itemize}\end{tcolorbox}}
+
+\newlist{chapterexercises}{enumerate}{1}
+\setlist[chapterexercises]{
+  label=\thechapter.\arabic*,
+  leftmargin=2.4em,
+  itemsep=0.65em,
+  topsep=0.4em
+}
+
+\newenvironment{chapterchecklist}
+  {\begin{itemize}[
+      label={\textcolor{BookAccent}{\ensuremath{\square}}},
+      leftmargin=1.8em,
+      itemsep=0.35em]}
+  {\end{itemize}}
+
+\newcommand{\expectedoutput}{\subsection*{What you should see}}
+\newcommand{\sourceanatomy}{\subsection*{Source anatomy}}
+\newcommand{\chapterproject}{\section{Chapter project}}
+\newcommand{\chaptersummary}{\section{Summary}}
+\newcommand{\chaptercheck}{\section{Checklist}}
+\newcommand{\chapterexercisestitle}{\section{Exercises}}
+
+% Theorem structures used in the optional advanced mathematics chapter.
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}

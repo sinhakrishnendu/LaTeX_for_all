@@ -1,0 +1,121 @@
+\chapter{Tables That Readers Can Use}
+\label{chap:tables}
+
+\begin{learningoutcomes}
+  \item Build a clean table with \pkg{booktabs}.
+  \item Align numbers and wrap long text.
+  \item Decide when a table should span pages.
+\end{learningoutcomes}
+
+\section{Start with a small professional table}
+
+\begin{latexcode}{Complete example: a results table}
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\begin{document}
+\begin{table}[htbp]
+  \centering
+  \caption{Simulated growth after seven days.}
+  \label{tab:growth}
+  \begin{tabular}{lS[table-format=2.1]S[table-format=2.1]}
+    \toprule
+    {Condition} & {Mean (mm)} & {SD (mm)} \\
+    \midrule
+    Control   & 12.4 & 1.8 \\
+    Treatment & 16.7 & 2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Table~\ref{tab:growth} shows the larger mean in the
+treatment condition.
+\end{document}
+\end{latexcode}
+
+Use \code{l}, \code{c}, and \code{r} for ordinary columns. An \pkg{siunitx}
+\code{S} column aligns numbers at the decimal marker. Put braces around a
+textual heading above an \code{S} column.
+
+\section{Wrap descriptive text}
+
+\begin{latexcode}{Complete example: a table that fits the line}
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\begin{document}
+\begin{table}[htbp]
+  \centering
+  \caption{A compact decision table.}
+  \begin{tabularx}{\linewidth}{@{}lXl@{}}
+    \toprule
+    Item & Check & Status \\
+    \midrule
+    Source & Commands are readable and commented. & Ready \\
+    Figure & Labels remain legible at print size. & Revise \\
+    PDF & Fonts are embedded and pages are correct. & Ready \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+\end{document}
+\end{latexcode}
+
+The \code{X} column takes the available width and wraps its content. The
+\code{@\{\}} markers remove extra padding at the outer edges.
+
+\section{Span several pages only when necessary}
+
+\begin{latexcode}{Longtable pattern}
+\usepackage{booktabs,longtable}
+
+\begin{longtable}{@{}lp{0.62\linewidth}@{}}
+\caption{Detailed checks.}\label{tab:checks}\\
+\toprule
+Item & Check \\
+\midrule
+\endfirsthead
+\toprule
+Item & Check \\
+\midrule
+\endhead
+Source & Compile from a clean directory. \\
+PDF & Inspect every page boundary. \\
+% Add further rows here.
+\bottomrule
+\end{longtable}
+\end{latexcode}
+
+\pkg{longtable} is not a floating environment. It repeats the heading and
+breaks between rows. Use it for genuinely long material, not for a table that
+could be shortened.
+
+\section{Repair the usual table errors}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Symptom & Repair \\
+\midrule
+Extra alignment tab & Match the number of ampersands to the column definition. \\
+Table runs into margin & Use \pkg{tabularx}, shorten headings, or redesign columns. \\
+Numbers do not align & Use an \code{S} column instead of adding spaces. \\
+Caption separated from table & Keep caption, tabular material, and label inside
+one \code{table} environment. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{codelab}
+Compile the results table. Add a third condition, change the numeric precision,
+and write one sentence that refers to the table by label. Then build the
+decision table using content from your own project.
+\end{codelab}
+
+\begin{chapterchecklist}
+  \item The caption explains the table without repeating every value.
+  \item Units appear in headings, not in every numeric cell.
+  \item Decimal values align.
+  \item The table fits without shrinking the main text.
+\end{chapterchecklist}

@@ -1,0 +1,129 @@
+\chapter{Quick Reference}
+\label{app:quick}
+
+\section{Document skeleton}
+
+\begin{latexcode}{Minimal document}
+\documentclass{article}
+% packages and commands
+\begin{document}
+Hello, world!
+\end{document}
+\end{latexcode}
+
+\section{Structure and text}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Source & Result or purpose \\
+\midrule
+\cmd{title}\required{text} & Define the document title. \\
+\cmd{author}\required{name} & Define the author. \\
+\cmd{maketitle} & Print title information. \\
+\cmd{section}\required{text} & Numbered section. \\
+\cmd{subsection}\required{text} & Numbered subsection. \\
+\cmd{section*}\required{text} & Unnumbered section. \\
+\cmd{emph}\required{text} & Contextual emphasis. \\
+\cmd{textbf}\required{text} & Bold label or short emphasis. \\
+\cmd{footnote}\required{text} & Footnote. \\
+\code{\% \& \_ \$ \# \{ \}} & Common literal reserved characters. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Lists}
+
+\begin{latexcode}{List patterns}
+\begin{itemize}
+  \item Unordered item
+\end{itemize}
+
+\begin{enumerate}
+  \item Ordered item
+\end{enumerate}
+
+\begin{description}
+  \item[Term] Explanation
+\end{description}
+\end{latexcode}
+
+\section{Mathematics}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Source & Purpose \\
+\midrule
+\code{\textbackslash(...\textbackslash)} & Inline mathematics. \\
+\code{\textbackslash[...\textbackslash]} & Unnumbered display. \\
+\code{equation} & Numbered single equation. \\
+\code{align} & Aligned numbered equations. \\
+\cmd{frac}\required{a}\required{b} & Fraction. \\
+\cmd{sqrt}\required{x} & Square root. \\
+\code{x\_i\^{}2} & Subscript and superscript. \\
+\cmd{text}\required{words} & Ordinary words inside mathematics. \\
+\cmd{label}\required{eq:key} & Label a numbered equation. \\
+\cmd{cref}\required{eq:key} & Type-aware reference with \pkg{cleveref}. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Quantities}
+
+\begin{latexcode}{siunitx patterns}
+\num{12345.6}
+\si{\milli\metre}
+\qty{12.5}{\milli\gram}
+\qtyrange{18}{22}{\degreeCelsius}
+\end{latexcode}
+
+\section{Tables}
+
+\begin{latexcode}{booktabs pattern}
+\begin{tabular}{lrr}
+\toprule
+Group & Mean & SD \\
+\midrule
+A & 12.4 & 1.8 \\
+B & 16.7 & 2.1 \\
+\bottomrule
+\end{tabular}
+\end{latexcode}
+
+\section{Figures}
+
+\begin{latexcode}{Figure pattern}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/result.pdf}
+  \caption{An informative caption.}
+  \label{fig:result}
+\end{figure}
+\end{latexcode}
+
+\section{References and citations}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Source & Purpose \\
+\midrule
+\cmd{label}\required{key} & Attach a stable name. \\
+\cmd{ref}\required{key} & Print the number. \\
+\cmd{cref}\required{key} & Print the type and number. \\
+\cmd{textcite}\required{key} & Author in the sentence. \\
+\cmd{parencite}\required{key} & Parenthetical citation. \\
+\cmd{printbibliography} & Print cited records. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Build commands}
+
+\begin{terminalcode}{Build reference}
+latexmk -pdf main.tex
+latexmk -C main.tex
+pdfinfo main.pdf
+pdffonts main.pdf
+\end{terminalcode}

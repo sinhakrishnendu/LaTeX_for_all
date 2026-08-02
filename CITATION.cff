@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite the book using the metadata below."
+type: book
+title: "LaTeX for All: From Your First Document to Publication-Ready Scholarly Writing"
+authors:
+  - family-names: Sinha
+    given-names: Krishnendu
+    orcid: "https://orcid.org/0000-0001-9590-3875"
+year: 2026
+date-released: 2026-08-02
+version: 1.0.0
+repository-code: "https://github.com/sinhakrishnendu/LaTeX_for_all"
+url: "https://github.com/sinhakrishnendu/LaTeX_for_all"
+license: CC-BY-4.0
+identifiers:
+  - type: other
+    value: "ISBN 9798190207026"
+    description: "Print ISBN"

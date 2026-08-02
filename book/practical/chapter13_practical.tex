@@ -1,0 +1,41 @@
+\section{Complete Practical Coding}
+\label{sec:practical-13}
+
+Centralise page design in the preamble and leave content commands semantic.
+
+\begin{latexcode}{Complete practical file: restrained page design}
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=28mm,headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Measurement Report}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{A Consistently Designed Report}
+\author{Your Name}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Objective}
+The document class and packages control recurring design choices.
+
+\section{Method}
+The source uses sections rather than manually styled headings.
+
+\newpage
+\section{Result}
+The header and page number repeat automatically.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Change the margin once, replace the header text once, and add a third page.
+Do not format individual headings by hand.
+\end{codelab}

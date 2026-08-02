@@ -1,0 +1,61 @@
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# LaTeX auxiliary files
+*.acn
+*.acr
+*.alg
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.listing
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+_minted-*/
+
+# Generated project trees and release binaries
+**/build/
+book/output/
+book/tmp/
+companion/**/build/
+companion/**/*.pdf
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local TeX caches
+.texmf-var/
+.texmf-config/
+
+# Temporary and backup files
+*.bak
+*.tmp
+*.orig

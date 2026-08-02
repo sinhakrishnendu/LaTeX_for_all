@@ -1,0 +1,62 @@
+\section{Complete Practical Coding}
+\label{sec:practical-15}
+
+The following generic thesis driver makes front matter, main chapters, and an
+appendix explicit. Replace placeholders only after checking local rules.
+
+\begin{latexcode}{Complete practical file: organised thesis driver}
+\documentclass[11pt,oneside]{report}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\title{Thesis Title}
+\author{Your Name}
+\date{2026}
+
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+
+\chapter*{Declaration}
+Insert the verified declaration required for the submission.
+
+\chapter*{Abstract}
+State the objective, method, main result, and conclusion.
+
+\chapter*{Acknowledgements}
+Record assistance accurately and concisely.
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+Define the problem, gap, and objectives.
+
+\chapter{Literature Review}
+Organise prior work around the research question.
+
+\chapter{Methods}
+Describe the design and analysis reproducibly.
+
+\chapter{Results}
+Present findings with numbered evidence.
+
+\chapter{Discussion}
+Interpret findings, limitations, and implications.
+
+\chapter{Conclusion}
+Answer the objectives directly.
+
+\appendix
+\chapter{Supplementary Methods}
+Place supporting detail here.
+
+\end{document}
+\end{latexcode}
+
+\begin{codelab}
+Replace the title metadata, add one subsection to Methods, and create one
+appendix. Then compare the structure with the verified institutional checklist.
+\end{codelab}
