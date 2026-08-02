@@ -39,7 +39,6 @@ _minted-*/
 
 # Generated project trees and release binaries
 **/build/
-book/output/
 book/tmp/
 companion/**/build/
 companion/**/*.pdf
